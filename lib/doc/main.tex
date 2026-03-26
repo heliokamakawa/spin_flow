@@ -1,0 +1,377 @@
+\documentclass[12pt,a4paper]{article}
+
+% --------------------------------------------------
+% PACOTES BÁSICOS
+% --------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage[backend=biber,style=ieee]{biblatex}
+\addbibresource{sections/references.bib}
+\input{config.tex}
+
+% --------------------------------------------------
+% CONFIGURAÇÕES GERAIS
+% --------------------------------------------------
+\onehalfspacing
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0.2cm}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=black,
+    pdftitle={Especificação dos Requisitos},
+    pdfauthor={Autores do Projeto}
+}
+
+% --------------------------------------------------
+% CABEÇALHO E RODAPÉ
+% --------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Especificação dos Requisitos do \ProjetoNome}
+\fancyhead[R]{Página \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% --------------------------------------------------
+% FORMATAÇÃO DE TÍTULOS
+% --------------------------------------------------
+\titleformat{\section}
+  {\normalfont\bfseries\large}
+  {\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\normalfont\bfseries\normalsize}
+  {\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\normalsize}
+  {\thesubsubsection}{1em}{}
+
+\newcommand{\blocoRF}[5]{
+\noindent\textbf{#1 \textless #2\textgreater}
+
+\vspace{0.2cm}
+\noindent\textbf{Descrição:} #3
+
+\noindent\textbf{Prioridade:} #4
+
+\noindent\textbf{Ator(es):} #5
+
+\noindent\textbf{Requisitos associados:} \textless Ex.: RF002, RF015 \textgreater
+
+\vspace{0.4cm}
+}
+
+\newcommand{\blocoNF}[3]{
+\noindent\textbf{#1 \textless #2\textgreater}
+
+\vspace{0.2cm}
+\noindent\textbf{Descrição:} #3
+
+\vspace{0.4cm}
+}
+
+% --------------------------------------------------
+% INÍCIO DO DOCUMENTO
+% --------------------------------------------------
+\begin{document}
+
+% --------------------------------------------------
+% CAPA
+% --------------------------------------------------
+\begin{titlepage}
+
+\noindent\rule{\textwidth}{0.8pt} % traço no topo
+
+\begin{flushright}
+    {\Huge \textbf{Especificação dos Requisitos}}
+\end{flushright}
+
+\begin{flushright}
+    {\Large \textbf{do}}\\[1.0cm]
+    
+    {\Huge \textbf{\ProjetoNome}}\\[1.2cm]
+    
+    {\Large \textbf{Versão \VersaoDocumento}}
+\end{flushright}
+
+\vspace{1.8cm}
+\begin{flushleft}
+    \AutorA\\
+    \AutorB\\
+    \AutorC\\[0.5cm]
+
+    \textbf{Professoras:} \\
+        \ProfessoraA\\
+        \ProfessoraB\\[0.5cm]
+    \textbf{Disciplina:} \DisciplinaNome
+\end{flushleft}
+
+\end{titlepage}
+
+% --------------------------------------------------
+% SUMÁRIO
+% --------------------------------------------------
+\tableofcontents
+\newpage
+
+
+
+
+% --------------------------------------------------
+% REVISÕES
+% --------------------------------------------------
+\section*{Revisões}
+\begin{longtable}{|p{2.5cm}|p{4cm}|p{5cm}|p{3cm}|}
+\hline
+\textbf{Versão} & \textbf{Autores} & \textbf{Descrição da Versão} & \textbf{Data} \\
+\hline
+1.0 & Equipe inicial & Criação inicial do documento & \textless dd/mm/aaaa\textgreater \\
+\hline
+1.1 & Equipe atualizada & Ajustes de conteúdo e refinamento dos requisitos & \textless dd/mm/aaaa\textgreater \\
+\hline
+\end{longtable}
+
+\newpage
+
+% --------------------------------------------------
+% 1 INTRODUÇÃO
+% --------------------------------------------------
+\section{Introdução}
+\input{sections/introduction}
+
+\subsection{Objetivo do Documento}
+\input{sections/purpose}
+
+\subsection{Escopo do Produto}
+\input{sections/scope}
+
+\subsection{Público-Alvo}
+\input{sections/audience}
+
+\subsection{Definições, Acrônimos e Abreviações}
+\input{sections/definitions}
+
+\subsection{Convenções}
+\input{sections/conventions}
+
+\subsection{Referências}
+\nocite{*}
+\printbibliography[heading=none]
+
+
+
+
+\newpage
+% --------------------------------------------------
+% 2 VISÃO GERAL
+% --------------------------------------------------
+\section{Visão Geral}
+
+\subsection{Perspectiva do Produto}
+Explicar a motivação do desenvolvimento do produto e descrever como ele irá interagir com o ambiente, sistemas externos, usuários e demais componentes envolvidos.
+
+\subsection{Funcionalidade do Produto}
+Descrever as principais funcionalidades do sistema em alto nível.
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item Cadastro e autenticação de usuários
+    \item Gerenciamento de dados do domínio do sistema
+    \item Consulta e atualização de informações
+    \item Emissão de relatórios ou visualizações
+    \item Comunicação com serviços externos, se aplicável
+\end{itemize}
+
+\subsection{Usuários}
+Descrever os perfis de usuários que irão utilizar o sistema.
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Administrador}: gerencia usuários e configurações
+    \item \textbf{Usuário comum}: utiliza as funcionalidades principais
+    \item \textbf{Operador/Professor/Técnico}: perfil especializado, se houver
+\end{itemize}
+
+\subsection{Ambiente Operacional}
+Descrever a plataforma, sistema operacional, hardware e demais aplicações que coexistirão com o produto.
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item Sistema operacional: Windows, Linux, Android, iOS ou Web
+    \item Linguagens e frameworks: conforme projeto
+    \item Banco de dados: conforme projeto
+    \item Navegadores compatíveis: Chrome, Firefox, Edge
+\end{itemize}
+
+\subsection{Restrições de Projeto e Implementação}
+Descrever limitações técnicas e de projeto.
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item Restrições de hardware
+    \item Linguagem de programação definida
+    \item Padrões arquiteturais
+    \item Protocolos de comunicação
+    \item Prazo acadêmico de entrega
+\end{itemize}
+
+\subsection{Documentação do Usuário}
+Listar os documentos de apoio ao usuário.
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item Manual do usuário
+    \item Guia de instalação
+    \item Guia rápido de uso
+    \item Ajuda embutida no sistema
+\end{itemize}
+
+\subsection{Suposições e Dependências}
+Descrever as suposições e dependências que podem afetar os requisitos.
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item Disponibilidade de internet
+    \item Acesso a banco de dados
+    \item Dependência de APIs externas
+    \item Disponibilidade dos usuários para validação
+\end{itemize}
+
+% --------------------------------------------------
+% 3 ESPECIFICAÇÃO DAS INTERFACES EXTERNAS
+% --------------------------------------------------
+\section{Especificação das Interfaces Externas}
+
+\subsection{Requisitos de Interface Externa}
+
+\subsubsection{Interfaces do Usuário}
+As interfaces do usuário devem ser intuitivas, responsivas e coerentes com o perfil dos usuários do sistema. Protótipos, wireframes ou telas podem ser entregues em anexo.
+
+\subsubsection{Interfaces de Hardware}
+Descrever as conexões do produto com hardwares utilizados, quando aplicável, como leitores, sensores, impressoras, dispositivos móveis ou periféricos específicos.
+
+\subsubsection{Interfaces de Software}
+Descrever as conexões com softwares externos, bibliotecas, frameworks, bancos de dados, serviços em nuvem ou APIs consumidas pelo sistema.
+
+\subsubsection{Interfaces de Comunicação}
+Descrever como serão realizadas as comunicações, como navegador web, e-mail, formulários eletrônicos, REST API, sockets ou protocolos específicos.
+
+% --------------------------------------------------
+% 4 REQUISITOS FUNCIONAIS
+% --------------------------------------------------
+\section{Requisitos Funcionais}
+
+Nesta seção são definidas as características que o sistema deve apresentar por meio da especificação dos requisitos. Cada requisito deve possuir um identificador único. A nomenclatura recomendada é:
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item Para requisitos funcionais: \textbf{[RF001] Nome do requisito}
+    \item Para requisitos não-funcionais: \textbf{[NF001] Nome do requisito}
+\end{itemize}
+
+Para estabelecer a prioridade dos requisitos, adotam-se as denominações:
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Essencial}: sem este requisito o sistema não entra em funcionamento de forma viável.
+    \item \textbf{Importante}: sem este requisito o sistema funciona, mas de forma insatisfatória.
+    \item \textbf{Desejável}: requisito útil, porém não indispensável para a versão atual.
+\end{itemize}
+
+\subsection{RF001 \textless Nome do requisito\textgreater}
+
+\blocoRF
+{RF001}
+{Nome do requisito}
+{o que representa no sistema e/ou o que deve fazer}
+{Essencial}
+{Informar os atores que irão interagir com o requisito}
+
+\subsection{RF002 \textless Nome do requisito\textgreater}
+
+\blocoRF
+{RF002}
+{Nome do requisito}
+{o que representa no sistema e/ou o que deve fazer}
+{Importante}
+{Informar os atores que irão interagir com o requisito}
+
+\subsection{RF003 \textless Nome do requisito\textgreater}
+
+\blocoRF
+{RF003}
+{Nome do requisito}
+{o que representa no sistema e/ou o que deve fazer}
+{Desejável}
+{Informar os atores que irão interagir com o requisito}
+
+% --------------------------------------------------
+% 5 REQUISITOS NÃO-FUNCIONAIS
+% --------------------------------------------------
+\section{Requisitos Não-Funcionais}
+
+\subsection{Requisitos de Desempenho}
+
+\blocoNF
+{NF001}
+{Tempo de resposta}
+{O sistema deve responder às principais operações do usuário em até \textless X\textgreater\ segundos, considerando condições normais de uso.}
+
+\blocoNF
+{NF002}
+{Capacidade}
+{O sistema deve suportar simultaneamente \textless X\textgreater\ usuários conectados sem degradação crítica do serviço.}
+
+\subsection{Requisitos de Segurança}
+
+\blocoNF
+{NF003}
+{Controle de acesso}
+{O sistema deve restringir o acesso às funcionalidades de acordo com o perfil do usuário autenticado.}
+
+\blocoNF
+{NF004}
+{Proteção de dados}
+{Os dados sensíveis devem ser armazenados e transmitidos de forma segura, utilizando mecanismos adequados de proteção.}
+
+\subsection{Atributos de Qualidade do Software}
+
+\blocoNF
+{NF005}
+{Usabilidade}
+{O sistema deve apresentar interface clara, padronizada e de fácil aprendizado para o usuário.}
+
+\blocoNF
+{NF006}
+{Manutenibilidade}
+{O código-fonte deve ser modular, documentado e organizado para facilitar manutenção e evolução.}
+
+\blocoNF
+{NF007}
+{Confiabilidade}
+{O sistema deve manter consistência dos dados e se recuperar adequadamente de falhas previsíveis.}
+
+\blocoNF
+{NF008}
+{Portabilidade}
+{O sistema deve operar nos ambientes especificados com o mínimo de adaptações.}
+
+% --------------------------------------------------
+% 6 OUTROS REQUISITOS
+% --------------------------------------------------
+\section{Outros Requisitos}
+Se necessário, incluir nesta seção requisitos complementares que não se enquadrem nas categorias anteriores, como requisitos legais, regulatórios, acadêmicos ou organizacionais.
+
+\vfill
+
+\end{document}
