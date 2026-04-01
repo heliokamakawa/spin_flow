@@ -9,11 +9,11 @@ class DTOAluno implements DTO {
   final DateTime dataNascimento;
   final String genero;
   final String telefone;
-  final String? urlFoto;
-  final String? instagram;
-  final String? facebook;
-  final String? tiktok;
-  final String? observacoes;
+  final String urlFoto;
+  final String instagram;
+  final String facebook;
+  final String tiktok;
+  final String observacoes;
   final bool ativo;
 
   DTOAluno({
@@ -23,11 +23,11 @@ class DTOAluno implements DTO {
     required this.dataNascimento,
     required this.genero,
     required this.telefone,
-    this.urlFoto,
-    this.instagram,
-    this.facebook,
-    this.tiktok,
-    this.observacoes,
+    required this.urlFoto,
+    required this.instagram,
+    required this.facebook,
+    required this.tiktok,
+    required this.observacoes,
     this.ativo = true,
   });
-} 
+}

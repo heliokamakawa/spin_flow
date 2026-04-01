@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spin_flow/dto/dto_artista_banda.dart';
 import 'package:spin_flow/dto/dto_categoria_musica.dart';
 import 'package:spin_flow/dto/dto_musica.dart';
+import 'package:spin_flow/dto/dto_video_aula.dart';
 import 'package:spin_flow/configuracoes/rotas.dart';
 import 'package:spin_flow/widget/componentes/campos/selecao_multipla/campo_multi_selecao.dart';
 import 'package:spin_flow/widget/componentes/campos/comum/campo_texto.dart';
@@ -65,9 +66,9 @@ class _FormMusicaState extends State<FormMusica> {
   DTOMusica _criarDTO() {
     final links = _links
         .where((link) => link['url'] != null && link['url']!.isNotEmpty)
-        .map((link) => DTOLinkVideoAula(
-              url: link['url']!,
-              descricao: link['descricao'] ?? '',
+        .map((link) => DTOVideoAula(
+              nome: link['descricao'] ?? '',
+              linkVideo: link['url']!,
             ))
         .toList();
     return DTOMusica(
@@ -132,7 +133,7 @@ class _FormMusicaState extends State<FormMusica> {
                   ...dto.linksVideoAula.map((link) => 
                     Padding(
                       padding: const EdgeInsets.only(left: 8, top: 2),
-                      child: Text('• ${link.descricao}: ${link.url}'),
+                      child: Text('• ${link.nome}: ${link.linkVideo}'),
                     ),
                   ),
                 ],

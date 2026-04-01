@@ -1,0 +1,46 @@
+% Definir os termos necessários para compreender o documento.
+
+Esta seção reúne os principais termos, acrônimos e abreviações utilizados neste documento. O objetivo é estabelecer uma terminologia comum para a leitura dos requisitos, dos modelos de análise e das prototipações, reduzindo ambiguidades na interpretação do domínio do sistema.
+
+\paragraph{}Os principais termos do domínio adotados nesta especificação são apresentados na Tabela~\ref{tab:glossary}.
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+    \caption{Glossário de termos do sistema \ProjetoNome.}\label{tab:glossary} \\ \hline
+    \textbf{Termo} & \textbf{Descrição} \\ \hline
+    \endfirsthead
+    \hline
+    \textbf{Termo} & \textbf{Descrição} \\ \hline
+    \endhead
+    Aluno & Cliente da academia que utiliza o sistema para consultar a agenda, reservar bike, acompanhar o histórico de presença e acessar informações do repertório musical das aulas. \\ \hline
+    Gênero & Enumeração utilizada para representar o gênero declarado no cadastro do aluno, com os valores `MASCULINO`, `FEMININO` e `OUTRO`. \\ \hline
+    Dia da semana & Enumeração que representa os dias válidos para a recorrência das turmas, de `SEGUNDA` a `DOMINGO`. \\ \hline
+    Bike & Equipamento físico utilizado na aula de spinning, associado a um fabricante, a uma posição na sala e, quando aplicável, a registros de manutenção. \\ \hline
+    Fabricante & Entidade cadastral que identifica a origem da bike e concentra seus dados de referência e contato. \\ \hline
+    Tipo de manutenção & Classificação do problema ou do serviço de manutenção, como defeito mecânico, ajuste ou troca de peça. \\ \hline
+    Sala & Espaço físico onde a turma acontece, definido por uma grade de posições de bike organizada por filas e colunas. \\ \hline
+    Posição da bike & Posição ocupável dentro da sala, identificada por fila e coluna, associada a uma bike específica e existente apenas na composição da sala. \\ \hline
+    Turma & Horário recorrente de aula de spinning associado a uma sala, a dias da semana específicos e, quando aplicável, a um mix em uso. \\ \hline
+    Check-in & Registro que representa a reserva do aluno para uma turma em uma data específica, incluindo a posição escolhida na sala e preservando o histórico da participação. \\ \hline
+    Mix & Conjunto organizado de músicas que compõe a experiência musical de uma aula ou de um período, com vigência própria e uso efetivo controlado pelo histórico de associação com a turma. \\ \hline
+    Histórico de mix da turma & Registro das associações de mixes a uma turma ao longo do tempo; `dataFim = null` identifica o mix ativo em uso naquela turma. \\ \hline
+    Música & Item do repertório musical que compõe um mix, associado a exatamente um artista ou banda e a uma ou mais categorias musicais. \\ \hline
+    Artista ou banda & Entidade cadastral que representa o artista ou a banda responsável por uma música. \\ \hline
+    Categoria musical & Entidade cadastral utilizada para classificar músicas por categoria, estilo ou finalidade dentro do repertório. \\ \hline
+    Videoaula & Material complementar com orientações sobre a execução de músicas no spinning, criado sempre no contexto de pelo menos uma música e podendo servir a mais de uma. \\ \hline
+    Manutenção & Registro operacional que indica uma intervenção realizada, agendada ou pendente em uma bike, podendo afetar sua disponibilidade para reserva. \\ \hline
+\end{longtable}
+
+\paragraph{}Os acrônimos e abreviações adotados no documento são apresentados na Tabela~\ref{tab:acronyms}.
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+    \caption{Acrônimos e abreviações utilizados no documento.}\label{tab:acronyms} \\ \hline
+    \textbf{Acrônimos / Abreviações} & \textbf{Descrição} \\ \hline
+    \endfirsthead
+    \hline
+    \textbf{Acrônimos / Abreviações} & \textbf{Descrição} \\ \hline
+    \endhead
+    RF & Requisito Funcional \\ \hline
+    RNF & Requisito Não Funcional \\ \hline
+    UI & \textit{User Interface}, termo em inglês para Interface do Usuário. \\ \hline
+    API & \textit{Application Programming Interface}, termo em inglês para Interface de Programação de Aplicações. \\ \hline
+\end{longtable}

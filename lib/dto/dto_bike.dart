@@ -6,7 +6,7 @@ class DTOBike implements DTO {
   final int? id;
   @override
   final String nome;
-  final String? numeroSerie;
+  final String numeroSerie;
   final DTOFabricante fabricante;
   final DateTime dataCadastro;
   final bool ativa;
@@ -14,9 +14,9 @@ class DTOBike implements DTO {
   DTOBike({
     this.id,
     required this.nome,
-    this.numeroSerie,
+    required this.numeroSerie,
     required this.fabricante,
     required this.dataCadastro,
     this.ativa = true,
   });
-} 
+}

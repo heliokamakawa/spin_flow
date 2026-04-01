@@ -1,0 +1,509 @@
+\section{Requisitos Funcionais}
+
+Nesta seção são definidas as características funcionais que o sistema deve apresentar. Cada requisito possui um identificador único. A nomenclatura adotada é:
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item Para requisitos funcionais: \textbf{[RF001] Nome do requisito}
+\end{itemize}
+
+Para estabelecer a prioridade dos requisitos, adotam-se as denominações:
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Essencial}: sem este requisito o sistema não entra em funcionamento de forma viável.
+    \item \textbf{Importante}: sem este requisito o sistema funciona, mas de forma insatisfatória.
+    \item \textbf{Desejável}: requisito útil, porém não indispensável para a versão atual.
+\end{itemize}
+
+% Contador de requisitos funcionais
+\newcounter{rfreq}
+
+% Contador de requisitos não funcionais
+\newcounter{nfreq}
+
+% Gera RF001, RF002, ...
+\newcommand{\rfreqid}{RF\ifnum\value{rfreq}<10 00\else\ifnum\value{rfreq}<100 0\fi\fi\arabic{rfreq}}
+
+% Gera NF001, NF002, ...
+\newcommand{\nfreqid}{NF\ifnum\value{nfreq}<10 00\else\ifnum\value{nfreq}<100 0\fi\fi\arabic{nfreq}}
+
+% #1 = label interno
+% #2 = nome do requisito funcional
+\newcommand{\reqfunc}[2]{%
+  \refstepcounter{rfreq}%
+  \subsection{[\rfreqid] #2}%
+  \label{#1}%
+  \noindent\textbf{Descrição:} \textless preencher\textgreater
+
+  \noindent\textbf{Prioridade:} \textless Essencial, Importante ou Desejável\textgreater
+
+  \noindent\textbf{Dependência:} \textless informar requisitos relacionados, se houver\textgreater
+
+  \noindent\textbf{Outros:} \textless atores, observações ou restrições complementares\textgreater
+
+  \vspace{0.4cm}
+}
+
+% #1 = label interno
+% #2 = nome do requisito funcional
+% #3 = descricao
+% #4 = prioridade
+% #5 = dependencia
+% #6 = outros
+\newcommand{\reqfuncfull}[6]{%
+  \refstepcounter{rfreq}%
+  \subsection{[\rfreqid] #2}%
+  \label{#1}%
+  \noindent\textbf{Descrição:} #3
+
+  \noindent\textbf{Prioridade:} #4
+
+  \noindent\textbf{Dependência:} #5
+
+  \noindent\textbf{Outros:} #6
+
+  \vspace{0.4cm}
+}
+
+% #1 = label interno
+% #2 = nome do requisito não funcional
+\newcommand{\reqnaofunc}[2]{%
+  \refstepcounter{nfreq}%
+  \subsection{[\nfreqid] #2}%
+  \label{#1}%
+  \noindent\textbf{Descrição:} \textless preencher\textgreater
+
+  \noindent\textbf{Prioridade:} \textless Essencial, Importante ou Desejável\textgreater
+
+  \noindent\textbf{Dependência:} \textless informar requisitos relacionados, se houver\textgreater
+
+  \noindent\textbf{Outros:} \textless observações, restrições ou critérios complementares\textgreater
+
+  \vspace{0.4cm}
+}
+
+\subsubsection*{Fluxo Principal do Aluno}
+
+\reqfuncfull
+{rf:consultar_agenda_semanal}
+{Consultar agenda semanal}
+{O sistema deve permitir que o \textbf{aluno} consulte a agenda semanal das \textbf{turmas} disponíveis para \textbf{reserva}, apresentando em grade semanal os horários recorrentes de \textbf{aula} associados a \textbf{salas} e a dias específicos da semana. Para cada turma exibida, a consulta deve mostrar, no mínimo, o horário da aula, a sala associada, a quantidade de \textit{bikes} disponíveis em tempo real e o \textit{mix} atual quando houver vínculo ativo. A agenda deve considerar apenas turmas aptas ao fluxo de reserva, respeitando sua ativação, associação válida à sala, configuração de dias da semana e consistência da disponibilidade operacional. O procedimento de consulta deve permitir a seleção de uma turma para avançar ao fluxo de visualização de disponibilidade e mapa. Quando previsto pela interface do produto, a consulta também deve oferecer filtros por sala ou por dia e destacar visualmente turmas com alta ocupação.}
+{Essencial.}
+{Depende dos requisitos [\ref{rf:exibir_dados_basicos_turma}], [\ref{rf:bloquear_turmas_inativas}] e [\ref{rf:selecionar_turma_e_data}]. Depende da existência de turmas válidas, ativas, associadas a salas válidas e configuradas com ao menos um dia da semana.}
+{Ator principal: Aluno. Este requisito inicia o fluxo central de agenda, disponibilidade, mapa de \textit{bikes} e reserva por \textit{check-in}.}
+
+\reqfuncfull
+{rf:exibir_dados_basicos_turma}
+{Exibir dados básicos da turma}
+{O sistema deve exibir, para cada turma apresentada na agenda semanal, o conjunto mínimo de informações necessárias para apoiar a decisão de consulta e reserva. Cada turma, entendida como um horário recorrente de aula associado a uma sala e a dias específicos da semana, deve apresentar pelo menos o horário da aula, a sala associada, a quantidade de \textit{bikes} disponíveis em tempo real e o \textit{mix} atual quando houver vínculo ativo para aquela aula. O horário deve refletir o `horarioInicio' válido da turma, a sala deve corresponder a uma associação válida e ativa, a disponibilidade deve refletir o estado operacional atualizado das \textit{bikes} reserváveis e o \textit{mix} atual, entendido como o repertório em uso na turma, deve ser mostrado apenas quando existir `TurmaMix' ativo. A exibição desses dados deve permanecer consistente com o estado operacional mantido pela professora e com as regras de ativação, vigência e disponibilidade do domínio.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:consultar_agenda_semanal}], [\ref{rf:bloquear_turmas_inativas}] e [\ref{rf:selecionar_turma_e_data}]. Depende da existência de turma válida e ativa, associada à sala válida, com horário definido, disponibilidade operacional calculável e \textit{mix} vigente quando houver associação ativa.}
+{Ator principal: Aluno. Quando não houver \textit{mix} ativo, a agenda deve continuar exibindo a turma sem obrigatoriedade desse dado. A disponibilidade apresentada deve refletir atualizações operacionais relevantes, inclusive efeitos de manutenção e inativação que impactem \textit{bikes} reserváveis.}
+
+\reqfuncfull
+{rf:bloquear_turmas_inativas}
+{Bloquear seleção de turmas inativas}
+{O sistema deve impedir que o aluno selecione, para avançar no fluxo de reserva, turmas inativas ou indisponíveis para novos \textit{check-ins}. Essa restrição deve considerar o estado operacional da turma, entendida como o horário recorrente de aula associado a uma sala e a dias específicos da semana, bloqueando interações de seleção quando ela não estiver apta a receber novas reservas. O bloqueio deve ser coerente com a regra de que turma inativa não aceita novos \textit{check-ins} e com situações em que a turma deixa de estar disponível para uso no fluxo de agenda.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:consultar_agenda_semanal}] e [\ref{rf:exibir_dados_basicos_turma}]. Depende das regras de domínio que definem a turma como apta ou inapta para novos \textit{check-ins}, inclusive seu estado `ativo' e sua disponibilidade operacional para reserva.}
+{Ator principal: Aluno. O requisito trata da permissão de seleção da turma na agenda, e não da exibição de seus dados básicos. Quando a turma estiver bloqueada para seleção, a interface deve impedir o avanço ao fluxo de disponibilidade e reserva.}
+
+\reqfuncfull
+{rf:selecionar_turma_e_data}
+{Selecionar turma e data}
+{O sistema deve permitir que o aluno selecione uma turma exibida na agenda e informe uma data válida para consultar sua disponibilidade. Essa seleção representa a transição entre a consulta geral da agenda e a verificação específica de uma aula em determinada data, preservando a relação entre a turma, entendida como horário recorrente de aula, e os dias em que ela realmente ocorre. A operação deve preparar o fluxo para a abertura do mapa e para as validações de reserva aplicáveis a essa combinação de turma e data.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:consultar_agenda_semanal}], [\ref{rf:exibir_dados_basicos_turma}], [\ref{rf:bloquear_turmas_inativas}] e [\ref{rf:validar_data_da_turma}]. Depende da existência de turma apta ao fluxo de reserva e de data compatível com a recorrência da turma.}
+{Ator principal: Aluno. A data informada deve servir como contexto de consulta da disponibilidade real antes da exibição do mapa de \textit{bikes}.}
+
+\reqfuncfull
+{rf:validar_data_da_turma}
+{Validar data da turma}
+{O sistema deve validar que a data escolhida para consulta e reserva pertence a um dos dias da semana configurados para a turma selecionada. Essa verificação deve impedir a abertura do fluxo de disponibilidade e mapa quando a data não for compatível com a recorrência da aula. A validação deve considerar a configuração de `diasSemana' da turma e manter coerência com as regras de \textit{check-in} do domínio.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:selecionar_turma_e_data}] e [\ref{rf:impedir_reserva_passada}]. Depende da existência de turma com ao menos um dia da semana configurado e da validação da data informada frente a `Turma.diasSemana'.}
+{Ator principal: Aluno. Quando a data for inválida para a turma, o sistema deve impedir o avanço do fluxo de reserva.}
+
+\reqfuncfull
+{rf:informar_turma_lotada}
+{Informar turma lotada}
+{O sistema deve informar que a turma está lotada quando, no contexto da data consultada, não houver \textit{bikes} reserváveis disponíveis. Essa verificação deve refletir a disponibilidade real da aula, considerando ocupação válida e impactos operacionais que reduzam as vagas efetivas. A mensagem de lotação deve ser apresentada antes da tentativa de reserva, evitando que o aluno prossiga como se ainda houvesse vaga disponível.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:selecionar_turma_e_data}] e [\ref{rf:exibir_dados_basicos_turma}]. Depende do cálculo atualizado de disponibilidade da turma para a data consultada.}
+{Ator principal: Aluno. A lotação deve ser avaliada no contexto da data selecionada, e não apenas pela configuração estrutural da sala.}
+
+\reqfuncfull
+{rf:exibir_mapa_em_grade}
+{Exibir mapa de \textit{bikes} em grade}
+{O sistema deve exibir o mapa de \textit{bikes} da aula em grade, refletindo a organização física da sala por filas e colunas. A apresentação deve representar as posições reserváveis de forma coerente com a configuração da sala, incluindo a referência da posição da professora e a distribuição espacial das \textit{bikes}. O mapa deve ser aberto após a seleção válida de turma e data, servindo como base visual para a escolha da posição no \textit{check-in}.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:selecionar_turma_e_data}] e [\ref{rf:validar_data_da_turma}]. Depende da existência de sala válida, com grade física configurada e posições de \textit{bikes} associadas.}
+{Ator principal: Aluno. O formato da consulta deve ser em grade, e não em lista simples, para preservar a leitura espacial da sala.}
+
+\reqfuncfull
+{rf:identificar_estados_do_mapa}
+{Identificar estados das posições no mapa}
+{O sistema deve identificar visualmente, no mapa da sala, os diferentes estados relevantes das posições, incluindo livre, ocupada, bloqueada por manutenção e reservada para a professora. Essa identificação deve permitir leitura clara da disponibilidade operacional da aula antes da escolha da posição. A representação visual deve ser consistente e suficiente para diferenciar os estados sem gerar ambiguidade para o aluno.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:exibir_mapa_em_grade}] e [\ref{rf:bloquear_posicoes_indisponiveis}]. Depende da classificação correta do estado operacional de cada posição no contexto da turma e da data consultadas.}
+{Ator principal: Aluno. A representação dos estados não deve depender apenas de cor, em alinhamento com os requisitos não funcionais de acessibilidade visual.}
+\reqfuncfull
+{rf:anonimizar_posicoes_ocupadas}
+{Anonimizar posições ocupadas por terceiros}
+{O sistema deve exibir, no mapa consultado pelo aluno, as posições ocupadas por outros alunos de forma anônima, sem identificação nominal do reservante. Essa regra deve preservar a visualização da ocupação da sala sem expor dados pessoais de terceiros. O requisito trata especificamente da visibilidade das reservas de outros alunos no mapa do perfil de aluno.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:exibir_mapa_em_grade}] e [\ref{rf:identificar_estados_do_mapa}]. Depende das regras de visibilidade entre perfis e de proteção das informações pessoais dos alunos.}
+{Ator principal: Aluno. A anonimização vale apenas para reservas de terceiros; a própria reserva do aluno deve receber tratamento distinto.}
+
+\reqfuncfull
+{rf:destacar_reserva_do_proprio_aluno}
+{Destacar reserva do próprio aluno}
+{O sistema deve destacar visualmente, no mapa da turma e da data consultadas, a posição já reservada pelo próprio aluno quando existir \textit{check-in} ativo correspondente. Esse destaque deve permitir que o aluno identifique sua reserva atual sem confundi-la com as ocupações anonimizadas de terceiros. A exibição dessa informação também deve inibir a criação de nova reserva simultânea para a mesma turma e data.}
+{Importante}
+{Depende dos requisitos [\ref{rf:exibir_mapa_em_grade}], [\ref{rf:anonimizar_posicoes_ocupadas}] e [\ref{rf:impedir_reserva_duplicada}]. Depende da identificação do \textit{check-in} ativo do próprio aluno na combinação de turma e data consultadas.}
+{Ator principal: Aluno. O destaque deve ser visualmente distinto das demais ocupações e servir de apoio ao fluxo de cancelamento quando permitido.}
+
+\reqfuncfull
+{rf:bloquear_posicoes_indisponiveis}
+{Bloquear posições indisponíveis}
+{O sistema deve impedir a seleção de posições que não estejam aptas à reserva, incluindo posições bloqueadas por manutenção pendente e posições associadas a \textit{bikes} inativas. Essa restrição deve atuar diretamente no mapa, evitando que o aluno tente reservar uma \textit{bike} cuja disponibilidade real esteja comprometida. O bloqueio deve refletir o estado operacional atualizado da sala para a turma e a data consultadas.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:exibir_mapa_em_grade}] e [\ref{rf:identificar_estados_do_mapa}]. Depende das regras de manutenção, do estado da \textit{bike} e do cálculo de disponibilidade real da posição.}
+{Ator principal: Aluno. Posições indisponíveis podem continuar visíveis no mapa, mas não devem permitir interação de reserva.}
+
+\reqfuncfull
+{rf:reservar_apenas_posicoes_livres}
+{Reservar apenas posições livres}
+{O sistema deve permitir a efetivação da reserva somente para posições livres no mapa da turma e da data selecionadas. A operação de \textit{check-in} não deve aceitar posições ocupadas, bloqueadas ou operacionalmente indisponíveis. Esse requisito concentra a regra de elegibilidade da posição escolhida no momento da reserva.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:exibir_mapa_em_grade}], [\ref{rf:identificar_estados_do_mapa}] e [\ref{rf:bloquear_posicoes_indisponiveis}]. Depende da validação da disponibilidade real da posição no instante da tentativa de reserva.}
+{Ator principal: Aluno. A reserva deve ocorrer por seleção direta da posição livre no mapa.}
+
+\reqfuncfull
+{rf:validar_aluno_ativo}
+{Validar aluno ativo e apto a reservar}
+{O sistema deve validar, antes da gravação do check-in, que o aluno esteja ativo e apto a realizar reserva. Essa verificação deve impedir que usuários bloqueados operacionalmente avancem no fluxo de confirmação. A aptidão do aluno deve ser avaliada no momento da tentativa de reserva, e não presumida apenas por ele ter conseguido acessar etapas anteriores do fluxo.}
+{Essencial}
+{Depende do requisito [\ref{rf:reservar_apenas_posicoes_livres}]. Depende das regras de domínio que controlam o estado ativo do aluno e sua permissão para novos \textit{check-ins}.}
+{Ator principal: Aluno. Se o aluno não estiver apto a reservar, o sistema deve interromper a operação antes da persistência do \textit{check-in}.}
+
+\reqfuncfull
+{rf:impedir_reserva_passada}
+{Impedir reserva para datas passadas}
+{O sistema deve impedir a realização de reserva para datas anteriores à data atual. Essa validação protege a coerência temporal do \textit{check-in} e deve ocorrer antes da gravação da reserva. O requisito se aplica a toda tentativa de selecionar ou confirmar uma aula em data já encerrada.}
+{Essencial}
+{Depende do requisito [\ref{rf:selecionar_turma_e_data}]. Depende da comparação da data informada com a data atual no contexto da operação de \textit{check-in}.}
+{Ator principal: Aluno. A restrição vale para a criação de novas reservas; o histórico de aulas passadas continua existindo para consulta.}
+
+\reqfuncfull
+{rf:impedir_reserva_duplicada}
+{Impedir reserva duplicada}
+{O sistema deve impedir que o mesmo aluno possua mais de um \textit{check-in} não cancelado para a mesma turma e a mesma data. Essa validação deve atuar antes da confirmação da reserva, evitando duplicidade de participação para um mesmo horário de aula. A regra deve considerar apenas \textit{check-ins} ativos, preservando o histórico de reservas canceladas sem permitir duplicidade operacional vigente.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:validar_aluno_ativo}] e [\ref{rf:selecionar_turma_e_data}]. Depende da verificação de existência de \textit{check-in} não cancelado para o mesmo aluno, turma e data.}
+{Ator principal: Aluno. Quando já houver reserva ativa, o mapa deve destacar a própria posição reservada em vez de permitir nova reserva concorrente.}
+
+\reqfuncfull
+{rf:impedir_dupla_ocupacao_da_posicao}
+{Impedir dupla ocupação da posição}
+{O sistema deve impedir que duas reservas válidas ocupem a mesma posição na mesma turma e data. Essa regra garante unicidade de ocupação da \textit{bike} e deve ser aplicada mesmo quando existirem tentativas concorrentes sobre a mesma posição. A verificação deve ocorrer no instante da efetivação do check-in, considerando o estado mais atual da reserva.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:reservar_apenas_posicoes_livres}] e [\ref{rf:impedir_reserva_duplicada}]. Depende da validação atômica da ocupação da posição na combinação de turma e data.}
+{Ator principal: Aluno. O requisito também protege a consistência operacional da sala contra concorrência simultânea.}
+
+\reqfuncfull
+{rf:persistir_dados_do_checkin}
+{Persistir dados do check-in}
+{O sistema deve persistir, no registro de check-in, a turma reservada, a data da aula e a posição escolhida, incluindo fila e coluna da \textit{bike} selecionada. O \textit{check-in}, entendido como o registro permanente da reserva do aluno para uma turma em data específica, deve guardar os dados mínimos necessários para reproduzir a ocupação da sala e sustentar histórico, cancelamento e métricas posteriores. A persistência deve ocorrer somente após a validação completa da operação.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:validar_aluno_ativo}], [\ref{rf:impedir_reserva_passada}], [\ref{rf:impedir_reserva_duplicada}] e [\ref{rf:impedir_dupla_ocupacao_da_posicao}]. Depende da disponibilidade dos campos de turma, data, fila e coluna em formato válido para gravação.}
+{Ator principal: Aluno. Os campos `fila` e `coluna` devem ser compatíveis com os limites da sala associada.}
+
+\reqfuncfull
+{rf:atualizar_mapa_apos_checkin}
+{Atualizar mapa após \textit{check-in}}
+{O sistema deve atualizar imediatamente o estado do mapa e a disponibilidade da turma após a efetivação de um \textit{check-in} válido. Essa atualização deve refletir a nova ocupação da posição reservada e reduzir a disponibilidade apresentada aos demais usuários do fluxo. O comportamento deve ser coerente com a persistência da reserva e com a consistência operacional da aula.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:persistir_dados_do_checkin}] e [\ref{rf:impedir_dupla_ocupacao_da_posicao}]. Depende do recálculo imediato da ocupação e da disponibilidade da turma após a gravação do \textit{check-in}.}
+{Ator principal: Aluno. A atualização deve ocorrer no mesmo fluxo de reserva, sem exigir nova consulta manual para refletir a mudança.}
+
+\reqfuncfull
+{rf:exibir_sucesso_na_reserva}
+{Exibir sucesso na reserva}
+{O sistema deve exibir mensagem clara de sucesso quando a reserva for concluída com gravação válida do \textit{check-in}. Esse retorno deve confirmar ao aluno que a operação foi aceita e que a posição escolhida passou a compor sua reserva ativa para a turma e data informadas. A mensagem deve aparecer ao final do fluxo de confirmação, após a persistência consistente dos dados.}
+{Importante}
+{Depende dos requisitos [\ref{rf:persistir_dados_do_checkin}] e [\ref{rf:atualizar_mapa_apos_checkin}]. Depende da conclusão bem-sucedida da operação de reserva.}
+{Ator principal: Aluno. O retorno de sucesso deve ser explícito e compatível com as diretrizes de feedback da interface.}
+
+\reqfuncfull
+{rf:exibir_erro_na_reserva}
+{Exibir erro na reserva}
+{O sistema deve exibir mensagem clara de erro, indisponibilidade ou conflito quando a reserva não puder ser concluída. Esse retorno deve informar ao aluno que a operação foi rejeitada por motivo operacional ou de validação, como data inválida, turma lotada, posição indisponível, aluno inapto ou conflito simultâneo de reserva. A mensagem deve ser apresentada no ponto da falha, evitando interpretação ambígua sobre o resultado da tentativa.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:validar_data_da_turma}], [\ref{rf:informar_turma_lotada}], [\ref{rf:bloquear_posicoes_indisponiveis}], [\ref{rf:validar_aluno_ativo}], [\ref{rf:impedir_reserva_passada}], [\ref{rf:impedir_reserva_duplicada}] e [\ref{rf:impedir_dupla_ocupacao_da_posicao}]. Depende da identificação da causa de bloqueio da reserva.}
+{Ator principal: Aluno. A mensagem deve ser clara o suficiente para diferenciar erro de validação, indisponibilidade e conflito operacional.}
+
+\reqfuncfull
+{rf:cancelar_proprio_checkin}
+{Cancelar o próprio check-in}
+{O sistema deve permitir que o aluno cancele o próprio \textit{check-in} enquanto a data da aula ainda não tiver passado. Essa operação deve atuar sobre a reserva ativa do próprio usuário para a turma e data correspondentes, liberando a vaga para nova ocupação quando o cancelamento for permitido. O requisito restringe a permissão de cancelamento do aluno à sua própria reserva e ao período temporal válido para a aula.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:destacar_reserva_do_proprio_aluno}] e [\ref{rf:impedir_reserva_passada}]. Depende da existência de \textit{check-in} ativo do próprio aluno e da verificação de que a data da aula ainda não passou.}
+{Ator principal: Aluno. O cancelamento do aluno não se aplica a reservas de terceiros.}
+
+\reqfuncfull
+{rf:preservar_historico_cancelado}
+{Preservar histórico de \textit{check-in} cancelado}
+{O sistema deve preservar o registro histórico do \textit{check-in} cancelado, marcando-o como cancelado em vez de removê-lo definitivamente. Essa regra garante rastreabilidade da reserva originalmente realizada e protege a integridade das informações históricas do domínio. O cancelamento deve alterar o estado operacional do \textit{check-in} sem eliminar sua existência como registro.}
+{Importante}
+{Depende do requisito [\ref{rf:cancelar_proprio_checkin}]. Depende das regras de domínio que determinam preservação histórica por cancelamento, e não por exclusão física do \textit{check-in}.}
+{Ator principal: Aluno. O mesmo princípio também sustenta cancelamentos operacionais realizados por outros perfis autorizados.}
+
+\reqfuncfull
+{rf:atualizar_mapa_apos_cancelamento}
+{Atualizar mapa após cancelamento}
+{O sistema deve atualizar imediatamente o mapa e a disponibilidade da turma após o cancelamento válido de um \textit{check-in}. Essa atualização deve remover a ocupação ativa da posição cancelada e refletir novamente a vaga como disponível quando não houver outro impedimento operacional. O comportamento deve ser consistente com a preservação do histórico do \textit{check-in} cancelado e com o recálculo da disponibilidade da aula.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:cancelar_proprio_checkin}] e [\ref{rf:preservar_historico_cancelado}]. Depende do recálculo da disponibilidade e do estado visual da posição após o cancelamento.}
+{Ator principal: Aluno. A atualização deve ocorrer no próprio fluxo de cancelamento, sem exigir nova carga manual da agenda ou do mapa.}
+
+\subsubsection*{Suporte Operacional da Professora}
+
+\reqfuncfull
+{rf:exclusao_logica_cadastral}
+{Realizar exclusão lógica de entidades cadastrais}
+{O sistema deve tratar a exclusão de entidades cadastrais do suporte operacional de forma lógica, com ação explícita para o usuário, mas persistência realizada por alteração do estado de habilitação do registro, e não por remoção física. Na interface, a exclusão deve ser operacionalizada de modo claro para a professora, com indicação de que a entidade deixará de aparecer nas consultas operacionais padrão; internamente, o sistema deve alterar o campo de status apropriado, como `ativo` ou `ativa`, preservando histórico e integridade do domínio. Registros excluídos logicamente não devem mais ser exibidos como disponíveis para uso cotidiano, de forma que a experiência aparente seja de exclusão, sem perda indevida de rastreabilidade.}
+{Importante}
+{Depende das regras de domínio sobre exclusão lógica e preservação de histórico em entidades cadastrais. Depende da existência de campo de habilitação cadastral, como `ativo` ou `ativa`, na entidade correspondente.}
+{Ator principal: Professora. Quando houver impacto operacional relevante, a interface deve tornar explícito que a ação deixará o registro indisponível para uso futuro. Consultas administrativas ou filtros específicos podem exibir registros inativos quando isso fizer parte do recorte funcional do produto.}
+
+\reqfuncfull
+{rf:validar_formularios_cadastrais}
+{Validar dados de formulários cadastrais}
+{O sistema deve validar os dados informados nos formulários cadastrais e operacionais antes de permitir a persistência de inclusões, edições ou alterações de estado. As validações devem abranger obrigatoriedade, tipo do campo, formato, limites numéricos, consistência semântica, relações entre campos e regras específicas do domínio aplicáveis a cada entidade. Campos inválidos ou combinações inconsistentes devem impedir a conclusão da operação, e a interface deve apresentar mensagens claras de erro associadas ao campo ou ao motivo da rejeição. Máscaras, seletores e controles de entrada podem auxiliar o preenchimento, mas não substituem a validação semântica realizada pelo sistema.}
+{Importante}
+{Depende das regras de domínio e do detalhamento dos campos essenciais de cada entidade. Depende da definição dos tipos, formatos, obrigatoriedades e restrições semânticas aplicáveis aos formulários do suporte operacional.}
+{Ator principal: Professora. O requisito é transversal aos formulários de CRUD e deve ser referenciado pelos requisitos específicos de manutenção cadastral.}
+
+\reqfuncfull
+{rf:alteracao_controlada_cadastral}
+{Realizar alteração controlada de registros cadastrais}
+{O sistema deve permitir a alteração de registros cadastrais por meio de procedimento controlado, no qual a professora selecione explicitamente o item desejado, visualize o formulário de edição com os dados atuais já preenchidos e submeta as modificações a nova validação antes da persistência. A operação de alteração deve diferenciar campos editáveis de campos imutáveis ou críticos, impedindo a modificação de identificadores técnicos, dados consolidados no domínio ou informações cuja alteração comprometa rastreabilidade, integridade referencial, histórico operacional ou vínculos com outros registros. Quando houver restrições desse tipo, a interface deve tornar claro o que pode e o que não pode ser alterado.}
+{Importante}
+{Depende do requisito [\ref{rf:validar_formularios_cadastrais}]. Depende das regras de domínio que definem campos imutáveis, campos restritos e limites de alteração para registros já consolidados ou vinculados a outros dados.}
+{Ator principal: Professora. O requisito é transversal aos fluxos de edição cadastral. A seleção do registro, o carregamento dos dados atuais e o bloqueio de campos críticos devem ser tratados como comportamento padrão dos formulários de alteração.}
+
+\reqfuncfull
+{rf:associacao_controlada_entre_entidades}
+{Realizar associação controlada entre entidades relacionadas}
+{O sistema deve tratar a associação entre entidades relacionadas por meio de campos de escolha controlada, e não por digitação livre, salvo quando o domínio explicitar outra forma de entrada. Quando a associação for de escolha única, a interface deve deixar claro que apenas uma opção pode ser selecionada entre valores previamente definidos. Quando a associação for múltipla, a interface deve deixar claro que mais de uma opção pode ser escolhida, exibir de forma visível as escolhas já realizadas e oferecer meios para adicionar novas associações, remover escolhas anteriores ou substituir seleções existentes. Em ambos os casos, a associação deve respeitar o contexto do formulário, a validade das entidades relacionadas e as restrições de cardinalidade e domínio aplicáveis ao relacionamento.}
+{Importante}
+{Depende do requisito [\ref{rf:validar_formularios_cadastrais}]. Depende das regras de domínio que definem cardinalidade, obrigatoriedade e validade das associações entre entidades relacionadas.}
+{Ator principal: Professora. Este requisito é transversal aos formulários que possuem campos relacionais, como associações com Sala, Fabricante, Tipo de Manutenção, dias da semana, Músicas e outras entidades do domínio.}
+\reqfuncfull
+{rf:manter_salas}
+{Manter salas}
+{O sistema deve permitir que a professora cadastre, edite e inative salas utilizadas pelas turmas. A sala, entendida como o espaço físico onde a aula acontece e cuja organização é definida por uma grade de posições de \textit{bike} por filas e colunas, deve possuir formulário com os campos essenciais `nome`, `numeroFilas`, `numeroColunas`, `posicaoProfessora` e `ativo`. O campo `nome` deve ser obrigatório e textual; `numeroFilas` e `numeroColunas` devem ser obrigatórios e numéricos, com valores maiores que zero; `posicaoProfessora` deve ser obrigatório, numérico inteiro, maior ou igual a zero e menor que `numeroColunas`; e `ativo` deve funcionar como indicador booleano de habilitação cadastral. As operações de manutenção da sala devem preservar coerência com os limites físicos do layout e com seu uso posterior pelas turmas e posições de \textit{bike}.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:exclusao_logica_cadastral}], [\ref{rf:validar_formularios_cadastrais}], [\ref{rf:alteracao_controlada_cadastral}], [\ref{rf:associacao_controlada_entre_entidades}] e [\ref{rf:definir_grade_da_sala}]. Depende das regras de domínio sobre estrutura da Sala, especialmente validade de `numeroFilas`, `numeroColunas` e `posicaoProfessora`.}
+{Ator principal: Professora. O requisito trata do CRUD da entidade `Sala`; regras mais específicas de validação da grade física devem permanecer concentradas no requisito seguinte.}
+
+\reqfuncfull
+{rf:definir_grade_da_sala}
+{Definir grade física da sala}
+{O sistema deve permitir que a professora defina e mantenha, para cada sala, a grade física que estrutura o mapa operacional da aula, por meio dos campos `numeroFilas`, `numeroColunas` e `posicaoProfessora`. `numeroFilas` e `numeroColunas` devem ser campos numéricos obrigatórios, com valores maiores que zero, e `posicaoProfessora` deve ser campo numérico inteiro obrigatório, maior ou igual a zero e menor que `numeroColunas`, indicando a coluna reservada para a professora na fila 0. A definição da grade deve respeitar os limites físicos da sala e impedir configurações inválidas que comprometam o posicionamento das \textit{bikes} e a representação espacial do mapa. Também não deve ser permitido reduzir `numeroFilas` ou `numeroColunas` quando já existirem posições cadastradas que ultrapassem os novos limites pretendidos.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:validar_formularios_cadastrais}], [\ref{rf:alteracao_controlada_cadastral}] e [\ref{rf:manter_salas}]. Depende das regras de domínio sobre limites da Sala e sobre compatibilidade da grade com as posições de \textit{bike} já existentes.}
+{Ator principal: Professora. Este requisito trata especificamente da configuração do layout físico da sala. A grade definida aqui sustenta a exibição do mapa, o posicionamento das \textit{bikes} e a validação dos campos `fila` e `coluna` nas reservas e nas `PosicaoBike`.}
+\reqfuncfull
+{rf:manter_bikes}
+{Manter \textit{bikes}}
+{O sistema deve permitir que a professora cadastre, edite e inative \textit{bikes} utilizadas no ambiente operacional da sala. A \textit{bike}, entendida como o equipamento físico de spinning associado a fabricante, posição e manutenções, deve possuir formulário com os campos essenciais do domínio, incluindo ao menos fabricante associado, nome, data de cadastro, status de habilitação e demais dados previstos para a entidade. Campos de associação, como fabricante, devem ser tratados por seleção controlada de entidade relacionada, e a inativação deve seguir o padrão de exclusão lógica do cadastro. As operações de manutenção da \textit{bike} devem preservar consistência com seu uso posterior em posições da sala, \textit{check-ins} e manutenções.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:exclusao_logica_cadastral}], [\ref{rf:validar_formularios_cadastrais}], [\ref{rf:alteracao_controlada_cadastral}] e [\ref{rf:associacao_controlada_entre_entidades}]. Depende da existência de Fabricante válido para associação da \textit{bike} e das regras de domínio sobre habilitação operacional da entidade.}
+{Ator principal: Professora. O requisito trata do CRUD da entidade `Bike`; regras específicas de posicionamento e reposicionamento devem permanecer concentradas no requisito seguinte.}
+\reqfuncfull
+{rf:associar_e_reposicionar_bikes}
+{Associar e reposicionar \textit{bikes}}
+{O sistema deve permitir que a professora associe uma \textit{bike} a uma `PosicaoBike` em sala e realize reposicionamentos quando necessário. A associação deve respeitar a grade física da sala, os limites de fila e coluna e a regra de que uma mesma \textit{bike} não pode ocupar mais de uma posição no sistema. Em operações de reposicionamento, o destino deve estar vazio e a movimentação deve reutilizar a posição existente, sem criar duplicidade estrutural.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:manter_bikes}], [\ref{rf:manter_salas}] e [\ref{rf:definir_grade_da_sala}]. Depende das regras de domínio sobre unicidade de `PosicaoBike`, compatibilidade com os limites da sala e ocupação exclusiva por \textit{bike}.}
+{Ator principal: Professora. O campo de posição deve ser tratado como associação controlada ao layout da sala. O requisito trata da ocupação física da grade por \textit{bikes} reais.}
+\reqfuncfull
+{rf:manter_turmas}
+{Manter turmas}
+{O sistema deve permitir que a professora cadastre, edite, ative e inative turmas associadas a uma sala e a pelo menos um dia válido da semana. A turma, entendida como o horário recorrente de aula vinculado a uma sala e a dias específicos, deve possuir formulário com os campos essenciais do domínio, incluindo ao menos identificação, horário de início, duração, dias da semana, sala associada e status de habilitação. Campos relacionais, como sala e dias da semana, devem deixar claro se representam escolha única ou múltipla, e a ativação da turma deve permanecer sujeita a validações específicas de consistência operacional.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:exclusao_logica_cadastral}], [\ref{rf:validar_formularios_cadastrais}], [\ref{rf:alteracao_controlada_cadastral}], [\ref{rf:associacao_controlada_entre_entidades}] e [\ref{rf:validar_ativacao_de_turma}]. Depende da existência de Sala válida para associação da turma e de ao menos um dia da semana configurado.}
+{Ator principal: Professora. O requisito trata do CRUD geral da entidade `Turma`; as pré-condições específicas para ativação permanecem concentradas no requisito de validação de ativação.}
+\reqfuncfull
+{rf:validar_ativacao_de_turma}
+{Validar ativação de turma}
+{O sistema deve impedir a ativação de uma turma quando ela não possuir sala associada, não possuir ao menos um dia válido de ocorrência ou estiver em conflito de horário com outra turma ativa na mesma sala. A turma, entendida como o horário recorrente de aula associado a uma sala e a dias específicos da semana, só pode passar ao estado ativo quando cumprir integralmente essas pré-condições operacionais. A validação deve ocorrer no momento da ativação e também sempre que uma edição puder afetar a disponibilidade do horário da sala. Quando houver conflito, o sistema deve considerar a verificação de `horarioSalaEhLivre()` ou regra equivalente para impedir sobreposição de uso da mesma sala.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:manter_turmas}], [\ref{rf:validar_formularios_cadastrais}], [\ref{rf:alteracao_controlada_cadastral}] e [\ref{rf:associacao_controlada_entre_entidades}]. Depende da existência de Sala válida e ativa, de ao menos um dia da semana configurado para a turma e da validação de disponibilidade de horário da sala no contexto da ativação.}
+{Ator principal: Professora. O requisito trata especificamente da transição para o estado ativo da turma, e não do cadastro geral da entidade. Quando a ativação for bloqueada, a interface deve apresentar retorno claro sobre a ausência de sala, falta de dia válido ou conflito de horário.}
+\reqfuncfull
+{rf:registrar_manutencoes}
+{Registrar manutenções}
+{O sistema deve permitir que a professora registre e acompanhe manutenções associadas a uma \textit{bike} e a um tipo de manutenção. O formulário de manutenção deve tratar \textit{bike} e tipo como campos de escolha controlada entre entidades relacionadas e deve contemplar os dados essenciais do domínio, como data de solicitação, data de realização quando houver, descrição e estado de cancelamento. O registro deve preservar histórico da ocorrência e sustentar os impactos operacionais sobre disponibilidade da \textit{bike} e da turma.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:manter_bikes}], [\ref{rf:validar_formularios_cadastrais}] e [\ref{rf:associacao_controlada_entre_entidades}]. Depende da existência de \textit{Bike} válida e de TipoManutencao válido para associação da ocorrência.}
+{Ator principal: Professora. O requisito cobre abertura e acompanhamento da manutenção; os efeitos dessa ocorrência sobre mapa e disponibilidade permanecem concentrados no requisito seguinte.}
+\reqfuncfull
+{rf:refletir_efeitos_de_manutencao}
+{Refletir efeitos de manutenção}
+{O sistema deve refletir automaticamente, no mapa e na disponibilidade da turma, os efeitos de manutenção pendente, realização de manutenção, cancelamento de manutenção e inativação de \textit{bike}. Essa atualização deve manter coerência entre o estado operacional da \textit{bike} e o que aparece como reservável para o aluno e para a professora. Sempre que a manutenção afetar \textit{check-ins} futuros ou a ocupação possível da sala, a disponibilidade exibida deve ser recalculada de forma consistente.}
+{Essencial}
+{Depende dos requisitos [\ref{rf:registrar_manutencoes}] e [\ref{rf:associar_e_reposicionar_bikes}]. Depende das regras de domínio que vinculam manutenção e estado da \textit{bike} ao cálculo de disponibilidade da turma.}
+{Ator principal: Professora. O comportamento deve ser automático e refletir impactos operacionais sem exigir ajuste manual paralelo na disponibilidade da aula.}
+\reqfuncfull
+{rf:visualizar_mapa_operacional}
+{Visualizar mapa operacional da turma}
+{O sistema deve permitir que a professora visualize o mapa operacional da turma com identificação nominal dos alunos nas posições reservadas. Diferentemente do mapa exibido ao aluno, essa visualização deve apoiar a condução da aula e a gestão operacional da ocupação da sala, apresentando quem ocupa cada posição reservada, além dos estados estruturais relevantes do mapa. A visualização deve permanecer coerente com a configuração da sala, com a posição da professora e com a ocupação efetiva da turma na data consultada.}
+{Importante}
+{Depende dos requisitos [\ref{rf:exibir_mapa_em_grade}], [\ref{rf:identificar_estados_do_mapa}] e [\ref{rf:manter_turmas}]. Depende da identificação dos \textit{check-ins} ativos da turma e da permissão de visibilidade nominal no perfil da professora.}
+{Ator principal: Professora. O requisito altera a regra de visibilidade em relação ao perfil de aluno, permitindo identificação nominal das reservas.}
+\reqfuncfull
+{rf:cancelar_checkins_de_alunos}
+{Cancelar \textit{check-ins} de alunos}
+{O sistema deve permitir que a professora cancele \textit{check-ins} de qualquer aluno quando isso for necessário para manter a consistência operacional da aula. Essa operação deve atuar sobre reservas existentes da turma, liberar a ocupação ativa da posição quando aplicável e preservar o histórico do \textit{check-in} cancelado. O cancelamento administrativo deve ser usado como mecanismo de intervenção operacional, especialmente em situações de conflito, indisponibilidade superveniente ou necessidade de reorganização da aula.}
+{Importante}
+{Depende dos requisitos [\ref{rf:visualizar_mapa_operacional}], [\ref{rf:preservar_historico_cancelado}] e [\ref{rf:atualizar_mapa_apos_cancelamento}]. Depende da existência de \textit{check-in} ativo passível de cancelamento no contexto operacional da turma.}
+{Ator principal: Professora. O requisito amplia a permissão de cancelamento para reservas de terceiros por motivo operacional.}
+
+\subsubsection*{Experiência Musical da Turma}
+\reqfuncfull
+{rf:consultar_mix_atual}
+{Consultar \textit{mix} atual da turma}
+{O sistema deve permitir que o aluno consulte o \textit{mix} atual associado à turma selecionada. O mix, entendido como o repertório musical em uso na aula, deve ser apresentado no contexto da turma consultada sem interromper o fluxo principal de agenda e participação. A consulta deve partir da turma escolhida pelo aluno e abrir a visualização do repertório vigente para aquela aula.}
+{Importante}
+{Depende do requisito [\ref{rf:consultar_agenda_semanal}]. Depende da existência de associação válida entre turma e \textit{mix} no contexto consultado.}
+{Ator principal: Aluno. O requisito introduz a visualização musical da aula, sem substituir o fluxo central de reserva.}
+\reqfuncfull
+{rf:determinar_mix_ativo}
+{Determinar \textit{mix} ativo da turma}
+{O sistema deve considerar como \textit{mix} atual da turma apenas o vínculo `TurmaMix` que estiver sem `dataFim`. Essa regra deve distinguir o uso efetivo do \textit{mix} na turma de sua vigência geral no domínio, garantindo que apenas um vínculo vigente represente o repertório atual da aula. A determinação do \textit{mix} ativo deve preceder qualquer exibição de repertório ao aluno.}
+{Importante}
+{Depende do requisito [\ref{rf:consultar_mix_atual}]. Depende das regras de domínio sobre `TurmaMix`, especialmente identificação de vínculo ativo por `dataFim` nula e unicidade do \textit{mix} ativo por turma.}
+{Ator principal: Aluno. O requisito trata da regra de determinação do \textit{mix} vigente, e não da exibição detalhada do repertório.}
+\reqfuncfull
+{rf:exibir_nome_e_periodo_do_mix}
+{Exibir nome e período do mix}
+{O sistema deve exibir o nome do \textit{mix} em uso e o período de utilização desse \textit{mix} no contexto da turma consultada. A apresentação deve deixar claro ao aluno qual repertório está vigente naquela aula e em que intervalo de uso ele se aplica à turma. O período exibido deve refletir o uso do \textit{mix} na turma, e não apenas a vigência geral do cadastro do mix.}
+{Importante}
+{Depende dos requisitos [\ref{rf:consultar_mix_atual}] e [\ref{rf:determinar_mix_ativo}]. Depende da existência de dados válidos de vigência do vínculo entre \textit{mix} e turma.}
+{Ator principal: Aluno. O requisito melhora a compreensão temporal do repertório exibido na aula.}
+\reqfuncfull
+{rf:exibir_musicas_do_mix}
+{Exibir músicas do mix}
+{O sistema deve exibir as músicas que compõem o \textit{mix} em uso na turma, respeitando a ordem definida para o repertório. A visualização deve refletir a sequência planejada da aula e permanecer coerente com o \textit{mix} vigente no contexto da turma consultada. O requisito trata da apresentação da lista ordenada de músicas vinculadas ao \textit{mix} atual.}
+{Importante}
+{Depende dos requisitos [\ref{rf:consultar_mix_atual}] e [\ref{rf:determinar_mix_ativo}]. Depende da existência de repertório associado ao \textit{mix} em uso e de ordenação definida para as músicas.}
+{Ator principal: Aluno. A consulta deve continuar funcional mesmo quando o repertório não tiver materiais complementares adicionais.}
+\reqfuncfull
+{rf:exibir_dados_musicais}
+{Exibir dados musicais do repertório}
+{O sistema deve exibir, para cada música do repertório apresentado, as informações disponíveis de artista ou banda e de categoria musical. Esses dados devem complementar a lista de músicas do \textit{mix} sem descaracterizar o foco principal da consulta. A exibição deve refletir apenas as informações efetivamente disponíveis para cada item do repertório.}
+{Desejável}
+{Depende do requisito [\ref{rf:exibir_musicas_do_mix}]. Depende da existência de associações válidas entre música, artista ou banda e categoria musical.}
+{Ator principal: Aluno. O requisito enriquece a visualização do repertório sem alterar a determinação do \textit{mix} vigente.}
+\reqfuncfull
+{rf:apresentar_links_de_video_aula}
+{Apresentar links de vídeo-aula}
+{O sistema deve apresentar os links de vídeo-aula associados às músicas do repertório quando esses materiais estiverem disponíveis. A exibição deve ocorrer como informação complementar da consulta ao mix, sem impedir a navegação quando determinada música não possuir material relacionado. O requisito trata da exposição de apoio instrucional vinculado ao repertório da turma.}
+{Desejável}
+{Depende do requisito [\ref{rf:exibir_musicas_do_mix}]. Depende da existência de `VideoAula` associada às músicas consultadas.}
+{Ator principal: Aluno. A ausência de link não torna a música inválida para exibição no mix.}
+\reqfuncfull
+{rf:informar_ausencia_de_mix}
+{Informar ausência de \textit{mix} ativo}
+{O sistema deve informar ao aluno quando não houver \textit{mix} ativo associado à turma consultada. Esse retorno deve deixar claro que a turma pode continuar existindo e operar sem repertório vigente visível naquele momento, sem comprometer a navegação do usuário. O requisito trata do tratamento explícito da ausência de associação ativa entre turma e mix.}
+{Importante}
+{Depende dos requisitos [\ref{rf:consultar_mix_atual}] e [\ref{rf:determinar_mix_ativo}]. Depende da verificação de inexistência de `TurmaMix` ativo para a turma consultada.}
+{Ator principal: Aluno. A mensagem deve ser clara e não deve ser tratada como erro técnico da consulta.}
+\reqfuncfull
+{rf:consultar_historico_de_mixes}
+{Consultar histórico de mixes da turma}
+{O sistema deve permitir a consulta ao histórico recente de mixes utilizados pela turma quando essa informação fizer parte do recorte funcional do produto. A visualização deve apresentar mixes anteriormente usados naquela turma, preservando a noção de sequência temporal de uso do repertório. O requisito amplia a consulta do \textit{mix} atual para um recorte histórico da experiência musical da turma.}
+{Desejável}
+{Depende dos requisitos [\ref{rf:consultar_mix_atual}] e [\ref{rf:determinar_mix_ativo}]. Depende da existência de histórico de vínculos `TurmaMix` anteriores para a turma consultada.}
+{Ator principal: Aluno. O histórico deve ser tratado como complemento da consulta principal ao \textit{mix} vigente.}
+\reqfuncfull
+{rf:preservar_consistencia_da_vigencia_do_mix}
+{Preservar consistência da vigência do mix}
+{O sistema deve preservar consistência entre o repertório apresentado ao aluno e a vigência do vínculo do \textit{mix} com a turma, sem confundir vigência geral do \textit{mix} com uso efetivo na turma. A informação exibida deve sempre refletir o período em que aquele repertório esteve ou está associado à turma consultada. Esse requisito garante que a consulta musical seja temporalmente coerente com a estrutura do domínio.}
+{Importante}
+{Depende dos requisitos [\ref{rf:determinar_mix_ativo}], [\ref{rf:exibir_nome_e_periodo_do_mix}] e [\ref{rf:consultar_historico_de_mixes}]. Depende das regras de domínio sobre vigência de `Mix` e `TurmaMix`.}
+{Ator principal: Aluno. O requisito é transversal a toda exibição de repertório por turma.}
+
+\subsubsection*{Acompanhamento Individual do Aluno}
+\reqfuncfull
+{rf:consultar_historico_de_presenca}
+{Consultar histórico de presença}
+{O sistema deve permitir que o aluno consulte seu próprio histórico de presença nas aulas. Essa consulta deve apresentar o conjunto de \textit{check-ins} relacionados ao usuário autenticado e servir de base para a exibição de métricas e padrões individuais de acompanhamento. O histórico deve representar a participação do aluno no recorte funcional previsto para o produto.}
+{Importante}
+{Depende da existência de \textit{check-ins} associados ao aluno autenticado no domínio do sistema.}
+{Ator principal: Aluno. O requisito inicia a área de acompanhamento individual.}
+\reqfuncfull
+{rf:restringir_historico_ao_proprio_aluno}
+{Restringir histórico ao próprio aluno}
+{O sistema deve exibir no histórico individual apenas informações pertencentes ao próprio aluno autenticado. Essa restrição deve impedir acesso a dados pessoais, \textit{check-ins} e indicadores de outros usuários no contexto da consulta individual. O requisito protege privacidade e coerência da visão pessoal de acompanhamento.}
+{Essencial}
+{Depende do requisito [\ref{rf:consultar_historico_de_presenca}]. Depende das regras de visibilidade e privacidade aplicáveis aos dados individuais do aluno.}
+{Ator principal: Aluno. O requisito limita o escopo da consulta individual ao próprio titular dos dados.}
+\reqfuncfull
+{rf:distinguir_checkins_futuros_e_concluidos}
+{Distinguir \textit{check-ins} futuros e concluídos}
+{O sistema deve distinguir, no histórico individual, \textit{check-ins} futuros de aulas já concluídas. Essa separação deve permitir ao aluno compreender o que ainda está agendado e o que já compõe seu histórico efetivo de participação. A classificação deve considerar a data da aula em relação à data atual e o estado válido do \textit{check-in}.}
+{Importante}
+{Depende dos requisitos [\ref{rf:consultar_historico_de_presenca}] e [\ref{rf:restringir_historico_ao_proprio_aluno}]. Depende da comparação temporal entre a data do \textit{check-in} e a data atual.}
+{Ator principal: Aluno. A distinção temporal prepara a leitura correta das métricas de acompanhamento.}
+\reqfuncfull
+{rf:apresentar_total_de_aulas_concluidas}
+{Apresentar total de aulas concluídas}
+{O sistema deve apresentar a métrica de aulas concluídas no total, considerando \textit{check-ins} do aluno com data anterior à atual e que não estejam cancelados. Essa informação deve ser derivada do histórico individual e representar a quantidade acumulada de participações efetivamente concluídas pelo usuário. O cálculo não deve incluir reservas futuras nem \textit{check-ins} cancelados.}
+{Desejável}
+{Depende dos requisitos [\ref{rf:consultar_historico_de_presenca}], [\ref{rf:restringir_historico_ao_proprio_aluno}] e [\ref{rf:distinguir_checkins_futuros_e_concluidos}]. Depende da exclusão de \textit{check-ins} cancelados do cálculo da métrica quando a regra do domínio exigir essa filtragem.}
+{Ator principal: Aluno. A métrica deve refletir apenas aulas efetivamente concluídas no histórico válido do usuário.}
+\reqfuncfull
+{rf:apresentar_aulas_concluidas_no_ano}
+{Apresentar aulas concluídas no ano}
+{O sistema deve apresentar a métrica de aulas concluídas no ano corrente, considerando apenas \textit{check-ins} válidos do período e vinculados ao próprio aluno autenticado. O cálculo deve filtrar as participações efetivamente concluídas dentro do ano em curso, excluindo registros que não componham o histórico válido de presença. Essa métrica deve funcionar como recorte temporal anual do total de aulas concluídas.}
+{Desejável}
+{Depende dos requisitos [\ref{rf:consultar_historico_de_presenca}], [\ref{rf:restringir_historico_ao_proprio_aluno}], [\ref{rf:distinguir_checkins_futuros_e_concluidos}] e [\ref{rf:apresentar_total_de_aulas_concluidas}]. Depende da filtragem dos \textit{check-ins} válidos dentro do ano corrente.}
+{Ator principal: Aluno. O resultado deve refletir apenas aulas concluídas no recorte anual vigente.}
+\reqfuncfull
+{rf:apresentar_aulas_concluidas_no_mes}
+{Apresentar aulas concluídas no mês}
+{O sistema deve apresentar a métrica de aulas concluídas no mês corrente, considerando apenas \textit{check-ins} válidos do período e vinculados ao próprio aluno autenticado. O cálculo deve restringir o recorte temporal ao mês em curso e manter os mesmos critérios de validade adotados para as demais métricas de conclusão. Essa métrica deve permitir acompanhamento mais imediato da frequência recente do aluno.}
+{Desejável}
+{Depende dos requisitos [\ref{rf:consultar_historico_de_presenca}], [\ref{rf:restringir_historico_ao_proprio_aluno}], [\ref{rf:distinguir_checkins_futuros_e_concluidos}] e [\ref{rf:apresentar_total_de_aulas_concluidas}]. Depende da filtragem dos \textit{check-ins} válidos dentro do mês corrente.}
+{Ator principal: Aluno. O resultado deve refletir apenas aulas concluídas no recorte mensal vigente.}
+\reqfuncfull
+{rf:apresentar_aulas_agendadas}
+{Apresentar aulas agendadas}
+{O sistema deve apresentar a métrica de aulas agendadas, considerando \textit{check-ins} futuros ou do dia que ainda permaneçam válidos. Essa informação deve refletir as reservas atualmente ativas do aluno para participações ainda não concluídas, distinguindo-as do histórico passado de aulas realizadas. O cálculo deve considerar apenas reservas vigentes no contexto temporal da consulta.}
+{Importante}
+{Depende dos requisitos [\ref{rf:consultar_historico_de_presenca}], [\ref{rf:restringir_historico_ao_proprio_aluno}] e [\ref{rf:distinguir_checkins_futuros_e_concluidos}]. Depende da identificação de \textit{check-ins} futuros ou do dia que não estejam cancelados.}
+{Ator principal: Aluno. A métrica deve representar compromissos ativos ainda pendentes de conclusão.}
+\reqfuncfull
+{rf:desconsiderar_checkins_cancelados_nas_metricas}
+{Desconsiderar \textit{check-ins} cancelados nas métricas}
+{O sistema deve desconsiderar \textit{check-ins} cancelados das métricas em que a regra do domínio exigir sua exclusão. Essa filtragem deve impedir que reservas canceladas distorçam totais de aulas concluídas, recortes temporais de participação ou contagens de agendamento ativo. O requisito preserva a confiabilidade das métricas derivadas do histórico individual.}
+{Importante}
+{Depende dos requisitos [\ref{rf:preservar_historico_cancelado}], [\ref{rf:apresentar_total_de_aulas_concluidas}], [\ref{rf:apresentar_aulas_concluidas_no_ano}], [\ref{rf:apresentar_aulas_concluidas_no_mes}] e [\ref{rf:apresentar_aulas_agendadas}]. Depende das regras de domínio que definem quando um \textit{check-in} cancelado deve permanecer apenas para histórico e não para cômputo métrico.}
+{Ator principal: Aluno. O requisito afeta o cálculo das métricas, e não a preservação do registro cancelado no histórico.}
+\reqfuncfull
+{rf:consultar_padroes_individuais_de_uso}
+{Consultar padrões individuais de uso}
+{O sistema deve permitir a consulta a padrões individuais de uso do aluno, incluindo recorrência de presença e preferência de posição, quando essas informações estiverem disponíveis no recorte do produto. Essa visualização deve derivar tendências do histórico válido do próprio usuário e complementar as métricas quantitativas básicas de acompanhamento. O requisito introduz um nível analítico de leitura do comportamento individual de participação.}
+{Desejável}
+{Depende dos requisitos [\ref{rf:consultar_historico_de_presenca}], [\ref{rf:restringir_historico_ao_proprio_aluno}] e [\ref{rf:desconsiderar_checkins_cancelados_nas_metricas}]. Depende da existência de dados históricos suficientes para inferência de padrões de uso.}
+{Ator principal: Aluno. O requisito amplia a consulta individual com informações analíticas sobre frequência e comportamento de escolha.}
+\reqfuncfull
+{rf:identificar_posicao_mais_recorrente}
+{Identificar posição mais recorrente}
+{O sistema deve permitir a identificação da posição mais recorrente do aluno e das turmas em que essa preferência aparece com maior frequência, quando houver dados suficientes no histórico. A análise deve considerar o conjunto de \textit{check-ins} válidos do próprio usuário e destacar a tendência de ocupação mais comum dentro da sala. O requisito detalha um caso específico de padrão individual de uso relacionado à preferência espacial do aluno.}
+{Desejável}
+{Depende dos requisitos [\ref{rf:consultar_padroes_individuais_de_uso}] e [\ref{rf:desconsiderar_checkins_cancelados_nas_metricas}]. Depende da existência de histórico suficiente de posições reservadas para identificar recorrência significativa.}
+{Ator principal: Aluno. A identificação deve se basear em dados históricos válidos e não em reservas canceladas ou insuficientes para inferência consistente.}

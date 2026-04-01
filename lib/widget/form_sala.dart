@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:spin_flow/dto/dto_sala.dart';
 import 'package:spin_flow/banco/sqlite/dao/dao_sala.dart';
 import 'package:spin_flow/widget/componentes/campos/comum/campo_texto.dart';
-import 'package:spin_flow/configuracoes/rotas.dart';
 
 class FormSala extends StatefulWidget {
   const FormSala({super.key});

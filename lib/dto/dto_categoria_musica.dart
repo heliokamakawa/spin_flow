@@ -5,13 +5,13 @@ class DTOCategoriaMusica implements DTO {
   final int? id;
   @override
   final String nome;
-  final String? descricao;
+  final String descricao;
   final bool ativa;
 
   DTOCategoriaMusica({
     this.id,
     required this.nome,
-    this.descricao,
+    required this.descricao,
     this.ativa = true,
   });
-} 
+}

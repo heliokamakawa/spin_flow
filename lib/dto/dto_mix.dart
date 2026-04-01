@@ -7,18 +7,18 @@ class DTOMix implements DTO {
   @override
   final String nome;
   final DateTime dataInicio;
-  final DateTime? dataFim;
+  final DateTime dataFim;
   final List<DTOMusica> musicas;
-  final String? descricao;
+  final String descricao;
   final bool ativo;
 
   DTOMix({
     this.id,
     required this.nome,
     required this.dataInicio,
-    this.dataFim,
+    required this.dataFim,
     required this.musicas,
-    this.descricao,
+    required this.descricao,
     this.ativo = true,
   });
-} 
+}

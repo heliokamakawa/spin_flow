@@ -66,6 +66,7 @@ class SpinFlowApp extends StatelessWidget {
         Rotas.listaBikes: (context) => const ListaBikes(),
         Rotas.listaMixes: (context) => const ListaMixes(),
         Rotas.listaGruposAlunos: (context) => const ListaGruposAlunos(),
+        Rotas.listaSalas: (context) => const ListaSalas(),
         '/lista-video-aula': (context) => const ListaVideoAula(),
       },
     );

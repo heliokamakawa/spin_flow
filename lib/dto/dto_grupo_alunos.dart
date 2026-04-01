@@ -6,15 +6,15 @@ class DTOGrupoAlunos implements DTO {
   final int? id;
   @override
   final String nome;
-  final String? descricao;
+  final String descricao;
   final List<DTOAluno> alunos;
   final bool ativo;
 
   DTOGrupoAlunos({
     this.id,
     required this.nome,
-    this.descricao,
+    required this.descricao,
     required this.alunos,
     this.ativo = true,
   });
-} 
+}

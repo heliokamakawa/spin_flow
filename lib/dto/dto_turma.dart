@@ -6,7 +6,7 @@ class DTOTurma implements DTO {
   final int? id;
   @override
   final String nome;
-  final String? descricao;
+  final String descricao;
   final List<String> diasSemana;
   final String horarioInicio;
   final int duracaoMinutos;
@@ -16,11 +16,11 @@ class DTOTurma implements DTO {
   DTOTurma({
     this.id,
     required this.nome,
-    this.descricao,
+    required this.descricao,
     required this.diasSemana,
     required this.horarioInicio,
     required this.duracaoMinutos,
     required this.sala,
     this.ativo = true,
   });
-} 
+}

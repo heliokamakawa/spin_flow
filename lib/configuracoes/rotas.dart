@@ -36,4 +36,5 @@ class Rotas {
   static const String listaBikes = '/lista-bikes';
   static const String listaMixes = '/lista-mixes';
   static const String listaGruposAlunos = '/lista-grupos-alunos';
+  static const String listaSalas = '/lista-salas';
 }

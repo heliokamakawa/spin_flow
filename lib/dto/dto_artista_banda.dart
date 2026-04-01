@@ -5,17 +5,17 @@ class DTOArtistaBanda implements DTO {
   final int? id;
   @override
   final String nome;
-  final String? descricao;
-  final String? link;
-  final String? foto;
+  final String descricao;
+  final String link;
+  final String foto;
   final bool ativo;
 
   DTOArtistaBanda({
     this.id,
     required this.nome,
-    this.descricao,
-    this.link,
-    this.foto,
+    required this.descricao,
+    required this.link,
+    required this.foto,
     this.ativo = true,
   });
-} 
+}

@@ -1,0 +1,312 @@
+\documentclass[12pt,a4paper]{article}
+
+% --------------------------------------------------
+% PACOTES BÁSICOS
+% --------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{nameref}
+\usepackage[backend=biber,style=ieee]{biblatex}
+\addbibresource{sections/references.bib}
+
+% --------------------------------------------------
+% CONFIGURAÇÕES GERAIS
+% --------------------------------------------------
+\onehalfspacing
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0.2cm}
+\newcommand{\ProjetoNome}{SpinFlow}
+\newcommand{\VersaoDocumento}{1.0}
+\newcommand{\ProfessoraA}{Professora Heloise Manica Paris Teixeira}
+\newcommand{\ProfessoraB}{Raqueline Ritter de Moura Penteado}
+\newcommand{\DisciplinaNome}{Engenharia de Software}
+\newcommand{\AutorA}{Hélio Toshio Kamakawa R.A. pg56583}
+\newcommand{\AutorB}{\textless Nome 2 \textgreater\ \textless R.A. \textgreater}
+\newcommand{\AutorC}{Marcelo Figueiredo Terenciani R.A. pg910234}
+
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=black,
+    pdftitle={Especificação dos Requisitos},
+    pdfauthor={Autores do Projeto}
+}
+
+% --------------------------------------------------
+% CABEÇALHO E RODAPÉ
+% --------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Especificação dos Requisitos do \ProjetoNome}
+\fancyhead[R]{Página \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% --------------------------------------------------
+% FORMATAÇÃO DE TÍTULOS
+% --------------------------------------------------
+\titleformat{\section}
+  {\normalfont\bfseries\large}
+  {\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\normalfont\bfseries\normalsize}
+  {\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\normalsize}
+  {\thesubsubsection}{1em}{}
+
+\newcommand{\blocoRF}[5]{
+\noindent\textbf{#1 \textless #2\textgreater}
+
+\vspace{0.2cm}
+\noindent\textbf{Descrição:} #3
+
+\noindent\textbf{Prioridade:} #4
+
+\noindent\textbf{Ator(es):} #5
+
+\noindent\textbf{Requisitos associados:} \textless Ex.: RF002, RF015 \textgreater
+
+\vspace{0.4cm}
+}
+
+\newcommand{\blocoNF}[3]{
+\noindent\textbf{#1 \textless #2\textgreater}
+
+\vspace{0.2cm}
+\noindent\textbf{Descrição:} #3
+
+\vspace{0.4cm}
+}
+
+% --------------------------------------------------
+% INÍCIO DO DOCUMENTO
+% --------------------------------------------------
+\begin{document}
+
+% --------------------------------------------------
+% CAPA
+% --------------------------------------------------
+\begin{titlepage}
+
+\noindent\rule{\textwidth}{0.8pt} % traço no topo
+
+\begin{flushright}
+    {\Huge \textbf{Especificação dos Requisitos}}
+\end{flushright}
+
+\begin{flushright}
+    {\Large \textbf{do}}\\[1.0cm]
+    
+    {\Huge \textbf{\ProjetoNome}}\\[1.2cm]
+    
+    {\Large \textbf{Versão \VersaoDocumento}}
+\end{flushright}
+
+\vspace{1.8cm}
+\begin{flushleft}
+    \AutorA\\
+    \AutorB\\
+    \AutorC\\[0.5cm]
+
+    \textbf{Professoras:} \\
+        \ProfessoraA\\
+        \ProfessoraB\\[0.5cm]
+    \textbf{Disciplina:} \DisciplinaNome
+\end{flushleft}
+
+\end{titlepage}
+
+% --------------------------------------------------
+% SUMÁRIO
+% --------------------------------------------------
+\tableofcontents
+\newpage
+
+
+
+
+% --------------------------------------------------
+% REVISÕES
+% --------------------------------------------------
+\section*{Revisões}
+\begin{longtable}{|p{2.5cm}|p{4cm}|p{5cm}|p{3cm}|}
+\hline
+\textbf{Versão} & \textbf{Autores} & \textbf{Descrição da Versão} & \textbf{Data} \\
+\hline
+1.0 & Equipe inicial & Criação inicial do documento & \textless dd/mm/aaaa\textgreater \\
+\hline
+1.1 & Equipe atualizada & Ajustes de conteúdo e refinamento dos requisitos & \textless dd/mm/aaaa\textgreater \\
+\hline
+\end{longtable}
+
+\newpage
+
+% --------------------------------------------------
+% VALIDAÇÕES
+% --------------------------------------------------
+\input{sections/02-validacoes}
+
+% --------------------------------------------------
+% 1 INTRODUÇÃO
+% --------------------------------------------------
+\input{sections/03-introducao}
+
+%\subsection{Objetivo do Documento}
+%\input{sections/purpose}
+
+%\subsection{Escopo do Produto}
+%\input{sections/scope}
+
+%\subsection{Público-Alvo}
+%\input{sections/audience}
+
+%\subsection{Definições, Acrônimos e Abreviações}
+%\input{sections/definitions}
+
+%\subsection{Convenções}
+%\input{sections/conventions}
+
+%\subsection{Referências}
+%\nocite{*}
+%\printbibliography[heading=none]
+
+% --------------------------------------------------
+% 2 VISÃO GERAL
+% --------------------------------------------------
+\input{sections/04-visao_geral}
+
+
+
+% \section{Visão Geral}
+
+% \subsection{Perspectiva do Produto}
+% Explicar a motivação do desenvolvimento do produto e descrever como ele irá interagir com o ambiente, sistemas externos, usuários e demais componentes envolvidos.
+
+% \subsection{Funcionalidade do Produto}
+% Descrever as principais funcionalidades do sistema em alto nível.
+
+% \begin{itemize}[leftmargin=1.2cm]
+%     \item Cadastro e autenticação de usuários
+%     \item Gerenciamento de dados do domínio do sistema
+%     \item Consulta e atualização de informações
+%     \item Emissão de relatórios ou visualizações
+%     \item Comunicação com serviços externos, se aplicável
+% \end{itemize}
+
+% \subsection{Usuários}
+% Descrever os perfis de usuários que irão utilizar o sistema.
+
+% \begin{itemize}[leftmargin=1.2cm]
+%     \item \textbf{Administrador}: gerencia usuários e configurações
+%     \item \textbf{Usuário comum}: utiliza as funcionalidades principais
+%     \item \textbf{Operador/Professor/Técnico}: perfil especializado, se houver
+% \end{itemize}
+
+% \subsection{Ambiente Operacional}
+% Descrever a plataforma, sistema operacional, hardware e demais aplicações que coexistirão com o produto.
+
+% \begin{itemize}[leftmargin=1.2cm]
+%     \item Sistema operacional: Windows, Linux, Android, iOS ou Web
+%     \item Linguagens e frameworks: conforme projeto
+%     \item Banco de dados: conforme projeto
+%     \item Navegadores compatíveis: Chrome, Firefox, Edge
+% \end{itemize}
+
+% \subsection{Restrições de Projeto e Implementação}
+% Descrever limitações técnicas e de projeto.
+
+% \begin{itemize}[leftmargin=1.2cm]
+%     \item Restrições de hardware
+%     \item Linguagem de programação definida
+%     \item Padrões arquiteturais
+%     \item Protocolos de comunicação
+%     \item Prazo acadêmico de entrega
+% \end{itemize}
+
+% \subsection{Documentação do Usuário}
+% Listar os documentos de apoio ao usuário.
+
+% \begin{itemize}[leftmargin=1.2cm]
+%     \item Manual do usuário
+%     \item Guia de instalação
+%     \item Guia rápido de uso
+%     \item Ajuda embutida no sistema
+% \end{itemize}
+
+% \subsection{Suposições e Dependências}
+% Descrever as suposições e dependências que podem afetar os requisitos.
+
+% \begin{itemize}[leftmargin=1.2cm]
+%     \item Disponibilidade de internet
+%     \item Acesso a banco de dados
+%     \item Dependência de APIs externas
+%     \item Disponibilidade dos usuários para validação
+% \end{itemize}
+
+% --------------------------------------------------
+% 3 ESPECIFICAÇÃO DAS INTERFACES EXTERNAS
+% --------------------------------------------------
+\input{sections/05-especificacao_interface}
+
+% \section{Especificação das Interfaces Externas}
+
+% \subsection{Requisitos de Interface Externa}
+
+% \subsubsection{Interfaces do Usuário}
+% As interfaces do usuário devem ser intuitivas, responsivas e coerentes com o perfil dos usuários do sistema. Protótipos, wireframes ou telas podem ser entregues em anexo.
+
+% \subsubsection{Interfaces de Hardware}
+% Descrever as conexões do produto com hardwares utilizados, quando aplicável, como leitores, sensores, impressoras, dispositivos móveis ou periféricos específicos.
+
+% \subsubsection{Interfaces de Software}
+% Descrever as conexões com softwares externos, bibliotecas, frameworks, bancos de dados, serviços em nuvem ou APIs consumidas pelo sistema.
+
+% \subsubsection{Interfaces de Comunicação}
+% Descrever como serão realizadas as comunicações, como navegador web, e-mail, formulários eletrônicos, REST API, sockets ou protocolos específicos.
+
+% --------------------------------------------------
+% 4 REQUISITOS FUNCIONAIS
+% --------------------------------------------------
+\input{sections/06-requisitos_funcionais}
+
+% \input{sections/06-requisitos_funcionais_validar}
+
+% --------------------------------------------------
+% 5 REQUISITOS NÃO-FUNCIONAIS
+% --------------------------------------------------
+\input{sections/07-requisitos_nao_funcionais}
+
+
+% --------------------------------------------------
+% 6 OUTROS REQUISITOS
+% --------------------------------------------------
+% \input{sections/08-outros_requisitos}
+\input{sections/08-outros_requisitos}
+\newpage
+% --------------------------------------------------
+% apendice
+% --------------------------------------------------
+\input{sections/09-apendice}
+
+
+\end{document}

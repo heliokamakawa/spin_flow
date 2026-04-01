@@ -1,0 +1,93 @@
+\section{Requisitos Funcionais}
+
+Nesta seção são definidas as características funcionais que o sistema deve apresentar. Cada requisito possui um identificador único. A nomenclatura adotada é:
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item Para requisitos funcionais: \textbf{[RF001] Nome do requisito}
+\end{itemize}
+
+Para estabelecer a prioridade dos requisitos, adotam-se as denominações:
+
+\begin{itemize}[leftmargin=1.2cm]
+    \item \textbf{Essencial}: sem este requisito o sistema não entra em funcionamento de forma viável.
+    \item \textbf{Importante}: sem este requisito o sistema funciona, mas de forma insatisfatória.
+    \item \textbf{Desejável}: requisito útil, porém não indispensável para a versão atual.
+\end{itemize}
+
+% Contador de requisitos funcionais
+\newcounter{rfreq}
+
+% Contador de requisitos não funcionais
+\newcounter{nfreq}
+
+% Gera RF001, RF002, ...
+\newcommand{\rfreqid}{RF\ifnum\value{rfreq}<10 00\else\ifnum\value{rfreq}<100 0\fi\fi\arabic{rfreq}}
+
+% Gera NF001, NF002, ...
+\newcommand{\nfreqid}{NF\ifnum\value{nfreq}<10 00\else\ifnum\value{nfreq}<100 0\fi\fi\arabic{nfreq}}
+
+% #1 = label interno
+% #2 = nome do requisito funcional
+\newcommand{\reqfunc}[2]{%
+  \refstepcounter{rfreq}%
+  \subsection{[\rfreqid] #2}%
+  \label{#1}%
+  \noindent\textbf{Descrição:} \textless preencher\textgreater
+
+  \noindent\textbf{Prioridade:} \textless Essencial, Importante ou Desejável\textgreater
+
+  \noindent\textbf{Dependência:} \textless informar requisitos relacionados, se houver\textgreater
+
+  \noindent\textbf{Outros:} \textless atores, observações ou restrições complementares\textgreater
+
+  \vspace{0.4cm}
+}
+
+% #1 = label interno
+% #2 = nome do requisito funcional
+% #3 = descricao
+% #4 = prioridade
+% #5 = dependencia
+% #6 = outros
+\newcommand{\reqfuncfull}[6]{%
+  \refstepcounter{rfreq}%
+  \subsection{[\rfreqid] #2}%
+  \label{#1}%
+  \noindent\textbf{Descrição:} #3
+
+  \noindent\textbf{Prioridade:} #4
+
+  \noindent\textbf{Dependência:} #5
+
+  \noindent\textbf{Outros:} #6
+
+  \vspace{0.4cm}
+}
+
+% #1 = label interno
+% #2 = nome do requisito não funcional
+\newcommand{\reqnaofunc}[2]{%
+  \refstepcounter{nfreq}%
+  \subsection{[\nfreqid] #2}%
+  \label{#1}%
+  \noindent\textbf{Descrição:} \textless preencher\textgreater
+
+  \noindent\textbf{Prioridade:} \textless Essencial, Importante ou Desejável\textgreater
+
+  \noindent\textbf{Dependência:} \textless informar requisitos relacionados, se houver\textgreater
+
+  \noindent\textbf{Outros:} \textless observações, restrições ou critérios complementares\textgreater
+
+  \vspace{0.4cm}
+}
+
+\subsubsection*{Fluxo Principal do Aluno}
+
+\reqfuncfull
+{rf:consultar_agenda_semanal}
+{Consultar agenda semanal}
+{O sistema deve permitir que o \textbf{aluno} consulte a agenda semanal das \textbf{turmas} disponíveis para \textbf{reserva}, apresentando em grade semanal os horários recorrentes de \textbf{aula} associados a \textbf{salas} e a dias específicos da semana. Para cada turma exibida, a consulta deve mostrar, no mínimo, o horário da aula, a sala associada, a quantidade de \textit{bikes} disponíveis em tempo real e o \textit{mix} atual quando houver vínculo ativo. A agenda deve considerar apenas turmas aptas ao fluxo de reserva, respeitando sua ativação, associação válida à sala, configuração de dias da semana e consistência da disponibilidade operacional. O procedimento de consulta deve permitir a seleção de uma turma para avançar ao fluxo de visualização de disponibilidade e mapa. Quando previsto pela interface do produto, a consulta também deve oferecer filtros por sala ou por dia e destacar visualmente turmas com alta ocupação.}
+{Essencial.}
+{Depende dos requisitos X, Y e Z. Depende da existência de turmas válidas, ativas, associadas a salas válidas e configuradas com ao menos um dia da semana.}
+{Ator principal: Aluno. Este requisito inicia o fluxo central de agenda, disponibilidade, mapa de \textit{bikes} e reserva por \textit{check-in}.}
+

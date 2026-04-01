@@ -1,0 +1,33 @@
+\newcounter{orreq}
+
+\newcommand{\orreqid}{OR\ifnum\value{orreq}<10 00\else\ifnum\value{orreq}<100 0\fi\fi\arabic{orreq}}
+
+\newcommand{\reqoutro}[6]{%
+  \refstepcounter{orreq}%
+  \subsection{[\orreqid] #2}%
+  \label{#1}%
+  \noindent\textbf{Descrição:} #3
+
+  \noindent\textbf{Prioridade:} #4
+
+  \noindent\textbf{Dependência:} #5
+
+  \noindent\textbf{Outros:} #6
+
+  \vspace{0.4cm}
+}
+
+\section{Outros Requisitos}
+
+Esta seção reúne requisitos complementares que não pertencem ao núcleo funcional nem aos requisitos não funcionais já especificados nas seções anteriores. Os itens aqui descritos tratam principalmente de conformidade legal, restrições de implantação e operação, e qualidade do processo de desenvolvimento e manutenção do próprio artefato de especificação.
+
+\subsubsection*{Conformidade Legal e Regulatória}
+
+\reqoutro
+{or:base_legal_lgpd}
+{Definir base legal para tratamento de dados pessoais}
+{O sistema deve apoiar a operação do produto de modo compatível com a existência de base legal explícita para o tratamento dos dados pessoais dos alunos, em conformidade com a Lei n.\ 13.709/2018. A base legal adotada para cada categoria relevante de dado pessoal deve estar definida antes da coleta e deve orientar o cadastro, o uso e a manutenção dessas informações no produto. O sistema não deve pressupor coleta irrestrita de dados pessoais sem finalidade e base legal previamente estabelecidas no contexto de uso da academia.}
+{Essencial}
+{Depende dos requisitos X e Y. Depende da definição, pela operação do produto, das finalidades e bases legais aplicáveis a cada categoria de dado pessoal tratada no sistema.}
+{Contexto principal: conformidade com LGPD. O requisito é transversal aos fluxos que coletam, exibem, persistem ou atualizam dados pessoais dos alunos.}
+

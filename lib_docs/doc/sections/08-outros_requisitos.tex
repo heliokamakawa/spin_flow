@@ -1,0 +1,100 @@
+\newcounter{orreq}
+
+\newcommand{\orreqid}{OR\ifnum\value{orreq}<10 00\else\ifnum\value{orreq}<100 0\fi\fi\arabic{orreq}}
+
+\newcommand{\reqoutro}[6]{%
+  \refstepcounter{orreq}%
+  \subsection{[\orreqid] #2}%
+  \label{#1}%
+  \noindent\textbf{Descrição:} #3
+
+  \noindent\textbf{Prioridade:} #4
+
+  \noindent\textbf{Dependência:} #5
+
+  \noindent\textbf{Outros:} #6
+
+  \vspace{0.4cm}
+}
+
+\section{Outros Requisitos}
+
+Esta seção reúne requisitos complementares que não pertencem ao núcleo funcional nem aos requisitos não funcionais já especificados nas seções anteriores. Os itens aqui descritos tratam principalmente de conformidade legal, restrições de implantação e operação, e qualidade do processo de desenvolvimento e manutenção do próprio artefato de especificação.
+
+\subsubsection*{Conformidade Legal e Regulatória}
+
+\reqoutro
+{or:base_legal_lgpd}
+{Definir base legal para tratamento de dados pessoais}
+{O sistema deve apoiar a operação do produto de modo compatível com a existência de base legal explícita para o tratamento dos dados pessoais dos alunos, em conformidade com a Lei n.\ 13.709/2018. A base legal adotada para cada categoria relevante de dado pessoal deve estar definida antes da coleta e deve orientar o cadastro, o uso e a manutenção dessas informações no produto. O sistema não deve pressupor coleta irrestrita de dados pessoais sem finalidade e base legal previamente estabelecidas no contexto de uso da academia.}
+{Essencial}
+{Depende dos requisitos [\ref{nf:tratar_dados_com_finalidade_explicita}] e [\ref{nf:respeitar_principios_de_privacidade}]. Depende da definição, pela operação do produto, das finalidades e bases legais aplicáveis a cada categoria de dado pessoal tratada no sistema.}
+{Contexto principal: conformidade com LGPD. O requisito é transversal aos fluxos que coletam, exibem, persistem ou atualizam dados pessoais dos alunos.}
+
+\reqoutro
+{or:direitos_do_titular}
+{Apoiar atendimento aos direitos do titular dos dados}
+{O sistema deve prever meios técnicos para que a academia identifique, localize e apresente os dados pessoais e registros relacionados a um titular quando houver solicitações ligadas aos direitos previstos na legislação aplicável. Isso inclui apoiar, quando pertinente ao contexto do produto, confirmação de tratamento, acesso, correção de dados, eliminação de dados tratados sob base adequada para isso e revogação de consentimento quando essa for a base adotada. O sistema não precisa automatizar integralmente o processo jurídico ou administrativo, mas deve fornecer condições para que a resposta ao titular seja operacionalmente viável.}
+{Importante}
+{Depende dos requisitos [\ref{nf:tratar_dados_com_finalidade_explicita}], [\ref{nf:restringir_visualizacao_de_dados_pessoais}] e [\ref{or:base_legal_lgpd}]. Depende da capacidade do produto de localizar os dados vinculados ao titular em seus cadastros e históricos relevantes.}
+{Contexto principal: direitos do titular. O requisito prioriza apoio técnico ao atendimento das solicitações, e não a automação completa do procedimento jurídico-administrativo.}
+
+\reqoutro
+{or:retencao_de_dados}
+{Definir política de retenção e descarte de dados pessoais}
+{O sistema deve operar de forma compatível com uma política explícita de retenção de dados pessoais, definindo por quanto tempo cada categoria de dado deve permanecer armazenada após o encerramento do vínculo do aluno com a academia ou após evento equivalente que afete sua manutenção. Quando o prazo de retenção se encerrar e não houver fundamento para preservação adicional, os dados devem poder ser eliminados ou anonimizados de forma coerente com a política adotada. A definição dessa política deve respeitar os princípios de necessidade, finalidade e preservação histórica legítima aplicáveis ao contexto do produto.}
+{Importante}
+{Depende dos requisitos [\ref{or:base_legal_lgpd}], [\ref{or:direitos_do_titular}] e [\ref{nf:respeitar_principios_de_privacidade}]. Depende da definição, pela operação do produto, dos prazos e critérios de retenção aplicáveis a cada categoria de dado.}
+{Contexto principal: ciclo de vida dos dados pessoais. O requisito orienta o desenho da persistência e das regras de descarte ou anonimização compatíveis com o domínio.}
+
+\reqoutro
+{or:minimizacao_de_dados}
+{Restringir coleta de dados pessoais ao mínimo necessário}
+{O sistema deve restringir a coleta de dados pessoais ao mínimo necessário para as finalidades declaradas do produto. Campos opcionais presentes no modelo do domínio, especialmente dados complementares de perfil ou redes sociais, não devem ser tratados como obrigatórios sem justificativa operacional clara e compatibilidade com a finalidade declarada. Sempre que houver ampliação futura do cadastro, a inclusão de novos dados pessoais deve ser precedida de revisão de finalidade, necessidade e base legal correspondente.}
+{Importante}
+{Depende dos requisitos [\ref{or:base_legal_lgpd}] e [\ref{nf:tratar_dados_com_finalidade_explicita}]. Depende da avaliação de necessidade de cada campo pessoal previsto no cadastro do aluno e nas demais entidades que tratem dados de pessoas.}
+{Contexto principal: minimização de dados. O requisito afeta principalmente o desenho e a evolução dos formulários cadastrais e do modelo de domínio ligado a dados pessoais.}
+
+\reqoutro
+{or:restricoes_tecnicas}
+{Observar restrições técnicas e acadêmicas de implantação}
+{O sistema deve permanecer compatível com as restrições técnicas e acadêmicas definidas para o projeto, especialmente quanto ao uso das tecnologias escolhidas pela equipe, à possibilidade de execução em ambiente local para avaliação e à ausência de dependência obrigatória de infraestrutura paga ou indisponível no contexto acadêmico. Mudanças relevantes de stack, persistência ou arquitetura que alterem o comportamento esperado da solução devem ser refletidas nos artefatos de especificação correspondentes.}
+{Importante}
+{Não há dependência de requisito específico. O requisito complementa as seções de Ambiente Operacional e de Restrições de Projeto e Implementação.}
+{Contexto principal: viabilidade técnica e acadêmica. O requisito orienta a manutenção de decisões tecnológicas compatíveis com a entrega e a avaliação do projeto.}
+
+\subsubsection*{Implantação e Operação}
+
+\reqoutro
+{or:ambientes_separados}
+{Permitir separação de ambientes de execução}
+{A solução deve permitir configuração separada para ambientes distintos de execução, como desenvolvimento, homologação e produção, preservando independência de parâmetros, credenciais, bases de dados e demais configurações operacionais relevantes. A troca de ambiente deve ocorrer por configuração externa apropriada, sem exigir alterações manuais no código-fonte para cada publicação. Quando houver uso de dados reais, o sistema e seu processo de implantação devem evitar sua exposição em ambientes não destinados à operação efetiva.}
+{Importante}
+{Depende dos requisitos [\ref{or:retencao_de_dados}] e [\ref{nf:armazenar_dados_em_area_protegida}]. Depende da adoção de estratégia de configuração e persistência compatível com separação de ambientes no contexto tecnológico do projeto.}
+{Contexto principal: implantação e operação. No contexto acadêmico, a granularidade exata dos ambientes pode variar, desde que exista separação suficiente para desenvolvimento e demonstração.}
+
+\reqoutro
+{or:documentacao_instalacao}
+{Documentar instalação e configuração inicial}
+{O produto deve ser acompanhado de documentação técnica suficiente para permitir instalação, configuração inicial e verificação básica de funcionamento sem dependência de suporte informal dos autores. Essa documentação deve cobrir, no mínimo, pré-requisitos, passos de execução ou build, configurações necessárias do ambiente, inicialização da persistência quando aplicável e forma de validar que a aplicação está operacional.}
+{Importante}
+{Depende do requisito [\ref{or:restricoes_tecnicas}] e da definição do processo de execução e configuração adotado pela equipe.}
+{Contexto principal: entrega e operação técnica. O requisito complementa a documentação do projeto e favorece reprodutibilidade da avaliação e da manutenção futura.}
+
+\subsubsection*{Qualidade do Processo de Desenvolvimento}
+
+\reqoutro
+{or:rastreabilidade}
+{Manter rastreabilidade entre requisitos e implementação}
+{A equipe deve manter rastreabilidade suficiente entre os requisitos especificados, os casos de uso, os artefatos de análise e os elementos relevantes da implementação, como telas, módulos, regras de domínio e testes quando existirem. Alterações significativas na especificação não devem reutilizar identificadores antigos de forma ambígua e devem preservar a possibilidade de compreender o impacto das mudanças sobre o produto. Essa rastreabilidade deve apoiar revisão, validação e manutenção do projeto ao longo de sua evolução.}
+{Importante}
+{Depende dos requisitos [\ref{or:documentacao_instalacao}] e [\ref{or:registro_de_desvios}] no que diz respeito à disciplina de manutenção documental e comunicação de mudanças. Depende também da manutenção coerente dos artefatos do projeto.}
+{Contexto principal: governança do desenvolvimento. A rastreabilidade pode ser mantida por organização do repositório, referências cruzadas no documento ou artefato complementar equivalente.}
+
+\reqoutro
+{or:registro_de_desvios}
+{Registrar desvios entre especificação e implementação}
+{Sempre que a implementação evidenciar impossibilidade técnica, ambiguidade relevante, contradição documental ou ajuste necessário em relação a um requisito previamente especificado, a equipe deve registrar o desvio de forma explícita, indicando o requisito afetado, a natureza do problema, a decisão tomada e o impacto produzido sobre os artefatos relacionados. O objetivo é evitar divergências silenciosas entre o documento e o comportamento efetivamente implementado, preservando a integridade do processo de engenharia adotado no projeto.}
+{Importante}
+{Não há dependência de requisito específico. O requisito se relaciona com a manutenção do histórico de validações, com a revisão da especificação e com a governança geral do processo de desenvolvimento.}
+{Contexto principal: controle de mudanças e conformidade acadêmica. O registro deve ser suficientemente objetivo para permitir auditoria posterior do motivo e do efeito da alteração realizada.}

@@ -1,0 +1,92 @@
+% Capitulo 1 da especificacao: introducao, objetivo, escopo, publico-alvo, definicoes, convencoes e referencias.
+
+\section{Introdução}
+
+A \textbf{Pulse Studio Indoor} é uma academia especializada em ciclismo \textit{indoor} e aulas coletivas, cuja operação principal está concentrada nas aulas de \textit{spinning}. Considerando uma estrutura com 1 unidade, 2 salas de \textit{spinning}, 42 \textit{bikes}, 6 professores e cerca de 320 alunos ativos, o contexto do projeto caracteriza uma operação de porte médio, com volume suficiente para exigir maior controle sobre agenda, ocupação das aulas e participação dos alunos.
+
+Nesse cenário, o processo de participação nas aulas deixa de ser trivial. A combinação entre horários de pico, alta procura por vagas, preferência dos alunos por determinadas posições na sala, necessidade de refletir a disponibilidade real das \textit{bikes} e ocorrência de cancelamentos ou manutenções passa a gerar atritos frequentes na rotina da academia. Como consequência, surgem dificuldades de organização do \textit{check-in}, conflitos de reserva, perda de previsibilidade operacional e aumento da insatisfação do aluno diante de falhas de informação ou de inconsistências no acesso às aulas.
+
+Esses problemas tornam-se mais críticos porque, no domínio adotado pelo \ProjetoNome, o aluno não busca apenas uma vaga abstrata. Sua participação depende de elementos concretos como turma, data, mapa da sala, posição, bike e, em certos contextos, o repertório musical associado à aula. Assim, a necessidade central da solução não é apenas registrar reservas, mas sustentar um fluxo de \textit{check-in} confiável, contextualizado e coerente com a operação real da academia.
+
+Dessa forma, o desenvolvimento do \ProjetoNome\ se justifica pela necessidade de organizar o \textit{check-in} das aulas de \textit{spinning} de maneira clara para o aluno e consistente para a operação. A solução proposta busca reduzir atritos de reserva, melhorar a visibilidade sobre disponibilidade e ocupação, preservar a coerência entre mapa, turma e bike e estruturar dados capazes de sustentar histórico, acompanhamento individual e futuras informações gerenciais e estratégicas.
+
+Esta especificação adota como referência de estruturação a norma ISO/IEC/IEEE 29148~\cite{iso29148}, considera as diretrizes aplicáveis de proteção de dados pessoais no contexto da Lei Geral de Proteção de Dados Pessoais (LGPD)~\cite{lgpd} e se apoia no levantamento de requisitos consolidado para o projeto, descrito em Apêndice A (Levantamento de Requisitos).
+
+\subsection{Objetivo do Documento}
+
+Este documento tem como objetivo especificar os requisitos do \ProjetoNome, descrevendo de forma clara e estruturada as funcionalidades esperadas, as restrições relevantes, as regras de negócio que precisam ser respeitadas e os atributos de qualidade que o produto deve atender. A especificação serve como base para desenvolvimento, validação, comunicação entre as partes interessadas e manutenção da solução ao longo de sua evolução.
+
+Além de registrar o comportamento esperado do sistema, este documento formaliza o recorte funcional adotado para o projeto e estabelece um referencial comum para interpretação de termos, prioridades, dependências e limites da solução. Sua organização segue a lógica de uma especificação de requisitos, com ênfase na rastreabilidade entre contexto, escopo, requisitos e artefatos de apoio.
+
+\subsection{Escopo do Produto}
+
+O \ProjetoNome\ é um aplicativo mobile desenvolvido em Flutter, voltado à organização operacional de aulas de \textit{spinning} e centrado no processo de \textit{check-in} do aluno. Seu propósito principal é permitir que a participação em uma aula seja tratada de forma contextualizada, considerando agenda, turma, data, mapa da sala, posição, \textit{bike} e disponibilidade real da operação.
+
+No recorte atual do produto, o escopo funcional está organizado em três frentes de prioridade. A primeira é o \textit{check-in}, que representa o núcleo do sistema e reúne tudo o que é essencial para a reserva funcionar corretamente. A segunda é o suporte ao \textit{check-in}, que inclui elementos que contextualizam ou enriquecem a decisão do aluno, como o \textit{mix} da turma e informações complementares da aula. A terceira é a estrutura complementar do domínio, como grupos de alunos, tratada como prioridade mais baixa e orientada a expansões futuras.
+
+Estão dentro deste escopo os fluxos do aluno relacionados à consulta da agenda, visualização do mapa, reserva por \textit{check-in}, cancelamento, histórico individual e consulta ao repertório da turma. Também estão dentro do escopo os fluxos da professora necessários para manter salas, \textit{bikes}, posições, turmas, manutenções e demais configurações operacionais mínimas que sustentam a reserva e a condução da aula.
+
+Ficam fora do escopo principal desta especificação módulos administrativos amplos, financeiros, comerciais e integrações externas que extrapolem a operação direta da aula e do processo de reserva. Também não constitui foco deste documento a exploração de outras plataformas como frente principal de uso, ainda que a tecnologia adotada permita essa evolução futura. Tais frentes podem compor a evolução do ecossistema da solução, mas não fazem parte do núcleo funcional formalizado neste documento.
+
+\subsection{Público-Alvo}
+
+Este documento destina-se às partes interessadas que precisam compreender, validar, implementar ou avaliar o comportamento esperado do \ProjetoNome. Seu uso principal está associado ao alinhamento entre problema, solução, escopo e requisitos do sistema.
+
+\begin{itemize}[leftmargin=1.2cm]
+\item \textbf{Equipe de desenvolvimento}: utilizará a especificação como base para implementação, testes e manutenção do software.
+\item \textbf{Gestão da academia}: utilizará o documento para verificar aderência da solução às necessidades operacionais do negócio.
+\item \textbf{Profissionais envolvidos na validação}: utilizarão o documento para revisar consistência, completude e coerência entre problema, escopo e requisitos.
+\item \textbf{Demais interessados}: poderão consultar o material para compreender objetivos, limites e comportamento esperado do produto.
+\end{itemize}
+
+Embora o sistema possua usuários operacionais específicos, como aluno e professora, esses perfis são tratados posteriormente na visão geral do produto. Nesta subseção, o foco está nos leitores da especificação.
+
+\subsection{Definições, Acrônimos e Abreviações}
+
+Esta subseção reúne os principais termos, acrônimos e abreviações utilizados neste documento. O objetivo é estabelecer uma terminologia comum para a leitura dos requisitos, dos modelos de análise e dos artefatos de apoio, reduzindo ambiguidades na interpretação do domínio do sistema.
+
+Os principais termos do domínio adotados nesta especificação são apresentados na Tabela~\ref{tab:glossary}.
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\caption{Glossário de termos do sistema \ProjetoNome.}\label{tab:glossary} \\ \hline
+\textbf{Termo} & \textbf{Descrição} \\ \hline
+\endfirsthead
+
+\hline
+\textbf{Termo} & \textbf{Descrição} \\ \hline
+\endhead
+
+Aluno & Cliente da academia que utiliza o sistema para consultar a agenda, reservar \textit{bike}, acompanhar o histórico de presença e acessar informações do repertório musical das aulas. \\ \hline
+Artista ou banda & Entidade cadastral que representa o artista ou a banda responsável por uma música. \\ \hline
+\textit{Bike} & Equipamento físico utilizado na aula de \textit{spinning}, associado a um fabricante, a uma posição na sala e, quando aplicável, a registros de manutenção. \\ \hline
+Categoria musical & Entidade cadastral utilizada para classificar músicas por categoria, estilo ou finalidade dentro do repertório. \\ \hline
+\textit{Check-in} & Registro que representa a reserva do aluno para uma turma em uma data específica, incluindo a posição escolhida na sala e preservando o histórico da participação. \\ \hline
+Dia da semana & Enumeração que representa os dias válidos para a recorrência das turmas, de `SEGUNDA' a `DOMINGO'. \\ \hline
+Fabricante & Entidade cadastral que identifica a origem da \textit{bike} e concentra seus dados de referência e contato. \\ \hline
+Gênero & Enumeração utilizada para representar o gênero declarado no cadastro do aluno, com os valores `MASCULINO', `FEMININO' e `OUTRO'. \\ \hline
+Histórico de mix da turma & Registro das associações de mixes a uma turma ao longo do tempo; `dataFim = null' identifica o \textit{mix} ativo em uso naquela turma. \\ \hline
+Manutenção & Registro operacional que indica uma intervenção realizada, agendada ou pendente em uma \textit{bike}, podendo afetar sua disponibilidade para reserva. \\ \hline
+Mix & Conjunto organizado de músicas que compõe a experiência musical de uma aula ou de um período, com vigência própria e uso efetivo controlado pelo histórico de associação com a turma. \\ \hline
+Música & Item do repertório musical que compõe um \textit{mix}, associado a exatamente um artista ou banda e a uma ou mais categorias musicais. \\ \hline
+Professora & Responsável operacional que utiliza o sistema para gerenciar salas, \textit{bikes}, posições e turmas, manter dados atualizados para viabilizar o \textit{check-in}, acompanhar a ocupação das aulas, visualizar o mapa operacional e realizar intervenções administrativas conforme as regras do domínio. \\ \hline
+Posição da \textit{bike} & Posição ocupável dentro da sala, identificada por fila e coluna, associada a uma \textit{bike} específica e existente apenas na composição da sala. \\ \hline
+Sala & Espaço físico onde a turma acontece, definido por uma grade de posições de \textit{bike} organizada por filas e colunas. \\ \hline
+Tipo de manutenção & Classificação do problema ou do serviço de manutenção, como defeito mecânico, ajuste ou troca de peça. \\ \hline
+Turma & Horário recorrente de aula de \textit{spinning} associado a uma sala, a dias da semana específicos e, quando aplicável, a um \textit{mix} em uso. \\ \hline
+Videoaula & Material complementar com orientações sobre a execução de músicas no \textit{spinning}, criado sempre no contexto de pelo menos uma música e podendo servir a mais de uma. \\ \hline
+
+\end{longtable}
+
+\subsection{Convenções}
+
+Este documento adota convenções tipográficas e de identificação com o objetivo de padronizar a apresentação dos requisitos e facilitar sua leitura, rastreabilidade e manutenção. Os requisitos funcionais são identificados pelo prefixo \textbf{RF}, seguido de um identificador numérico sequencial, no formato \textbf{RF001, RF002, RF003, ...}. De forma análoga, os requisitos não funcionais são identificados pelo prefixo \textbf{RNF}, seguido de um identificador numérico sequencial, no formato \textbf{RNF001, RNF002, RNF003, ...}. Os identificadores são únicos e não devem ser reutilizados, mesmo em caso de remoção de requisitos.
+
+As prioridades dos requisitos são classificadas como \textbf{Essencial}, \textbf{Importante} e \textbf{Desejável}, sendo atribuídas individualmente a cada requisito, sem herança automática entre diferentes níveis de especificação. Termos relevantes do domínio, nomes de entidades e identificadores podem ser destacados em \textbf{negrito} quando isso contribuir para a clareza da leitura. Palavras ou expressões em inglês são apresentadas em \textit{itálico} quando apropriado ao contexto.
+
+\subsection{Referências}
+
+Esta subseção reúne as referências utilizadas como base metodológica, normativa e documental para a elaboração desta especificação e para o entendimento do produto.
+
+\nocite{iso29148}
+\nocite{lgpd}
+\printbibliography[heading=none]

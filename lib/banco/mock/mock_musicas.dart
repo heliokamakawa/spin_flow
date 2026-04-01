@@ -1,4 +1,5 @@
 import 'package:spin_flow/dto/dto_musica.dart';
+import 'package:spin_flow/dto/dto_video_aula.dart';
 import 'mock_artistas_bandas.dart';
 import 'mock_categorias_musica.dart';
 
@@ -9,9 +10,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[0], // Survivor
     categorias: [mockCategoriasMusica[0], mockCategoriasMusica[15]], // Cadência, Motivação
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=btPJPFnesV4',
-        descricao: 'Tutorial Eye of the Tiger - Treino de Cadência',
+      DTOVideoAula(
+        nome: 'Tutorial Eye of the Tiger - Treino de Cadência',
+        linkVideo: 'https://youtube.com/watch?v=btPJPFnesV4',
       ),
     ],
     descricao: 'Música icônica para treinos de cadência e motivação',
@@ -23,9 +24,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[1], // Queen
     categorias: [mockCategoriasMusica[5], mockCategoriasMusica[11]], // Ritmo, Explosão
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=-tJYN-eG1zk',
-        descricao: 'We Will Rock You - Treino de Explosão',
+      DTOVideoAula(
+        nome: 'We Will Rock You - Treino de Explosão',
+        linkVideo: 'https://youtube.com/watch?v=-tJYN-eG1zk',
       ),
     ],
     descricao: 'Clássico do Queen para treinos explosivos',
@@ -37,9 +38,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[2], // AC/DC
     categorias: [mockCategoriasMusica[2], mockCategoriasMusica[11]], // Força, Explosão
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=v2AC41dglnM',
-        descricao: 'Thunderstruck - Treino de Força',
+      DTOVideoAula(
+        nome: 'Thunderstruck - Treino de Força',
+        linkVideo: 'https://youtube.com/watch?v=v2AC41dglnM',
       ),
     ],
     descricao: 'Riff poderoso para treinos de força',
@@ -51,9 +52,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[3], // Eminem
     categorias: [mockCategoriasMusica[15], mockCategoriasMusica[16]], // Motivação, Recuperação
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=_Yhyp-_hX2s',
-        descricao: 'Lose Yourself - Treino Motivacional',
+      DTOVideoAula(
+        nome: 'Lose Yourself - Treino Motivacional',
+        linkVideo: 'https://youtube.com/watch?v=_Yhyp-_hX2s',
       ),
     ],
     descricao: 'Música motivacional para superar limites',
@@ -65,9 +66,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[4], // Imagine Dragons
     categorias: [mockCategoriasMusica[2], mockCategoriasMusica[19]], // Força, Energia
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=7wtfhZwyrcc',
-        descricao: 'Believer - Treino de Força e Energia',
+      DTOVideoAula(
+        nome: 'Believer - Treino de Força e Energia',
+        linkVideo: 'https://youtube.com/watch?v=7wtfhZwyrcc',
       ),
     ],
     descricao: 'Música energética para treinos intensos',
@@ -79,9 +80,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[5], // Kanye West
     categorias: [mockCategoriasMusica[2], mockCategoriasMusica[15]], // Força, Motivação
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=PsO6ZnUZI0g',
-        descricao: 'Stronger - Treino de Força',
+      DTOVideoAula(
+        nome: 'Stronger - Treino de Força',
+        linkVideo: 'https://youtube.com/watch?v=PsO6ZnUZI0g',
       ),
     ],
     descricao: 'Música para treinos de força e superação',
@@ -93,9 +94,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[8], // Macklemore
     categorias: [mockCategoriasMusica[0], mockCategoriasMusica[19]], // Cadência, Energia
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=2zNSgSzhBfM',
-        descricao: 'Can\'t Hold Us - Treino de Cadência',
+      DTOVideoAula(
+        nome: 'Can\'t Hold Us - Treino de Cadência',
+        linkVideo: 'https://youtube.com/watch?v=2zNSgSzhBfM',
       ),
     ],
     descricao: 'Música energética para manter o ritmo',
@@ -107,9 +108,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[3], // Eminem (Fort Minor)
     categorias: [mockCategoriasMusica[15], mockCategoriasMusica[11]], // Motivação, Explosão
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=VDvr08sCPOc',
-        descricao: 'Remember the Name - Treino Explosivo',
+      DTOVideoAula(
+        nome: 'Remember the Name - Treino Explosivo',
+        linkVideo: 'https://youtube.com/watch?v=VDvr08sCPOc',
       ),
     ],
     descricao: 'Música para treinos explosivos e motivacionais',
@@ -121,9 +122,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[3], // Eminem
     categorias: [mockCategoriasMusica[2], mockCategoriasMusica[13]], // Força, Endurance
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=8CdcCD5V-d8',
-        descricao: 'Till I Collapse - Treino de Resistência',
+      DTOVideoAula(
+        nome: 'Till I Collapse - Treino de Resistência',
+        linkVideo: 'https://youtube.com/watch?v=8CdcCD5V-d8',
       ),
     ],
     descricao: 'Música para treinos de resistência e força',
@@ -135,9 +136,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[1], // Bruce Springsteen
     categorias: [mockCategoriasMusica[13], mockCategoriasMusica[17]], // Endurance, Velocidade
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=IxuThNgl3YA',
-        descricao: 'Born to Run - Treino de Endurance',
+      DTOVideoAula(
+        nome: 'Born to Run - Treino de Endurance',
+        linkVideo: 'https://youtube.com/watch?v=IxuThNgl3YA',
       ),
     ],
     descricao: 'Música para treinos de resistência',
@@ -149,9 +150,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[1], // Van Halen
     categorias: [mockCategoriasMusica[11], mockCategoriasMusica[19]], // Explosão, Energia
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=SwYN7mTi6HM',
-        descricao: 'Jump - Treino Explosivo',
+      DTOVideoAula(
+        nome: 'Jump - Treino Explosivo',
+        linkVideo: 'https://youtube.com/watch?v=SwYN7mTi6HM',
       ),
     ],
     descricao: 'Música energética para treinos explosivos',
@@ -163,9 +164,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[4], // Imagine Dragons
     categorias: [mockCategoriasMusica[2], mockCategoriasMusica[19]], // Força, Energia
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=ktvTqknDobU',
-        descricao: 'Radioactive - Treino de Força',
+      DTOVideoAula(
+        nome: 'Radioactive - Treino de Força',
+        linkVideo: 'https://youtube.com/watch?v=ktvTqknDobU',
       ),
     ],
     descricao: 'Música para treinos de força e energia',
@@ -177,9 +178,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[13], // Red Hot Chili Peppers
     categorias: [mockCategoriasMusica[0], mockCategoriasMusica[5]], // Cadência, Ritmo
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=8DyziWtkfBw',
-        descricao: 'Can\'t Stop - Treino de Cadência',
+      DTOVideoAula(
+        nome: 'Can\'t Stop - Treino de Cadência',
+        linkVideo: 'https://youtube.com/watch?v=8DyziWtkfBw',
       ),
     ],
     descricao: 'Música para manter o ritmo constante',
@@ -191,9 +192,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[9], // Sia
     categorias: [mockCategoriasMusica[15], mockCategoriasMusica[19]], // Motivação, Energia
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=GLvohMXgcBo',
-        descricao: 'The Greatest - Treino Motivacional',
+      DTOVideoAula(
+        nome: 'The Greatest - Treino Motivacional',
+        linkVideo: 'https://youtube.com/watch?v=GLvohMXgcBo',
       ),
     ],
     descricao: 'Música motivacional para superar desafios',
@@ -205,9 +206,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[14], // Lady Gaga
     categorias: [mockCategoriasMusica[7], mockCategoriasMusica[15]], // Animação, Motivação
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=wV1FrqwZyKw',
-        descricao: 'Born This Way - Treino Animado',
+      DTOVideoAula(
+        nome: 'Born This Way - Treino Animado',
+        linkVideo: 'https://youtube.com/watch?v=wV1FrqwZyKw',
       ),
     ],
     descricao: 'Música animada e motivacional',
@@ -219,9 +220,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[9], // Rachel Platten
     categorias: [mockCategoriasMusica[15], mockCategoriasMusica[19]], // Motivação, Energia
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=xo1VInw-SKc',
-        descricao: 'Fight Song - Treino Motivacional',
+      DTOVideoAula(
+        nome: 'Fight Song - Treino Motivacional',
+        linkVideo: 'https://youtube.com/watch?v=xo1VInw-SKc',
       ),
     ],
     descricao: 'Música para lutar e superar obstáculos',
@@ -233,9 +234,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[18], // Panic! At The Disco
     categorias: [mockCategoriasMusica[15], mockCategoriasMusica[19]], // Motivação, Energia
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=IPXIgEAGe4U',
-        descricao: 'High Hopes - Treino Motivacional',
+      DTOVideoAula(
+        nome: 'High Hopes - Treino Motivacional',
+        linkVideo: 'https://youtube.com/watch?v=IPXIgEAGe4U',
       ),
     ],
     descricao: 'Música motivacional com alta energia',
@@ -247,9 +248,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[19], // Two Steps From Hell
     categorias: [mockCategoriasMusica[2], mockCategoriasMusica[15]], // Força, Motivação
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=2Z4m4lnvxkY',
-        descricao: 'Invincible - Treino de Força',
+      DTOVideoAula(
+        nome: 'Invincible - Treino de Força',
+        linkVideo: 'https://youtube.com/watch?v=2Z4m4lnvxkY',
       ),
     ],
     descricao: 'Música épica para treinos de força',
@@ -261,9 +262,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[6], // Fall Out Boy
     categorias: [mockCategoriasMusica[15], mockCategoriasMusica[19]], // Motivação, Energia
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=LBr7kECsjcQ',
-        descricao: 'Centuries - Treino Motivacional',
+      DTOVideoAula(
+        nome: 'Centuries - Treino Motivacional',
+        linkVideo: 'https://youtube.com/watch?v=LBr7kECsjcQ',
       ),
     ],
     descricao: 'Música motivacional para deixar legado',
@@ -275,9 +276,9 @@ List<DTOMusica> mockMusicas = [
     artista: mockArtistasBandas[7], // The Script
     categorias: [mockCategoriasMusica[15], mockCategoriasMusica[19]], // Motivação, Energia
     linksVideoAula: [
-      DTOLinkVideoAula(
-        url: 'https://youtube.com/watch?v=mk48xRzuNvA',
-        descricao: 'Hall of Fame - Treino Motivacional',
+      DTOVideoAula(
+        nome: 'Hall of Fame - Treino Motivacional',
+        linkVideo: 'https://youtube.com/watch?v=mk48xRzuNvA',
       ),
     ],
     descricao: 'Música para entrar no hall da fama',

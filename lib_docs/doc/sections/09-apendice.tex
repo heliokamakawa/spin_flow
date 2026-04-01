@@ -1,0 +1,88 @@
+\section*{Apêndice}
+\addcontentsline{toc}{section}{Apêndice}
+
+\subsection*{Apêndice A: Levantamento de Requisitos}
+\addcontentsline{toc}{subsection}{Apêndice A: Levantamento de Requisitos}
+\hypertarget{ap:apendice}{}
+
+Este apêndice apresenta o processo de levantamento de requisitos adotado para o desenvolvimento do SpinFlow. É importante explicitar que o contexto descrito neste material possui caráter didático e parcialmente simulado, sendo construído com o objetivo de apoiar o entendimento das técnicas de engenharia de requisitos aplicadas ao projeto.
+
+Embora o domínio representado (academia de spinning, fluxo de check-in, gestão de turmas e recursos operacionais) seja plausível e coerente com cenários reais, não houve execução integral de um processo formal de elicitação em ambiente produtivo, com stakeholders reais e ciclos completos de validação empírica.
+
+O levantamento de requisitos considerado para a elaboração desta especificação foi estruturado de forma didática e representativa, buscando refletir práticas compatíveis com projetos de software orientados à operação. Ainda que não tenha sido conduzido em um ambiente real com stakeholders ativos, o processo foi organizado com o propósito de simular a consolidação de informações relevantes sobre o contexto da academia, os problemas centrais do fluxo de \textit{check-in}, as necessidades dos usuários e os limites do recorte funcional adotado no \ProjetoNome.
+
+Para compor essa base de trabalho, considera-se a utilização simulada e orientada por boas práticas de técnicas de engenharia de requisitos, com ênfase em:
+
+\begin{itemize}[leftmargin=1.2cm]
+\item \textbf{Entrevistas semiestruturadas}: utilizadas para levantar dores operacionais, expectativas de uso e percepções sobre os principais problemas ligados à reserva, à ocupação das aulas, à manutenção das bikes e à experiência do aluno.
+\item \textbf{Sessões colaborativas do tipo \textit{JAD}}: utilizadas para consolidar entendimento entre as partes interessadas sobre o fluxo central do produto, suas prioridades e os limites do escopo.
+\item \textbf{Análise documental}: utilizada para revisar artefatos do próprio projeto, regras de negócio, diagrama de classes, protótipos de interface e materiais de apoio relevantes para a especificação.
+\item \textbf{Consolidação de artefatos}: utilizada para transformar as informações coletadas em um conjunto coerente de definições, escopo, regras e requisitos.
+\end{itemize}
+
+No contexto desta especificação, essas técnicas sustentam a identificação do \textit{check-in} como núcleo do produto, da Professora como frente de suporte operacional e do grupo de alunos como estrutura complementar de menor prioridade. Também sustentam a delimitação entre o que faz parte do recorte atual do sistema e o que deve permanecer como possibilidade de evolução futura. Em conjunto, esse processo permitiu consolidar uma especificação alinhada ao problema de negócio, ao domínio modelado e às decisões de escopo formalizadas neste documento.
+
+\newpage
+
+\subsection*{Apêndice B: Modelos de Análise}
+\addcontentsline{toc}{subsection}{Apêndice B: Modelos de Análise}
+
+\subsubsection*{B.1 Diagrama de Classes}
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{img/dc.png}
+\caption{Diagrama de classes do projeto \ProjetoNome. Para preservar clareza visual, foram omitidos os fluxos e operações tradicionais de CRUD das entidades de cadastro.}
+\end{figure}
+\newpage
+
+\subsubsection*{B.2 Diagramas de Casos de Uso}
+\paragraph{Perfil Professora}
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.9\textwidth]{img/dcup.png}
+\caption{Diagrama de casos de uso do perfil Professora no projeto \ProjetoNome.}
+\end{figure}
+
+\newpage
+
+\paragraph{Perfil Aluno}
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.9\textwidth]{img/dcug_aluno.png}
+\caption{Diagrama de casos de uso do perfil Aluno no projeto \ProjetoNome.}
+\end{figure}
+\newpage
+
+\subsubsection*{B.3 Tabela de Casos de Uso}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.10\textwidth}>{\raggedright\arraybackslash}p{0.52\textwidth}>{\centering\arraybackslash}p{0.14\textwidth}>{\centering\arraybackslash}p{0.14\textwidth}@{}}
+\toprule
+\textbf{ID} & \textbf{Caso de Uso} & \textbf{Professora} & \textbf{Aluno} \\ \hline
+\midrule
+\endfirsthead
+% \toprule
+% \textbf{ID} & \textbf{Caso de Uso} & \textbf{Professora} & \textbf{Aluno} \
+% \midrule
+% \endhead
+
+
+
+UC01 & Autenticar no Sistema & Sim & Sim \\ \hline
+UC02 & Realizar Checkin & Sim & Sim \\ \hline
+UC03 & Verificar Disponibilidade da Bike (\textit{include} de UC02) & --- & --- \\ \hline
+UC04 & Visualizar Mapa da Sala (\textit{include} de UC02) & --- & --- \\ \hline
+UC05 & Cancelar Checkin (\textit{extend} de UC02) & Sim, qualquer & Sim, próprio \\ \hline
+UC06 & Gerenciar Alunos e Grupos & Sim & --- \\ \hline
+UC07 & Gerenciar Bikes e Fabricantes & Sim & --- \\ \hline
+UC08 & Gerenciar Manutenções & Sim & --- \\ \hline
+UC09 & Cancelar Manutenção (\textit{extend} de UC08) & Sim & --- \\ \hline
+UC10 & Gerenciar Salas e Turmas & Sim & --- \\ \hline
+UC11 & Verificar Disponibilidade de Horário (\textit{include} de UC10) & --- & --- \\ \hline
+UC12 & Associar Mix a Turma (\textit{extend} de UC10) & Sim & --- \\ \hline
+UC13 & Gerenciar Mixes e Repertório & Sim & --- \\ \hline
+UC14 & Consultar Agenda Semanal & Sim & Sim \\ \hline
+UC15 & Consultar Mix e Repertório & Sim & Sim \\ \hline
+UC16 & Consultar Histórico de Presença & --- & Sim \\ \hline
+UC17 & Visualizar Dashboard & Sim & Sim \\ \hline
+UC18 & Gerar Relatórios Gerenciais & Sim & --- \\ \hline
+\bottomrule
+\end{longtable}

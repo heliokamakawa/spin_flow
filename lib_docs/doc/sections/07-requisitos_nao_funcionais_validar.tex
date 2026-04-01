@@ -1,0 +1,10 @@
+\section{Requisitos Não Funcionais}
+
+\subsubsection*{Desempenho e Fluidez}
+\reqfuncfull
+{nf:concluir_reserva_em_ate_dois_segundos}
+{Concluir reserva por check-in em até dois segundos}
+{A operação completa de reserva por check-in, desde a validação da posição escolhida até a atualização do mapa e da disponibilidade da turma, deve concluir em no máximo dois segundos. Esse requisito se aplica ao fluxo crítico do aluno, inclusive em situações de sala com ocupação total e tentativas concorrentes de reserva no mesmo horário. O objetivo é preservar resposta rápida e previsível no principal fluxo de valor do sistema.}
+{Importante}
+{Depende dos requisitos funcionais do fluxo de reserva por check-in e da execução consistente das validações e atualizações correlatas. Depende de processamento e persistência capazes de atender ao tempo máximo definido mesmo em cenário de alta ocupação.}
+{Contexto principal: fluxo do aluno. O requisito é mensurável e deve ser verificado com critério objetivo de tempo fim a fim da operação.}

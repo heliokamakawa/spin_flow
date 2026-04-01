@@ -1,0 +1,46 @@
+\section{Visão Geral}
+
+\subsection{Perspectiva do Produto}
+Sob a perspectiva desta especificação, o \ProjetoNome\ é um aplicativo \textit{mobile} desenvolvido em Flutter para apoiar a operação de uma academia especializada em \textit{spinning}, com ênfase no \textit{check-in} das aulas e nos elementos que tornam esse fluxo possível. O produto foi concebido para atender à realidade da Pulse Studio Indoor, academia de porte médio cuja rotina combina duas salas de \textit{spinning}, 42 \textit{bikes}, aproximadamente 320 alunos ativos e seis professoras responsáveis pela condução das aulas e manutenção da operação.
+
+Nesse contexto, o produto se posiciona como núcleo operacional do estúdio, conectando agenda, turma, mapa da sala, posição, \textit{bike}, repertório musical e histórico de participação. Sua função não é substituir integralmente todos os controles administrativos da academia, mas oferecer uma solução específica para o domínio da aula de \textit{spinning}, reduzindo atritos de reserva, melhorando a visibilidade sobre a ocupação das aulas e preservando coerência entre os estados operacionais envolvidos. Embora a tecnologia adotada permita evolução para outras plataformas, o foco de uso considerado nesta especificação está em dispositivos móveis, por serem o meio mais aderente à rotina de consulta e reserva do aluno.
+
+Embora o domínio comporte possibilidades de expansão para frentes mais amplas de gestão, relacionamento e inteligência de negócio, o recorte desta especificação permanece concentrado no fluxo do \textit{check-in} e em suas dependências diretas. Isso inclui tanto a experiência do aluno ao reservar uma posição quanto a estrutura operacional mantida pela professora para que a aula aconteça com disponibilidade, organização e consistência.
+
+\subsection{Funcionalidade do Produto}
+Em alto nível, o \ProjetoNome\ organiza-se em três frentes de prioridade. A primeira, e principal, é o \textit{check-in}, entendido como o núcleo do produto e como o processo que engloba consulta de agenda, seleção de turma, visualização do mapa da sala, escolha de posição e \textit{bike}, validação da disponibilidade, confirmação da reserva e cancelamento quando permitido. Todos esses elementos existem para viabilizar um \textit{check-in} claro para o aluno e consistente para a operação.
+
+A segunda frente corresponde ao suporte ao \textit{check-in}. Nela se inserem informações e recursos que qualificam a decisão do aluno e enriquecem a experiência da aula, como a consulta ao \textit{mix} associado à turma, ao repertório musical e ao histórico relacionado à participação. Esses elementos não substituem o núcleo operacional, mas ampliam o valor percebido do produto ao contextualizar a reserva.
+
+A terceira frente corresponde às estruturas complementares do domínio, com prioridade inferior no recorte atual. Nessa camada situam-se agrupamentos de alunos e outros elementos de organização que sustentam evolução futura do ecossistema, mas que não definem o valor principal entregue agora. Do ponto de vista operacional da professora, o produto também deve permitir a manutenção das entidades necessárias para o funcionamento do fluxo principal, como salas, \textit{bikes}, posições, turmas, \textit{mixes} e registros de manutenção.
+
+\subsection{Usuários}
+Os usuários operacionais principais contemplados nesta especificação são Aluno e Professora. O Aluno representa o perfil central do produto e interage com os fluxos de consulta de agenda, visualização de mapa, escolha de posição, realização de \textit{check-in}, cancelamento de reserva, consulta ao \textit{mix} da turma e acompanhamento do próprio histórico. Sua experiência deve ser direta, rápida e focada na tomada de decisão para participação na aula.
+
+A Professora atua como perfil de suporte operacional ao fluxo do Aluno. Sua responsabilidade está em manter os dados e estados que tornam o \textit{check-in} possível e confiável, incluindo salas, \textit{bikes}, posições, turmas, \textit{mixes}, grupos de alunos e manutenções. Também cabe a esse perfil acompanhar a ocupação das aulas, visualizar o mapa operacional e realizar intervenções administrativas compatíveis com as regras do domínio.
+
+Outros atores, como avaliadores, equipe de desenvolvimento e partes interessadas institucionais, são relevantes para o ciclo do projeto e para o entendimento desta especificação, mas não são tratados como usuários operacionais primários do produto.
+
+\subsection{Ambiente Operacional}
+O ambiente operacional previsto para o \ProjetoNome\ prioriza mobilidade, simplicidade de uso e execução local. A aplicação foi estruturada em Flutter, com foco principal em dispositivos móveis utilizados pelos alunos para consulta e reserva de aulas e em dispositivos de apoio da academia utilizados pela professora para manutenção e acompanhamento da operação.
+
+No recorte atual, a solução privilegia armazenamento local como base principal de funcionamento, reduzindo dependência de conectividade contínua e favorecendo a execução dos fluxos essenciais mesmo em cenários de uso offline. Esse comportamento é compatível com a necessidade de resposta rápida em interações como consulta ao mapa, verificação de disponibilidade e confirmação de \textit{check-in}.
+
+Do ponto de vista de uso, o ambiente deve garantir interface legível, tempo de resposta adequado, preservação da integridade dos dados e consistência visual no contexto mobile. A operação esperada não depende, para suas funções centrais, de infraestrutura complexa, serviços externos obrigatórios ou configuração técnica avançada por parte dos usuários finais. A possibilidade de execução em outras plataformas pode ser explorada futuramente, mas não constitui o foco principal do problema tratado neste documento.
+
+\subsection{Restrições de Projeto e Implementação}
+O projeto está submetido a restrições técnicas, de domínio e de contexto. Entre as restrições técnicas, destaca-se a necessidade de manter funcionamento prioritariamente offline nas funcionalidades centrais, com persistência local suficiente para sustentar agenda, mapa, reserva, histórico e dados operacionais essenciais. A solução também deve preservar organização modular que permita evolução do domínio sem acoplamento excessivo entre cadastros, regras e interface.
+
+Do ponto de vista do domínio, o produto deve manter coerência entre disponibilidade da \textit{bike}, posição no mapa, estado da turma, manutenção e histórico de \textit{check-in}. Isso implica respeitar regras de unicidade de ocupação, vínculos consistentes entre entidades, tratamento controlado de inativação e manutenção, e preservação de histórico sempre que a regra de negócio exigir rastreabilidade das ações.
+
+Também constituem restrições relevantes o tratamento adequado de dados pessoais no contexto da LGPD, a necessidade de demonstração local da solução e o respeito ao recorte funcional adotado nesta especificação. Dessa forma, módulos administrativos amplos, financeiros ou integrações externas complexas não são tratados como dependências obrigatórias da operação básica documentada neste artefato.
+
+\subsection{Documentação do Usuário}
+Considera-se como documentação de apoio ao usuário e às partes interessadas o conjunto de artefatos produzidos ao longo da definição da solução. Isso inclui esta especificação de requisitos, o documento de regras de negócio, os diagramas de casos de uso e de classes, os apêndices com descrições complementares e os protótipos de interface relacionados ao \ProjetoNome.
+
+Também compõem esse conjunto materiais que apoiam entendimento e evolução do produto, como registros estruturados na pasta de apoio do projeto, descrições das prioridades do domínio, documentação complementar de análise e orientações de uso dos fluxos principais do Aluno e da Professora. Em conjunto, esses artefatos oferecem base suficiente para entendimento do sistema, comunicação entre envolvidos e manutenção futura da solução.
+
+\subsection{Suposições e Dependências}
+Esta especificação parte da suposição de que a academia disponha de dispositivos aptos a executar a aplicação e de que os usuários principais tenham acesso ao sistema em um contexto operacional controlado. Parte-se também da premissa de que os dados cadastrais fundamentais sejam mantidos com consistência mínima pela Professora, uma vez que o fluxo do Aluno depende diretamente da existência prévia de salas, \textit{bikes}, posições, turmas, \textit{mixes} e demais entidades relacionadas.
+
+Outra dependência central é a disponibilidade do armazenamento local no dispositivo como fonte principal de dados no recorte atual. Além disso, elementos como autenticação robusta, sincronização entre múltiplos dispositivos, integrações externas, notificações e módulos administrativos ampliados devem ser entendidos como possibilidades de evolução do ecossistema, e não como pressupostos obrigatórios para a operação básica aqui especificada.

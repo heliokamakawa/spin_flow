@@ -1,0 +1,128 @@
+\section{Requisitos Não Funcionais}
+
+\subsubsection*{Desempenho e Fluidez}
+\reqfuncfull
+{nf:concluir_reserva_em_ate_dois_segundos}
+{Concluir reserva por check-in em até dois segundos}
+{A operação completa de reserva por check-in, desde a validação da posição escolhida até a atualização do mapa e da disponibilidade da turma, deve concluir em no máximo dois segundos. Esse requisito se aplica ao fluxo crítico do aluno, inclusive em situações de sala com ocupação total e tentativas concorrentes de reserva no mesmo horário. O objetivo é preservar resposta rápida e previsível no principal fluxo de valor do sistema.}
+{Importante}
+{Depende dos requisitos funcionais do fluxo de reserva por check-in e da execução consistente das validações e atualizações correlatas. Depende de processamento e persistência capazes de atender ao tempo máximo definido mesmo em cenário de alta ocupação.}
+{Contexto principal: fluxo do aluno. O requisito é mensurável e deve ser verificado com critério objetivo de tempo fim a fim da operação.}
+\reqfuncfull
+{nf:renderizar_mapa_em_ate_um_segundo}
+{Renderizar mapa da sala em até um segundo}
+{O mapa visual da sala deve ser renderizado em no máximo um segundo após a seleção da turma e da data, para salas com até cinquenta posições. Esse requisito garante que a consulta espacial da aula permaneça fluida e útil no momento de escolha da posição. O tempo de resposta deve considerar a representação da grade e dos estados das posições no contexto consultado.}
+{Importante}
+{Depende dos requisitos funcionais de seleção de turma e data, exibição do mapa e identificação de estados das posições. Depende da capacidade de montagem do mapa dentro do limite de desempenho definido para o tamanho de sala previsto.}
+{Contexto principal: mapa de bikes. O requisito é mensurável e deve ser validado em salas com até cinquenta posições.}
+\reqfuncfull
+{nf:carregar_listagens_com_fluidez}
+{Carregar listagens e consultas com fluidez}
+{As telas de listagem e consulta do produto devem carregar e renderizar até quinhentos registros em no máximo dois segundos, adotando paginação ou carregamento progressivo quando necessário para preservar fluidez de uso. O requisito se aplica a consultas operacionais e informacionais previstas no recorte do sistema. A estratégia de exibição pode variar, desde que o comportamento percebido pelo usuário continue rápido e controlado.}
+{Importante}
+{Depende dos requisitos de consulta e listagem do sistema e da estratégia de exibição adotada para volumes maiores de dados. Depende de mecanismos de paginação ou carregamento progressivo quando o volume exigir.}
+{Contexto principal: consultas e listagens. O requisito é mensurável e deve considerar tanto carregamento quanto renderização perceptível na interface.}
+
+\subsubsection*{Consistência Operacional e Acessibilidade Visual}
+\reqfuncfull
+{nf:garantir_consistencia_da_reserva}
+{Garantir consistência entre reserva, ocupação e disponibilidade}
+{O sistema deve garantir consistência entre reserva, ocupação da posição e disponibilidade da turma, evitando estados contraditórios após efetivação, cancelamento ou concorrência no check-in. Toda alteração operacional relevante deve produzir resultado coerente entre o registro persistido, o mapa exibido e a vaga considerada disponível. O requisito protege a integridade do fluxo principal da aula.}
+{Essencial}
+{Depende dos requisitos funcionais de reserva, cancelamento, atualização de mapa e reflexo operacional de manutenção. Depende da execução coordenada das escritas e recálculos relacionados ao estado da aula.}
+{Contexto principal: operação de reserva e disponibilidade. O requisito é transversal aos fluxos que alteram ocupação ou vagas da turma.}
+\reqfuncfull
+{nf:tratar_concorrencia_de_reserva}
+{Tratar concorrência na reserva da mesma posição}
+{Quando houver tentativa simultânea de reserva da mesma posição na mesma turma e data, apenas uma operação deve ser bem-sucedida e a outra deve receber retorno claro de indisponibilidade. O sistema deve tratar a concorrência como situação controlada, sem gerar dupla ocupação da posição nem inconsistências entre reserva e mapa. O requisito protege a unicidade operacional da vaga em cenários de disputa simultânea.}
+{Essencial}
+{Depende dos requisitos funcionais de impedimento de dupla ocupação da posição, exibição de erro na reserva e consistência entre reserva e disponibilidade. Depende da execução atômica e sincronizada da confirmação da reserva.}
+{Contexto principal: concorrência de check-in. O comportamento deve ser verificável em tentativas simultâneas sobre a mesma posição.}
+\reqfuncfull
+{nf:nao_depender_apenas_de_cor}
+{Não depender apenas de cor para estados críticos}
+{O produto não deve transmitir estados críticos apenas por cor. Disponibilidade, bloqueio, ocupação e indisponibilidade devem possuir reforço adicional por texto, ícone ou padrão visual equivalente, de modo que a compreensão do estado não dependa exclusivamente da percepção cromática do usuário. O requisito se aplica especialmente ao mapa da sala e aos pontos de feedback operacional da interface.}
+{Importante}
+{Depende dos requisitos funcionais de identificação de estados do mapa e visualização operacional da sala. Depende da definição de elementos visuais complementares para representar os estados críticos.}
+{Contexto principal: interface e acessibilidade visual. O requisito é transversal a telas com estados operacionais relevantes.}
+
+\subsubsection*{Privacidade e Proteção de Dados}
+\reqfuncfull
+{nf:tratar_dados_com_finalidade_explicita}
+{Tratar dados pessoais com finalidade explícita}
+{Dados pessoais dos alunos devem ser tratados com finalidade explícita e não devem ser compartilhados com terceiros por meio do sistema sem base apropriada. O uso dessas informações deve permanecer vinculado ao contexto operacional e informacional previsto pelo produto. O requisito estabelece limite de finalidade e compartilhamento no tratamento dos dados pessoais.}
+{Essencial}
+{Depende dos requisitos funcionais que lidam com dados pessoais, históricos e identificação de alunos. Depende das regras de domínio e conformidade aplicáveis ao uso dessas informações.}
+{Contexto principal: privacidade e governança de dados. O requisito é transversal a todo fluxo que trate dados pessoais do aluno.}
+\reqfuncfull
+{nf:restringir_visualizacao_de_dados_pessoais}
+{Restringir visualização de dados pessoais e históricos}
+{Informações pessoais e históricas do aluno devem ser visíveis apenas ao próprio usuário e aos perfis autorizados pelas regras do domínio. A interface e os serviços de consulta devem respeitar essa limitação de visibilidade em histórico, mapa e demais pontos de acesso a dados sensíveis. O requisito protege privacidade e controle de acesso no recorte funcional do sistema.}
+{Essencial}
+{Depende dos requisitos funcionais de histórico individual, anonimização de ocupações de terceiros e visualização operacional pela professora. Depende das regras de visibilidade por perfil definidas no domínio.}
+{Contexto principal: controle de acesso a informações pessoais. O requisito admite exceções apenas para perfis autorizados pelo domínio.}
+\reqfuncfull
+{nf:armazenar_dados_em_area_protegida}
+{Armazenar dados em área protegida do dispositivo}
+{O armazenamento de dados do aplicativo deve ocorrer em área protegida do ambiente de execução, sem exposição deliberada de dados pessoais em locais públicos do dispositivo. Esse requisito reforça a proteção física e lógica das informações mantidas localmente, especialmente no contexto de operação prioritária offline. O objetivo é reduzir risco de acesso indevido por armazenamento inseguro.}
+{Importante}
+{Depende do requisito [\ref{nf:operar_prioritariamente_offline}] e do tratamento de dados pessoais previsto no sistema. Depende da escolha de mecanismos de armazenamento compatíveis com área protegida do ambiente de execução.}
+{Contexto principal: persistência local. O requisito é transversal a dados pessoais e operacionais armazenados no aplicativo.}
+\reqfuncfull
+{nf:respeitar_principios_de_privacidade}
+{Respeitar princípios de privacidade e conformidade}
+{A solução deve respeitar os princípios de privacidade e conformidade aplicáveis ao tratamento de dados pessoais no contexto brasileiro, especialmente quanto à necessidade, finalidade e restrição de uso das informações coletadas. O requisito funciona como diretriz geral de conformidade para o desenho e a evolução do sistema. Sua aplicação deve orientar tanto o tratamento dos dados quanto a exposição dessas informações aos perfis do produto.}
+{Essencial}
+{Depende dos requisitos [\ref{nf:tratar_dados_com_finalidade_explicita}] e [\ref{nf:restringir_visualizacao_de_dados_pessoais}]. Depende da observância das normas e princípios aplicáveis ao contexto brasileiro de tratamento de dados pessoais.}
+{Contexto principal: conformidade e governança. O requisito é transversal a todo o ciclo de tratamento dos dados pessoais no produto.}
+
+\subsubsection*{Qualidade de Uso e Evolução}
+\reqfuncfull
+{nf:operar_prioritariamente_offline}
+{Operar prioritariamente de forma offline}
+{O sistema deve operar prioritariamente de forma offline nas funcionalidades centrais de consulta, visualização e reserva previstas neste recorte. A ausência de conectividade não deve impedir o uso normal das funções principais contempladas no produto, desde que o contexto local do aplicativo esteja disponível. O requisito orienta a arquitetura e o comportamento operacional do sistema.}
+{Essencial}
+{Depende dos requisitos funcionais centrais de agenda, mapa, reserva, cancelamento e acompanhamento individual. Depende de armazenamento local e sincronização compatíveis com operação prioritária offline.}
+{Contexto principal: arquitetura e operação. O requisito define uma condição estrutural do produto, e não apenas um comportamento opcional da interface.}
+\reqfuncfull
+{nf:manter_fluxo_principal_simples}
+{Manter o fluxo principal de reserva simples}
+{O fluxo principal de reserva deve ser simples o suficiente para que um aluno de primeira utilização consiga concluí-lo em no máximo três toques a partir do dashboard, em menos de sessenta segundos. Esse requisito estabelece critério de usabilidade e simplicidade para o principal caminho de uso do sistema. A interface deve ser desenhada para reduzir fricção e tornar a reserva rápida e intuitiva.}
+{Importante}
+{Depende dos requisitos funcionais do fluxo principal de agenda, seleção de turma e data, mapa e check-in. Depende de desenho de interface compatível com o limite de interações e tempo definidos.}
+{Contexto principal: usabilidade do fluxo de reserva. O requisito é mensurável por número de toques e tempo de conclusão.}
+\reqfuncfull
+{nf:preservar_consistencia_no_contexto_mobile}
+{Preservar consistência funcional e visual no contexto mobile}
+{O comportamento funcional e visual das funcionalidades centrais deve permanecer consistente nos dispositivos móveis suportados pelo projeto. Diferenças técnicas entre ambientes móveis não devem alterar o entendimento do fluxo, das regras ou dos estados operacionais principais do sistema. O requisito busca preservar previsibilidade e coerência da experiência de uso no contexto principal do produto.}
+{Importante}
+{Depende dos requisitos funcionais centrais e do desenho de interface adotado pelo produto. Depende da implementação mobile manter equivalência de comportamento nas funcionalidades nucleares entre os dispositivos suportados.}
+{Contexto principal: experiência mobile. O requisito não exige identidade absoluta de implementação, mas sim consistência percebida e funcional no ambiente principal de uso do sistema.}
+\reqfuncfull
+{nf:permitir_evolucao_sem_acoplamento_excessivo}
+{Permitir evolução sem acoplamento excessivo}
+{A solução deve ser mantida de forma extensível, permitindo evolução das entidades e fluxos do domínio sem acoplamento excessivo entre módulos. Mudanças em partes do sistema não devem impor refatorações desproporcionais em componentes não relacionados. O requisito orienta a qualidade estrutural da implementação para favorecer manutenção e crescimento controlado do produto.}
+{Importante}
+{Depende da organização arquitetural e modular do sistema. Depende de separação adequada entre responsabilidades do domínio, persistência, interface e regras operacionais.}
+{Contexto principal: manutenibilidade e evolução técnica. O requisito é estrutural e se aplica ao desenho interno da solução.}
+\reqfuncfull
+{nf:preservar_confiabilidade_historica}
+{Preservar confiabilidade histórica dos registros de check-in}
+{O sistema deve preservar confiabilidade histórica dos registros de check-in, garantindo que cancelamentos e alterações operacionais não corrompam as métricas individuais e gerenciais derivadas do domínio. O histórico deve permanecer rastreável e coerente mesmo diante de mudanças no estado operacional das reservas. O requisito protege a utilidade analítica e a integridade temporal dos dados.}
+{Importante}
+{Depende dos requisitos funcionais de preservação de histórico de check-in cancelado, desconsideração de cancelados nas métricas e reflexo operacional de alterações no domínio. Depende da manutenção correta dos estados históricos dos registros.}
+{Contexto principal: histórico e análise. O requisito é transversal aos fluxos que alteram estado de check-ins e métricas derivadas.}
+\reqfuncfull
+{nf:executar_operacoes_criticas_de_forma_atomica}
+{Executar operações críticas de forma atômica}
+{Operações que envolvam múltiplas escritas correlatas, como reserva, cancelamento de check-in e atualização de disponibilidade, devem ser executadas de forma atômica, sem deixar o banco em estado inconsistente. O requisito garante que alterações parciais não comprometam a integridade do domínio quando uma operação crítica for interrompida ou falhar no meio do processo. Sua aplicação é essencial para consistência operacional do sistema.}
+{Essencial}
+{Depende dos requisitos funcionais de reserva, cancelamento e atualização de disponibilidade. Depende de mecanismos de persistência capazes de garantir atomicidade nas operações críticas.}
+{Contexto principal: persistência e consistência transacional. O requisito se aplica a toda operação com múltiplas escritas relacionadas.}
+\reqfuncfull
+{nf:permitir_expansao_do_padrao_cadastral}
+{Permitir expansão do padrão cadastral sem refatorações invasivas}
+{A inclusão de novas entidades cadastrais no padrão já adotado pelo projeto deve ser possível sem exigir refatorações invasivas nas entidades existentes. O requisito busca preservar reuso de abordagem, previsibilidade estrutural e capacidade de crescimento controlado do conjunto de cadastros do domínio. A evolução do modelo cadastral não deve degradar a estabilidade dos componentes já implementados.}
+{Importante}
+{Depende dos requisitos transversais de CRUD e da organização modular adotada para formulários, validações, associações e persistência das entidades. Depende de desenho técnico que favoreça extensão sem ruptura generalizada.}
+{Contexto principal: evolução do ecossistema cadastral. O requisito é estrutural e orienta a expansão futura do domínio operacional.}

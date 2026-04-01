@@ -1,0 +1,39 @@
+\section{Especificação das Interfaces Externas}
+
+\subsection{Requisitos de Interface Externa}
+
+\subsubsection{Interfaces do Usuário}
+As interfaces do usuário do \ProjetoNome\ devem atender de forma coerente os dois perfis operacionais contemplados nesta especificação: Aluno e Professora. Como o produto é um aplicativo \textit{mobile} com foco no contexto de uso da academia, a interação deve privilegiar leitura rápida, navegação objetiva e resposta imediata nos fluxos mais frequentes, especialmente consulta de agenda, visualização do mapa, realização de \textit{check-in}, cancelamento de reserva e manutenção operacional.
+
+Para o Aluno, a interface deve priorizar poucos passos, linguagem direta e clareza sobre o estado da aula, da posição escolhida e da disponibilidade real das \textit{bikes}. O mapa da sala deve refletir a organização física do ambiente e distinguir, de maneira compreensível, posições livres, ocupadas, indisponíveis ou afetadas por manutenção. Informações operacionais relevantes ao processo de reserva, como turma, data, horário, \textit{mix} atual e confirmação do \textit{check-in}, devem estar acessíveis de forma simples e contextualizada.
+
+Para a Professora, a interface deve oferecer visão operacional das entidades que sustentam o fluxo principal do produto, incluindo salas, \textit{bikes}, posições, turmas, \textit{mixes}, grupos de alunos e manutenções. Nessa frente, a solução deve favorecer a compreensão da relação entre os elementos do domínio, evidenciar os impactos de ativação, inativação, manutenção e cancelamento e permitir acompanhamento da ocupação das aulas de forma compatível com a rotina da academia.
+
+Independentemente do perfil, a interface não deve depender exclusivamente de cor para representar estados críticos. Situações como disponibilidade, indisponibilidade, bloqueio, ocupação e erro devem possuir reforço textual, icônico ou visual equivalente. O sistema também deve fornecer retorno explícito para ações de sucesso, falha, ausência de dados, conflito de reserva e carregamento de informações.
+
+\subsubsection{Interfaces de Hardware}
+No escopo desta especificação, o \ProjetoNome\ não depende de integração direta com hardware especializado, sensores, leitores, catracas, impressoras ou periféricos externos específicos. A interface de hardware relevante é a dos próprios dispositivos utilizados para executar o aplicativo, com destaque para \textit{smartphones} Android e dispositivos iOS utilizados pelos alunos, além de dispositivos móveis ou computadores de apoio utilizados pela Professora na operação da academia.
+
+Os dispositivos de uso principal devem oferecer, no mínimo, tela sensível ao toque com área útil suficiente para leitura da agenda e visualização do mapa da sala, capacidade de armazenamento local para persistência dos dados do aplicativo e recursos de processamento compatíveis com renderização do mapa, consultas e operações de \textit{check-in} sem degradação perceptível do fluxo. O projeto deve ser executável em aparelhos compatíveis com as configurações mínimas de \textit{build} definidas para Android e iOS no ambiente da aplicação, sem exigir acessórios adicionais para que as funções centrais do produto sejam realizadas.
+
+No recorte atual, não há necessidade de câmera, microfone, geolocalização, Bluetooth ou leitura de arquivos locais para execução das funções centrais. Como o produto trabalha com URLs informadas em cadastro para fotos, links e conteúdos externos, a exibição desses recursos depende apenas da capacidade normal de renderização do dispositivo e, quando aplicável, de conectividade para acesso ao endereço remoto correspondente.
+
+\subsubsection{Interfaces de Software}
+As interfaces de software do \ProjetoNome\ concentram-se principalmente na comunicação entre a camada de apresentação do aplicativo, as regras de domínio e os mecanismos de persistência local que sustentam o funcionamento do produto. No recorte atual, o sistema deve preservar consistência entre agenda, turma, mapa, posição, \textit{bike}, \textit{mix}, histórico e manutenção, refletindo nas telas exatamente o estado operacional mantido pela aplicação.
+
+Como a solução foi concebida com foco em operação local, a principal interface de software externa ao fluxo visual corresponde ao mecanismo de armazenamento persistente utilizado pelo aplicativo. Essa interface deve permitir gravação, consulta e atualização dos dados do domínio de forma íntegra, especialmente nas operações críticas de \textit{check-in}, cancelamento e atualização da disponibilidade da turma.
+
+No estado atual do projeto, não foram identificadas integrações obrigatórias com serviços externos de autenticação, notificações \textit{push}, captura de mídia ou sincronização remota contínua. Também não foram observadas, nos artefatos móveis principais, permissões sensíveis específicas para câmera, galeria, microfone, localização ou contatos. Assim, a operação básica do produto deve permanecer desvinculada dessas autorizações.
+
+O produto admite, como evolução futura, interfaces complementares com serviços de autenticação, sincronização, notificações e fontes externas de informação. Entretanto, tais integrações não constituem dependências obrigatórias para o funcionamento básico especificado neste documento e não devem comprometer a autonomia dos fluxos centrais do sistema.
+
+\subsubsection{Interfaces de Comunicação}
+No recorte atual, o \ProjetoNome\ não depende de comunicação contínua em rede para executar suas funções centrais. Os fluxos principais de consulta, visualização do mapa, reserva, cancelamento e acompanhamento operacional devem permanecer utilizáveis mesmo na ausência de conectividade externa, desde que o contexto local do aplicativo esteja disponível.
+
+As necessidades de comunicação identificadas no projeto estão associadas principalmente ao acesso eventual a endereços externos informados por URL, como imagens remotas de perfil, fotos de artistas, links musicais e referências de vídeo-aula. Esse tipo de comunicação é complementar ao fluxo principal e não deve impedir o uso do aplicativo quando indisponível, podendo apenas limitar a exibição do conteúdo remoto correspondente.
+
+Nos artefatos móveis atualmente configurados, a permissão de internet aparece apenas nos manifestos de desenvolvimento do Android, compatível com execução e depuração durante o ciclo de implementação. No recorte funcional descrito nesta especificação, não há dependência obrigatória de comunicação em rede para reserva, agenda, mapa ou manutenção operacional.
+
+Ainda assim, o contexto da solução admite interfaces de comunicação complementares para frentes futuras do ecossistema, como sincronização entre dispositivos, envio de notificações, integração com serviços remotos e troca de dados com componentes externos da academia. Quando presentes, essas comunicações devem ocorrer de forma controlada, sem alterar a previsibilidade do fluxo principal nem introduzir dependência obrigatória para o uso cotidiano do produto.
+
+Sempre que houver troca de dados entre o aplicativo e componentes externos, a comunicação deverá respeitar as restrições de segurança, privacidade e finalidade aplicáveis ao domínio, preservando a integridade das informações e o tratamento adequado dos dados pessoais no contexto da LGPD.
