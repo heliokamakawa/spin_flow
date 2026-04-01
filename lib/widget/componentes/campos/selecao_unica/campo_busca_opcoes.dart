@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:spin_flow/dto/dto.dart';
 
 class CampoBuscaOpcoes<T extends DTO> extends StatefulWidget {
@@ -135,3 +135,5 @@ class _CampoBuscaOpcoesState<T extends DTO> extends State<CampoBuscaOpcoes<T>> {
     super.dispose();
   }
 }
+
+

@@ -1,4 +1,4 @@
-import 'package:spin_flow/dto/dto.dart';
+﻿import 'package:spin_flow/dto/dto.dart';
 import 'package:spin_flow/dto/dto_fabricante.dart';
 
 class DTOBike implements DTO {
@@ -20,3 +20,4 @@ class DTOBike implements DTO {
     this.ativa = true,
   });
 }
+

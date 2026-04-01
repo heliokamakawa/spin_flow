@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:spin_flow/dto/dto_categoria_musica.dart';
 import 'package:spin_flow/banco/sqlite/dao/dao_categoria_musica.dart';
 import 'package:spin_flow/widget/componentes/campos/comum/campo_texto.dart';
@@ -78,7 +78,7 @@ class _FormCategoriaMusicaState extends State<FormCategoriaMusica> {
               CampoTexto(
                 controle: _descricaoControlador,
                 rotulo: 'Descrição',
-                dica: 'Descrição da coreografia\nExemplo para "Coreografia" → músicas que exigem coordenação motora e passos específicos',
+                dica: 'Descrição da coreografia\nExemplo para "Coreografia" -> músicas que exigem coordenação motora e passos específicos',
                 maxLinhas: 3,
                 eObrigatorio: false,
               ),
@@ -127,7 +127,7 @@ class _FormCategoriaMusicaState extends State<FormCategoriaMusica> {
   void _preencherCampos(DTOCategoriaMusica categoria) {
     _id = categoria.id;
     _nomeControlador.text = categoria.nome;
-    _descricaoControlador.text = categoria.descricao ?? '';
+    _descricaoControlador.text = categoria.descricao;
     _ativa = categoria.ativa;
   }
 
@@ -143,7 +143,7 @@ class _FormCategoriaMusicaState extends State<FormCategoriaMusica> {
     return DTOCategoriaMusica(
       id: _id,
       nome: _nomeControlador.text,
-      descricao: _descricaoControlador.text.isEmpty ? null : _descricaoControlador.text,
+      descricao: _descricaoControlador.text,
       ativa: _ativa,
     );
   }
@@ -188,17 +188,19 @@ class _FormCategoriaMusicaState extends State<FormCategoriaMusica> {
 
 /*
 Categorias para músicas (nomes sugestivos):
-Cadência — músicas que definem ritmo e velocidade do treino
-Coreografia — músicas que exigem coordenação motora e passos específicos
-Força — músicas para exercícios que trabalham força e resistência
-Perna — músicas focadas em exercícios para membros inferiores
-Braço — músicas para exercícios focados em membros superiores
-Ritmo — músicas com batidas envolventes para manter a energia
-Relaxamento — músicas suaves para alongamento, descanso e desaceleração
-Animação — músicas alegres e motivadoras para divertir e estimular
-Intervalo — músicas para momentos de pausa ativa, recuperação rápida
-Aquecimento — músicas para preparar o corpo no início da aula
-Desaquecimento — músicas para finalização, relaxar e diminuir o esforço
-Explosão — músicas com batidas fortes para picos de esforço e sprint
-Core — músicas para exercícios focados na região do abdômen e tronco
+Cadência - músicas que definem ritmo e velocidade do treino
+Coreografia - músicas que exigem coordenação motora e passos específicos
+Força - músicas para exercícios que trabalham força e resistência
+Perna - músicas focadas em exercícios para membros inferiores
+Braço - músicas para exercícios focados em membros superiores
+Ritmo - músicas com batidas envolventes para manter a energia
+Relaxamento - músicas suaves para alongamento, descanso e desaceleração
+Animação - músicas alegres e motivadoras para divertir e estimular
+Intervalo - músicas para momentos de pausa ativa, recuperação rápida
+Aquecimento - músicas para preparar o corpo no início da aula
+Desaquecimento - músicas para finalização, relaxar e diminuir o esforço
+Explosão - músicas com batidas fortes para picos de esforço e sprint
+Core - músicas para exercícios focados na região do abdômen e tronco
 */
+
+

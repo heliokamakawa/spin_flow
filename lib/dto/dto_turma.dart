@@ -1,4 +1,4 @@
-import 'package:spin_flow/dto/dto.dart';
+﻿import 'package:spin_flow/dto/dto.dart';
 import 'package:spin_flow/dto/dto_sala.dart';
 
 class DTOTurma implements DTO {
@@ -24,3 +24,4 @@ class DTOTurma implements DTO {
     this.ativo = true,
   });
 }
+

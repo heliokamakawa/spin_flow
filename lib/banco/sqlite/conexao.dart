@@ -1,4 +1,4 @@
-import 'dart:io';
+﻿import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
@@ -8,7 +8,7 @@ import 'script.dart';
 class ConexaoSQLite {
   static Database? _database;
   
-  // Método singleton para obter a instância do banco
+  // MÃ©todo singleton para obter a instÃ¢ncia do banco
   static Future<Database> get database async {
     if (_database != null) return _database!;
     
@@ -26,7 +26,7 @@ class ConexaoSQLite {
       sqfliteFfiInit();
       databaseFactory = databaseFactoryFfi;
     }
-    // Mobile usa o sqflite padrão
+    // Mobile usa o sqflite padrÃ£o
 
     // Caminho do banco
     String path;
@@ -61,13 +61,18 @@ class ConexaoSQLite {
         await db.execute(comando);
       }
     }
+
+    // Insercoes dinamicas para manter cenarios de teste alinhados com data/hora atual.
+    for (final comando in ScriptSQLite.comandosInsercoesDinamicas(DateTime.now())) {
+      await db.execute(comando);
+    }
   }
 
   static Future<void> _atualizarBanco(Database db, int oldVersion, int newVersion) async {
-    // Lógica para atualizações futuras
+    // LÃ³gica para atualizaÃ§Ãµes futuras
   }
 
-  // Método para fechar conexão
+  // MÃ©todo para fechar conexÃ£o
   static Future<void> fecharConexao() async {
     if (_database != null) {
       await _database!.close();

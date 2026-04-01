@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:spin_flow/dto/dto.dart';
 
 class CampoMultiSelecao<T extends DTO> extends StatelessWidget {
@@ -105,3 +105,5 @@ class CampoMultiSelecao<T extends DTO> extends StatelessWidget {
     );
   }
 }
+
+

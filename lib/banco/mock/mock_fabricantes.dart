@@ -1,11 +1,11 @@
-import 'package:spin_flow/dto/dto_fabricante.dart';
+﻿import 'package:spin_flow/dto/dto_fabricante.dart';
 
 List<DTOFabricante> mockFabricantes = [
   DTOFabricante(
     id: 1,
     nome: 'Movement',
-    descricao: 'Fabricante líder em equipamentos de spinning com tecnologia avançada',
-    nomeContatoPrincipal: 'João Silva',
+    descricao: 'Fabricante lÃ­der em equipamentos de spinning com tecnologia avanÃ§ada',
+    nomeContatoPrincipal: 'JoÃ£o Silva',
     emailContato: 'contato@movement.com.br',
     telefoneContato: '(11) 3456-7890',
     ativo: true,
@@ -67,7 +67,7 @@ List<DTOFabricante> mockFabricantes = [
   DTOFabricante(
     id: 8,
     nome: 'Power Bike',
-    descricao: 'Potência e resistência para treinos intensos',
+    descricao: 'PotÃªncia e resistÃªncia para treinos intensos',
     nomeContatoPrincipal: 'Fernanda Rocha',
     emailContato: 'vendas@powerbike.com.br',
     telefoneContato: '(11) 9012-3456',
@@ -94,7 +94,7 @@ List<DTOFabricante> mockFabricantes = [
   DTOFabricante(
     id: 11,
     nome: 'Fitness Tech',
-    descricao: 'Tecnologia avançada em fitness',
+    descricao: 'Tecnologia avanÃ§ada em fitness',
     nomeContatoPrincipal: 'Ricardo Nunes',
     emailContato: 'vendas@fitnesstech.com.br',
     telefoneContato: '(11) 2345-6789',
@@ -112,7 +112,7 @@ List<DTOFabricante> mockFabricantes = [
   DTOFabricante(
     id: 13,
     nome: 'Spin Force',
-    descricao: 'Força e resistência em cada treino',
+    descricao: 'ForÃ§a e resistÃªncia em cada treino',
     nomeContatoPrincipal: 'Diego Souza',
     emailContato: 'comercial@spinforce.com.br',
     telefoneContato: '(11) 4567-8901',
@@ -130,7 +130,7 @@ List<DTOFabricante> mockFabricantes = [
   DTOFabricante(
     id: 15,
     nome: 'Power Spin',
-    descricao: 'Potência máxima em spinning',
+    descricao: 'PotÃªncia mÃ¡xima em spinning',
     nomeContatoPrincipal: 'Andre Santos',
     emailContato: 'contato@powerspin.com.br',
     telefoneContato: '(11) 6789-0123',
@@ -157,7 +157,7 @@ List<DTOFabricante> mockFabricantes = [
   DTOFabricante(
     id: 18,
     nome: 'Spin Tech',
-    descricao: 'Tecnologia avançada em spinning',
+    descricao: 'Tecnologia avanÃ§ada em spinning',
     nomeContatoPrincipal: 'Renata Silva',
     emailContato: 'contato@spintech.com.br',
     telefoneContato: '(11) 9012-3456',
@@ -175,7 +175,7 @@ List<DTOFabricante> mockFabricantes = [
   DTOFabricante(
     id: 20,
     nome: 'Spin Power',
-    descricao: 'Potência e tecnologia em spinning',
+    descricao: 'PotÃªncia e tecnologia em spinning',
     nomeContatoPrincipal: 'Amanda Rocha',
     emailContato: 'vendas@spinpower.com.br',
     telefoneContato: '(11) 1234-5678',

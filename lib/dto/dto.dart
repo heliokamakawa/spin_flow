@@ -1,4 +1,4 @@
-abstract class DTO {
+﻿abstract class DTO {
   final int? id;
   final String nome;
 

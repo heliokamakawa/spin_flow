@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:spin_flow/banco/sqlite/dao/dao_video_aula.dart';
 import 'package:spin_flow/dto/dto_video_aula.dart';
 
 class FormVideoAula extends StatefulWidget {
@@ -11,6 +12,7 @@ class FormVideoAula extends StatefulWidget {
 
 class _FormVideoAulaState extends State<FormVideoAula> {
   final _formKey = GlobalKey<FormState>();
+  final DAOVideoAula _daoVideoAula = DAOVideoAula();
   late TextEditingController _nomeController;
   late TextEditingController _linkController;
   bool _ativo = true;
@@ -30,15 +32,16 @@ class _FormVideoAulaState extends State<FormVideoAula> {
     super.dispose();
   }
 
-  void _salvar() {
+  Future<void> _salvar() async {
     if (_formKey.currentState?.validate() ?? false) {
       final dto = DTOVideoAula(
         id: widget.videoAula?.id,
         nome: _nomeController.text.trim(),
-        linkVideo: _linkController.text.trim().isEmpty ? null : _linkController.text.trim(),
+        linkVideo: _linkController.text.trim(),
         ativo: _ativo,
       );
-      debugPrint(dto.toString()); // Persistência real será implementada depois
+      await _daoVideoAula.salvar(dto);
+      if (!mounted) return;
       Navigator.of(context).pop(dto);
     }
   }
@@ -47,7 +50,7 @@ class _FormVideoAulaState extends State<FormVideoAula> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.videoAula == null ? 'Nova Vídeo-aula' : 'Editar Vídeo-aula'),
+        title: Text(widget.videoAula == null ? 'Nova Video-aula' : 'Editar Video-aula'),
         actions: [
           IconButton(
             icon: const Icon(Icons.save),
@@ -69,22 +72,22 @@ class _FormVideoAulaState extends State<FormVideoAula> {
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) => (value == null || value.trim().isEmpty)
-                    ? 'Informe o nome da vídeo-aula'
+                    ? 'Informe o nome da video-aula'
                     : null,
               ),
               const SizedBox(height: 16),
               TextFormField(
                 controller: _linkController,
                 decoration: const InputDecoration(
-                  labelText: 'Link do vídeo',
+                  labelText: 'Link do video',
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.url,
                 validator: (value) {
                   if (value != null && value.trim().isNotEmpty) {
-                    final urlPattern = r'^(http|https):\/\/';
+                    const urlPattern = r'^(http|https):\/\/';
                     if (!RegExp(urlPattern).hasMatch(value.trim())) {
-                      return 'Informe uma URL válida (http ou https)';
+                      return 'Informe uma URL valida (http ou https)';
                     }
                   }
                   return null;
@@ -102,4 +105,5 @@ class _FormVideoAulaState extends State<FormVideoAula> {
       ),
     );
   }
-} 
+}
+

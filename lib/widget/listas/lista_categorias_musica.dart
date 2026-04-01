@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:spin_flow/banco/sqlite/dao/dao_categoria_musica.dart';
 import 'package:spin_flow/dto/dto_categoria_musica.dart';
 import 'package:spin_flow/configuracoes/rotas.dart';
@@ -22,3 +22,5 @@ class ListaCategoriasMusica extends StatelessWidget {
     );
   }
 }
+
+

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:spin_flow/dto/dto_fabricante.dart';
 import 'package:spin_flow/banco/sqlite/dao/dao_fabricante.dart';
 import 'package:spin_flow/widget/componentes/borda_com_titulo.dart';
@@ -237,4 +237,6 @@ class _FormFabricanteState extends State<FormFabricante> {
     );
   }
 }
+
+
 

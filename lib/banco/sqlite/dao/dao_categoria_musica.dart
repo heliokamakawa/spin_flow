@@ -4,77 +4,69 @@ import 'package:spin_flow/dto/dto_categoria_musica.dart';
 class DAOCategoriaMusica {
   static const String _tabela = 'categoria_musica';
 
-  // Salvar (inserir ou atualizar)
   Future<int> salvar(DTOCategoriaMusica categoria) async {
     final db = await ConexaoSQLite.database;
-    
+    final dados = {
+      'nome': categoria.nome,
+      'descricao': categoria.descricao,
+      'ativa': categoria.ativa ? 1 : 0,
+    };
+
     if (categoria.id != null) {
-      // Atualizar
-      return await db.update(
+      return db.update(
         _tabela,
-        {
-          'nome': categoria.nome,
-          'descricao': categoria.descricao,
-          'ativa': categoria.ativa ? 1 : 0,
-        },
+        dados,
         where: 'id = ?',
         whereArgs: [categoria.id],
       );
-    } else {
-      // Inserir
-      return await db.insert(
-        _tabela,
-        {
-          'nome': categoria.nome,
-          'descricao': categoria.descricao,
-          'ativa': categoria.ativa ? 1 : 0,
-        },
-      );
     }
+
+    return db.insert(_tabela, dados);
   }
 
-  // Buscar todos
   Future<List<DTOCategoriaMusica>> buscarTodos() async {
     final db = await ConexaoSQLite.database;
-    final List<Map<String, dynamic>> maps = await db.query(_tabela);
-    
-    return List.generate(maps.length, (i) {
-      return DTOCategoriaMusica(
-        id: maps[i]['id'],
-        nome: maps[i]['nome'],
-        descricao: maps[i]['descricao'],
-        ativa: maps[i]['ativa'] == 1,
-      );
-    });
+    final maps = await db.query(_tabela);
+    return maps.map(_mapParaDto).toList();
   }
 
-  // Buscar por ID
   Future<DTOCategoriaMusica?> buscarPorId(int id) async {
     final db = await ConexaoSQLite.database;
-    final List<Map<String, dynamic>> maps = await db.query(
+    final maps = await db.query(
       _tabela,
       where: 'id = ?',
       whereArgs: [id],
+      limit: 1,
     );
-    
-    if (maps.isNotEmpty) {
-      return DTOCategoriaMusica(
-        id: maps[0]['id'],
-        nome: maps[0]['nome'],
-        descricao: maps[0]['descricao'],
-        ativa: maps[0]['ativa'] == 1,
-      );
-    }
-    return null;
+
+    if (maps.isEmpty) return null;
+    return _mapParaDto(maps.first);
   }
 
-  // Excluir
   Future<int> excluir(int id) async {
     final db = await ConexaoSQLite.database;
-    return await db.delete(
+    return db.update(
       _tabela,
+      {'ativa': 0},
       where: 'id = ?',
       whereArgs: [id],
     );
   }
-} 
+
+  DTOCategoriaMusica _mapParaDto(Map<String, dynamic> map) {
+    return DTOCategoriaMusica(
+      id: _toInt(map['id']),
+      nome: (map['nome'] as String?) ?? '',
+      descricao: (map['descricao'] as String?) ?? '',
+      ativa: _toInt(map['ativa']) == 1,
+    );
+  }
+
+  int? _toInt(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    if (value is num) return value.toInt();
+    if (value is String) return int.tryParse(value);
+    return null;
+  }
+}

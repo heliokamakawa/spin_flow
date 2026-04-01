@@ -1,4 +1,4 @@
-class Rotas {
+﻿class Rotas {
   static const String login = '/login';
   static const String dashboardAluno = '/dashboard-aluno';
   static const String dashboardProfessora = '/dashboard-professora';
@@ -24,6 +24,16 @@ class Rotas {
   static const String cadastroTipoManutencao = '/cadastro-tipo-manutencao';
   static const String cadastroGrupoAlunos = '/cadastro-grupo-alunos';
   static const String cadastroVideoAula = '/cadastroVideoAula';
+  static const String cadastroManutencao = '/cadastro-manutencao';
+  static const String cadastroCheckin = '/cadastro-checkin';
+  static const String cadastroTurmaMix = '/cadastro-turma-mix';
+  static const String agendaAluno = '/agenda-aluno';
+  static const String mapaCheckin = '/mapa-checkin';
+  static const String historicoAluno = '/historico-aluno';
+  static const String checkinAluno = '/checkin-aluno';
+  static const String mixTurmaAluno = '/mix-turma-aluno';
+  static const String mapaOperacionalProfessora = '/mapa-operacional-professora';
+  static const String posicionamentoBikes = '/posicionamento-bikes';
   
   // Rotas das listas
   static const String listaFabricantes = '/lista-fabricantes';
@@ -37,4 +47,6 @@ class Rotas {
   static const String listaMixes = '/lista-mixes';
   static const String listaGruposAlunos = '/lista-grupos-alunos';
   static const String listaSalas = '/lista-salas';
+  static const String listaVideoAula = '/lista-video-aula';
 }
+

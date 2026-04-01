@@ -1,4 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:spin_flow/banco/sqlite/dao/dao_artista_banda.dart';
+import 'package:spin_flow/banco/sqlite/dao/dao_categoria_musica.dart';
+import 'package:spin_flow/banco/sqlite/dao/dao_musica.dart';
 import 'package:spin_flow/dto/dto_artista_banda.dart';
 import 'package:spin_flow/dto/dto_categoria_musica.dart';
 import 'package:spin_flow/dto/dto_musica.dart';
@@ -8,8 +11,6 @@ import 'package:spin_flow/widget/componentes/campos/selecao_multipla/campo_multi
 import 'package:spin_flow/widget/componentes/campos/comum/campo_texto.dart';
 import 'package:spin_flow/widget/componentes/campos/selecao_unica/campo_opcoes.dart';
 import 'package:spin_flow/widget/componentes/campos/comum/campo_url.dart';
-import 'package:spin_flow/banco/mock/mock_artistas_bandas.dart';
-import 'package:spin_flow/banco/mock/mock_categorias_musica.dart';
 
 class FormMusica extends StatefulWidget {
   const FormMusica({super.key});
@@ -20,16 +21,34 @@ class FormMusica extends StatefulWidget {
 
 class _FormMusicaState extends State<FormMusica> {
   final _chaveFormulario = GlobalKey<FormState>();
+  final DAOArtistaBanda _daoArtista = DAOArtistaBanda();
+  final DAOCategoriaMusica _daoCategoria = DAOCategoriaMusica();
+  final DAOMusica _daoMusica = DAOMusica();
 
-  // Campos do formulário
   String? _nome;
   DTOArtistaBanda? _artistaSelecionado;
   final List<DTOCategoriaMusica> _categoriasSelecionadas = [];
   final List<Map<String, String?>> _links = [];
-  String? _descricao;
+  String _descricao = '';
 
-  final List<DTOArtistaBanda> _artistasMock = mockArtistasBandas;
-  final List<DTOCategoriaMusica> _categoriasMock = mockCategoriasMusica;
+  List<DTOArtistaBanda> _artistas = [];
+  List<DTOCategoriaMusica> _categorias = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _carregarOpcoes();
+  }
+
+  Future<void> _carregarOpcoes() async {
+    final artistas = await _daoArtista.buscarTodos();
+    final categorias = await _daoCategoria.buscarTodos();
+    if (!mounted) return;
+    setState(() {
+      _artistas = artistas;
+      _categorias = categorias;
+    });
+  }
 
   void _adicionarLink() {
     setState(() {
@@ -58,7 +77,7 @@ class _FormMusicaState extends State<FormMusica> {
       _artistaSelecionado = null;
       _categoriasSelecionadas.clear();
       _links.clear();
-      _descricao = null;
+      _descricao = '';
     });
     _chaveFormulario.currentState?.reset();
   }
@@ -72,7 +91,6 @@ class _FormMusicaState extends State<FormMusica> {
             ))
         .toList();
     return DTOMusica(
-      id: 0,
       nome: _nome ?? '',
       artista: _artistaSelecionado!,
       categorias: List.from(_categoriasSelecionadas),
@@ -90,11 +108,7 @@ class _FormMusicaState extends State<FormMusica> {
     );
   }
 
-  void _redirecionarAposSalvar() {
-    _limparCampos();
-  }
-
-  void _salvar() {
+  Future<void> _salvar() async {
     if (_chaveFormulario.currentState!.validate()) {
       if (_artistaSelecionado == null) {
         _mostrarMensagem('Selecione o artista/banda', erro: true);
@@ -105,51 +119,11 @@ class _FormMusicaState extends State<FormMusica> {
         return;
       }
       final dto = _criarDTO();
-      debugPrint(dto.toString());
-      //final dao = DAOMusica(); 
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Música Criada'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Nome: ${dto.nome}'),
-                Text('Artista: ${dto.artista.nome}'),
-                Text('Descrição: ${dto.descricao ?? 'Não informado'}'),
-                const SizedBox(height: 8),
-                Text('Categorias (${dto.categorias.length}):', style: const TextStyle(fontWeight: FontWeight.bold)),
-                ...dto.categorias.map((cat) => 
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8, top: 2),
-                    child: Text('• ${cat.nome}'),
-                  ),
-                ),
-                if (dto.linksVideoAula.isNotEmpty) ...[
-                  const SizedBox(height: 8),
-                  Text('Links de Vídeo Aula (${dto.linksVideoAula.length}):', style: const TextStyle(fontWeight: FontWeight.bold)),
-                  ...dto.linksVideoAula.map((link) => 
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8, top: 2),
-                      child: Text('• ${link.nome}: ${link.linkVideo}'),
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Fechar'),
-            ),
-          ],
-        ),
-      );
-      _mostrarMensagem('Música "${dto.nome}" salva com sucesso!');
-      _redirecionarAposSalvar();
+      await _daoMusica.salvar(dto);
+      if (!mounted) return;
+      _mostrarMensagem('Musica "${dto.nome}" salva com sucesso!');
+      _limparCampos();
+      Navigator.of(context).pop(dto);
     }
   }
 
@@ -157,7 +131,7 @@ class _FormMusicaState extends State<FormMusica> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastro de Música'),
+        title: const Text('Cadastro de Musica'),
         actions: [
           IconButton(
             icon: const Icon(Icons.save),
@@ -173,14 +147,14 @@ class _FormMusicaState extends State<FormMusica> {
           child: ListView(
             children: [
               CampoTexto(
-                rotulo: 'Nome da Música',
-                dica: 'Nome da música',
+                rotulo: 'Nome da Musica',
+                dica: 'Nome da musica',
                 eObrigatorio: true,
                 aoAlterar: (value) => _nome = value,
               ),
               const SizedBox(height: 16),
               CampoOpcoes<DTOArtistaBanda>(
-                opcoes: _artistasMock,
+                opcoes: _artistas,
                 valorSelecionado: _artistaSelecionado,
                 rotulo: 'Artista/Banda',
                 textoPadrao: 'Selecione o artista/banda',
@@ -194,10 +168,10 @@ class _FormMusicaState extends State<FormMusica> {
               ),
               const SizedBox(height: 16),
               CampoMultiSelecao<DTOCategoriaMusica>(
-                opcoes: _categoriasMock,
+                opcoes: _categorias,
                 valoresSelecionados: _categoriasSelecionadas,
                 rotaCadastro: Rotas.cadastroCategoriaMusica,
-                rotulo: 'Categorias de Música',
+                rotulo: 'Categorias de Musica',
                 textoPadrao: 'Selecione categorias',
                 eObrigatorio: true,
                 onChanged: (selecionados) {
@@ -209,12 +183,12 @@ class _FormMusicaState extends State<FormMusica> {
                 },
               ),
               const SizedBox(height: 24),
-              Text(
-                'Links de Vídeo Aula (opcional)',
+              const Text(
+                'Links de Video Aula (opcional)',
               ),
               const SizedBox(height: 8),
               ..._links.asMap().entries.map((entry) {
-                int index = entry.key;
+                final index = entry.key;
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: Row(
@@ -222,7 +196,7 @@ class _FormMusicaState extends State<FormMusica> {
                       Expanded(
                         flex: 3,
                         child: CampoUrl(
-                          rotulo: 'Link do Vídeo Aula ${index + 1}',
+                          rotulo: 'Link do Video Aula ${index + 1}',
                           dica: 'https://...',
                           eObrigatorio: false,
                           aoAlterar: (value) => _atualizarLink(index, 'url', value),
@@ -232,7 +206,7 @@ class _FormMusicaState extends State<FormMusica> {
                       Expanded(
                         flex: 2,
                         child: CampoTexto(
-                          rotulo: 'Descrição',
+                          rotulo: 'Descricao',
                           dica: 'Ex: Playlist oficial',
                           eObrigatorio: false,
                           aoAlterar: (value) => _atualizarLink(index, 'descricao', value),
@@ -254,8 +228,8 @@ class _FormMusicaState extends State<FormMusica> {
               ),
               const SizedBox(height: 16),
               CampoTexto(
-                rotulo: 'Descrição',
-                dica: 'Descrição da música (opcional)',
+                rotulo: 'Descricao',
+                dica: 'Descricao da musica (opcional)',
                 eObrigatorio: false,
                 maxLinhas: 3,
                 aoAlterar: (value) => _descricao = value,
@@ -271,3 +245,4 @@ class _FormMusicaState extends State<FormMusica> {
     );
   }
 }
+

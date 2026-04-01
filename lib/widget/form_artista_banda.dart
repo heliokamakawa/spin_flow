@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:spin_flow/dto/dto_artista_banda.dart';
 import 'package:spin_flow/banco/sqlite/dao/dao_artista_banda.dart';
 import 'package:spin_flow/widget/componentes/campos/comum/campo_texto.dart';
@@ -149,9 +149,9 @@ class _FormArtistaBandaState extends State<FormArtistaBanda> {
   void _preencherCampos(DTOArtistaBanda artista) {
     _id = artista.id;
     _nomeControlador.text = artista.nome;
-    _descricaoControlador.text = artista.descricao ?? '';
-    _linkControlador.text = artista.link ?? '';
-    _fotoControlador.text = artista.foto ?? '';
+    _descricaoControlador.text = artista.descricao;
+    _linkControlador.text = artista.link;
+    _fotoControlador.text = artista.foto;
     _ativo = artista.ativo;
   }
 
@@ -169,9 +169,9 @@ class _FormArtistaBandaState extends State<FormArtistaBanda> {
     return DTOArtistaBanda(
       id: _id,
       nome: _nomeControlador.text,
-      descricao: _descricaoControlador.text.isEmpty ? null : _descricaoControlador.text,
-      link: _linkControlador.text.isEmpty ? null : _linkControlador.text,
-      foto: _fotoControlador.text.isEmpty ? null : _fotoControlador.text,
+      descricao: _descricaoControlador.text,
+      link: _linkControlador.text,
+      foto: _fotoControlador.text,
       ativo: _ativo,
     );
   }
@@ -210,3 +210,5 @@ class _FormArtistaBandaState extends State<FormArtistaBanda> {
     }
   }
 }
+
+

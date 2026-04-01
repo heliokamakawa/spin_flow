@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 class AppBarSalvar extends StatelessWidget implements PreferredSizeWidget {
   final String titulo;
@@ -30,3 +30,4 @@ class AppBarSalvar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+

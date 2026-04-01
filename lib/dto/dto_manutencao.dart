@@ -1,4 +1,4 @@
-import 'package:spin_flow/dto/dto_bike.dart';
+﻿import 'package:spin_flow/dto/dto_bike.dart';
 import 'package:spin_flow/dto/dto_tipo_manutencao.dart';
 
 class DTOManutencao {
@@ -20,3 +20,4 @@ class DTOManutencao {
     this.ativo = true,
   });
 }
+

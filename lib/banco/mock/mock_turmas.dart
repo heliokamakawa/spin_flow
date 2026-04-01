@@ -1,11 +1,11 @@
-import 'package:spin_flow/dto/dto_turma.dart';
+﻿import 'package:spin_flow/dto/dto_turma.dart';
 import 'mock_salas.dart';
 
 List<DTOTurma> mockTurmas = [
   DTOTurma(
     id: 1,
     nome: 'Spinning Iniciante 07h',
-    descricao: 'Aula para iniciantes com foco em técnica e resistência',
+    descricao: 'Aula para iniciantes com foco em tÃ©cnica e resistÃªncia',
     diasSemana: ['segunda', 'quarta', 'sexta'],
     horarioInicio: '07:00',
     duracaoMinutos: 45,
@@ -14,9 +14,9 @@ List<DTOTurma> mockTurmas = [
   ),
   DTOTurma(
     id: 2,
-    nome: 'Spinning Intermediário 08h',
-    descricao: 'Aula intermediária com intensidade moderada',
-    diasSemana: ['terça', 'quinta'],
+    nome: 'Spinning IntermediÃ¡rio 08h',
+    descricao: 'Aula intermediÃ¡ria com intensidade moderada',
+    diasSemana: ['terÃ§a', 'quinta'],
     horarioInicio: '08:00',
     duracaoMinutos: 50,
     sala: mockSalas[1], // Sala Spinning Compacta
@@ -24,8 +24,8 @@ List<DTOTurma> mockTurmas = [
   ),
   DTOTurma(
     id: 3,
-    nome: 'Spinning Avançado 18h',
-    descricao: 'Aula avançada com alta intensidade e intervalos',
+    nome: 'Spinning AvanÃ§ado 18h',
+    descricao: 'Aula avanÃ§ada com alta intensidade e intervalos',
     diasSemana: ['segunda', 'quarta', 'sexta'],
     horarioInicio: '18:00',
     duracaoMinutos: 60,
@@ -35,8 +35,8 @@ List<DTOTurma> mockTurmas = [
   DTOTurma(
     id: 4,
     nome: 'Spinning Express 12h',
-    descricao: 'Aula rápida e intensa para horário de almoço',
-    diasSemana: ['segunda', 'terça', 'quarta', 'quinta', 'sexta'],
+    descricao: 'Aula rÃ¡pida e intensa para horÃ¡rio de almoÃ§o',
+    diasSemana: ['segunda', 'terÃ§a', 'quarta', 'quinta', 'sexta'],
     horarioInicio: '12:00',
     duracaoMinutos: 30,
     sala: mockSalas[3], // Sala Spinning Express
@@ -45,8 +45,8 @@ List<DTOTurma> mockTurmas = [
   DTOTurma(
     id: 5,
     nome: 'Spinning Elite 19h',
-    descricao: 'Aula premium com música ao vivo e coreografia',
-    diasSemana: ['terça', 'quinta'],
+    descricao: 'Aula premium com mÃºsica ao vivo e coreografia',
+    diasSemana: ['terÃ§a', 'quinta'],
     horarioInicio: '19:00',
     duracaoMinutos: 75,
     sala: mockSalas[4], // Sala Spinning Elite
@@ -55,7 +55,7 @@ List<DTOTurma> mockTurmas = [
   DTOTurma(
     id: 6,
     nome: 'Spinning Studio 20h',
-    descricao: 'Aula com foco em técnica e performance',
+    descricao: 'Aula com foco em tÃ©cnica e performance',
     diasSemana: ['segunda', 'quarta'],
     horarioInicio: '20:00',
     duracaoMinutos: 55,
@@ -66,7 +66,7 @@ List<DTOTurma> mockTurmas = [
     id: 7,
     nome: 'Spinning Power 06h',
     descricao: 'Aula matinal para acordar com energia',
-    diasSemana: ['segunda', 'terça', 'quarta', 'quinta', 'sexta'],
+    diasSemana: ['segunda', 'terÃ§a', 'quarta', 'quinta', 'sexta'],
     horarioInicio: '06:00',
     duracaoMinutos: 45,
     sala: mockSalas[6], // Sala Spinning Power
@@ -75,8 +75,8 @@ List<DTOTurma> mockTurmas = [
   DTOTurma(
     id: 8,
     nome: 'Spinning Energy 17h',
-    descricao: 'Aula para liberar energia após o trabalho',
-    diasSemana: ['segunda', 'terça', 'quarta', 'quinta', 'sexta'],
+    descricao: 'Aula para liberar energia apÃ³s o trabalho',
+    diasSemana: ['segunda', 'terÃ§a', 'quarta', 'quinta', 'sexta'],
     horarioInicio: '17:00',
     duracaoMinutos: 50,
     sala: mockSalas[7], // Sala Spinning Energy
@@ -85,8 +85,8 @@ List<DTOTurma> mockTurmas = [
   DTOTurma(
     id: 9,
     nome: 'Spinning Core 21h',
-    descricao: 'Aula com foco em core e estabilização',
-    diasSemana: ['terça', 'quinta'],
+    descricao: 'Aula com foco em core e estabilizaÃ§Ã£o',
+    diasSemana: ['terÃ§a', 'quinta'],
     horarioInicio: '21:00',
     duracaoMinutos: 40,
     sala: mockSalas[8], // Sala Spinning Core
@@ -95,8 +95,8 @@ List<DTOTurma> mockTurmas = [
   DTOTurma(
     id: 10,
     nome: 'Spinning Max 09h',
-    descricao: 'Aula máxima com intensidade extrema',
-    diasSemana: ['sábado'],
+    descricao: 'Aula mÃ¡xima com intensidade extrema',
+    diasSemana: ['sÃ¡bado'],
     horarioInicio: '09:00',
     duracaoMinutos: 90,
     sala: mockSalas[9], // Sala Spinning Max
@@ -105,7 +105,7 @@ List<DTOTurma> mockTurmas = [
   DTOTurma(
     id: 11,
     nome: 'Spinning Pro 14h',
-    descricao: 'Aula profissional com técnicas avançadas',
+    descricao: 'Aula profissional com tÃ©cnicas avanÃ§adas',
     diasSemana: ['segunda', 'quarta', 'sexta'],
     horarioInicio: '14:00',
     duracaoMinutos: 60,
@@ -116,7 +116,7 @@ List<DTOTurma> mockTurmas = [
     id: 12,
     nome: 'Spinning Fit 16h',
     descricao: 'Aula fitness com foco em resultados',
-    diasSemana: ['terça', 'quinta'],
+    diasSemana: ['terÃ§a', 'quinta'],
     horarioInicio: '16:00',
     duracaoMinutos: 45,
     sala: mockSalas[11], // Sala Spinning Fit
@@ -126,7 +126,7 @@ List<DTOTurma> mockTurmas = [
     id: 13,
     nome: 'Spinning Turbo 10h',
     descricao: 'Aula turbo com velocidade e agilidade',
-    diasSemana: ['sábado'],
+    diasSemana: ['sÃ¡bado'],
     horarioInicio: '10:00',
     duracaoMinutos: 60,
     sala: mockSalas[12], // Sala Spinning Turbo
@@ -145,7 +145,7 @@ List<DTOTurma> mockTurmas = [
   DTOTurma(
     id: 15,
     nome: 'Spinning Force 13h',
-    descricao: 'Aula de força com resistência muscular',
+    descricao: 'Aula de forÃ§a com resistÃªncia muscular',
     diasSemana: ['segunda', 'quarta', 'sexta'],
     horarioInicio: '13:00',
     duracaoMinutos: 55,
@@ -156,7 +156,7 @@ List<DTOTurma> mockTurmas = [
     id: 16,
     nome: 'Spinning Pulse 15h',
     descricao: 'Aula com batidas pulsantes e ritmo constante',
-    diasSemana: ['terça', 'quinta'],
+    diasSemana: ['terÃ§a', 'quinta'],
     horarioInicio: '15:00',
     duracaoMinutos: 45,
     sala: mockSalas[15], // Sala Spinning Pulse
@@ -165,8 +165,8 @@ List<DTOTurma> mockTurmas = [
   DTOTurma(
     id: 17,
     nome: 'Spinning Drive 22h',
-    descricao: 'Aula noturna para quem trabalha até tarde',
-    diasSemana: ['segunda', 'terça', 'quarta', 'quinta', 'sexta'],
+    descricao: 'Aula noturna para quem trabalha atÃ© tarde',
+    diasSemana: ['segunda', 'terÃ§a', 'quarta', 'quinta', 'sexta'],
     horarioInicio: '22:00',
     duracaoMinutos: 40,
     sala: mockSalas[16], // Sala Spinning Drive
@@ -175,8 +175,8 @@ List<DTOTurma> mockTurmas = [
   DTOTurma(
     id: 18,
     nome: 'Spinning Boost 08h30',
-    descricao: 'Aula para dar boost na manhã',
-    diasSemana: ['sábado'],
+    descricao: 'Aula para dar boost na manhÃ£',
+    diasSemana: ['sÃ¡bado'],
     horarioInicio: '08:30',
     duracaoMinutos: 45,
     sala: mockSalas[17], // Sala Spinning Boost
@@ -196,7 +196,7 @@ List<DTOTurma> mockTurmas = [
     id: 20,
     nome: 'Spinning Peak 20h30',
     descricao: 'Aula para atingir o pico de performance',
-    diasSemana: ['terça', 'quinta'],
+    diasSemana: ['terÃ§a', 'quinta'],
     horarioInicio: '20:30',
     duracaoMinutos: 60,
     sala: mockSalas[19], // Sala Spinning Peak

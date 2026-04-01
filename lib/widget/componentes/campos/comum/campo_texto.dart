@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:spin_flow/configuracoes/erro.dart';
 
 class CampoTexto extends StatelessWidget {
-  // 1. Atributos públicos
+  // 1. Atributos pÃºblicos
   final TextEditingController? controle;
   final String? valorInicial;
   final String rotulo;
@@ -27,7 +27,7 @@ class CampoTexto extends StatelessWidget {
     this.aoAlterar,
   });
 
-  // 3. Métodos override
+  // 3. MÃ©todos override
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -43,7 +43,7 @@ class CampoTexto extends StatelessWidget {
     );
   }
 
-  // 5. Métodos privados importantes
+  // 5. MÃ©todos privados importantes
   TextEditingController? _definirController() {
     // Se valorInicial for fornecido, não usar controller para evitar conflito
     return valorInicial != null ? null : controle;
@@ -59,3 +59,4 @@ class CampoTexto extends StatelessWidget {
     return null;
   }
 }
+

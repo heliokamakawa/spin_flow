@@ -1,4 +1,4 @@
-import 'package:spin_flow/dto/dto.dart';
+﻿import 'package:spin_flow/dto/dto.dart';
 
 class DTOVideoAula implements DTO {
   @override
@@ -15,3 +15,4 @@ class DTOVideoAula implements DTO {
     this.ativo = true,
   });
 }
+

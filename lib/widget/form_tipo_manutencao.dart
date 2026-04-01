@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:spin_flow/dto/dto_tipo_manutencao.dart';
 import 'package:spin_flow/banco/sqlite/dao/dao_tipo_manutencao.dart';
 import 'package:spin_flow/widget/componentes/campos/comum/campo_texto.dart';
@@ -170,3 +170,4 @@ class _FormTipoManutencaoTelaState extends State<FormTipoManutencaoTela> {
     }
   }
 } 
+

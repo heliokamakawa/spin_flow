@@ -1,4 +1,4 @@
-import 'package:spin_flow/dto/dto.dart';
+﻿import 'package:spin_flow/dto/dto.dart';
 
 class DTOTipoManutencao implements DTO {
   @override

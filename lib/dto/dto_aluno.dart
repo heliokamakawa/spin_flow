@@ -1,4 +1,4 @@
-import 'package:spin_flow/dto/dto.dart';
+﻿import 'package:spin_flow/dto/dto.dart';
 
 class DTOAluno implements DTO {
   @override
@@ -31,3 +31,4 @@ class DTOAluno implements DTO {
     this.ativo = true,
   });
 }
+

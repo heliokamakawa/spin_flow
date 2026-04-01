@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:spin_flow/banco/sqlite/dao/dao_artista_banda.dart';
 import 'package:spin_flow/dto/dto_artista_banda.dart';
 import 'package:spin_flow/configuracoes/rotas.dart';
@@ -26,3 +26,4 @@ class ListaArtistasBandas extends StatelessWidget {
     );
   }
 }
+

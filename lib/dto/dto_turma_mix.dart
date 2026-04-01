@@ -1,4 +1,4 @@
-import 'package:spin_flow/dto/dto_mix.dart';
+﻿import 'package:spin_flow/dto/dto_mix.dart';
 import 'package:spin_flow/dto/dto_turma.dart';
 
 class DTOTurmaMix {
@@ -18,3 +18,4 @@ class DTOTurmaMix {
     this.ativo = true,
   });
 }
+

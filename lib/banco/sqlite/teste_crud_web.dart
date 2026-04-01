@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:sqflite/sqflite.dart';
 import 'conexao.dart';
@@ -20,7 +20,7 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
   int _testesPassaram = 0;
   int _testesFalharam = 0;
   
-  // Instâncias dos DAOs
+  // InstÃ¢ncias dos DAOs
   final DAOFabricante _daoFabricante = DAOFabricante();
   final DAOCategoriaMusica _daoCategoria = DAOCategoriaMusica();
 
@@ -39,16 +39,16 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
     });
 
     try {
-      _adicionarLog('🚀 Iniciando testes CRUD para Web...');
+      _adicionarLog('ðŸš€ Iniciando testes CRUD para Web...');
       
       // Configurar SQLite para web
-      _adicionarLog('🌐 Configurando SQLite para web...');
+      _adicionarLog('ðŸŒ Configurando SQLite para web...');
       databaseFactory = databaseFactoryFfiWeb;
       
-      // Inicializar conexão
-      _adicionarLog('🔌 Inicializando conexão SQLite...');
+      // Inicializar conexÃ£o
+      _adicionarLog('ðŸ”Œ Inicializando conexÃ£o SQLite...');
       await ConexaoSQLite.database;
-      _adicionarLog('✅ Conexão SQLite inicializada');
+      _adicionarLog('âœ… ConexÃ£o SQLite inicializada');
 
       // Testar Fabricante
       await _testarFabricante();
@@ -56,15 +56,15 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
       // Testar CategoriaMusica
       await _testarCategoriaMusica();
       
-      // Relatório final
+      // RelatÃ³rio final
       _mostrarRelatorioFinal();
       
-      // Fechar conexão
+      // Fechar conexÃ£o
       await ConexaoSQLite.fecharConexao();
-      _adicionarLog('✅ Conexão SQLite fechada');
+      _adicionarLog('âœ… ConexÃ£o SQLite fechada');
       
     } catch (e) {
-      _adicionarLog('💥 ERRO FATAL: $e');
+      _adicionarLog('ðŸ’¥ ERRO FATAL: $e');
       _testesFalharam++;
     } finally {
       setState(() {
@@ -74,145 +74,147 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
   }
 
   Future<void> _testarFabricante() async {
-    _adicionarLog('\n🔧 TESTANDO FABRICANTE...');
+    _adicionarLog('\nðŸ”§ TESTANDO FABRICANTE...');
     
     try {
       // CREATE
-      _adicionarLog('  📝 Testando CREATE...');
+      _adicionarLog('  ðŸ“ Testando CREATE...');
       DTOFabricante fabricante = DTOFabricante(
         nome: 'Teste Fabricante Web',
-        descricao: 'Descrição teste web',
+        descricao: 'DescriÃ§Ã£o teste web',
         ativo: true,
       );
       
       int id = await _daoFabricante.salvar(fabricante);
-      _adicionarLog('  ✅ CREATE: Fabricante criado com ID $id');
+      _adicionarLog('  âœ… CREATE: Fabricante criado com ID $id');
       _testesPassaram++;
 
       // READ
-      _adicionarLog('  📖 Testando READ...');
+      _adicionarLog('  ðŸ“– Testando READ...');
       DTOFabricante? fabricanteLido = await _daoFabricante.buscarPorId(id);
       if (fabricanteLido != null && fabricanteLido.nome == 'Teste Fabricante Web') {
-        _adicionarLog('  ✅ READ: Fabricante lido corretamente');
+        _adicionarLog('  âœ… READ: Fabricante lido corretamente');
         _testesPassaram++;
       } else {
-        _adicionarLog('  ❌ READ: Erro ao ler fabricante');
+        _adicionarLog('  âŒ READ: Erro ao ler fabricante');
         _testesFalharam++;
       }
 
       // UPDATE
-      _adicionarLog('  🔄 Testando UPDATE...');
+      _adicionarLog('  ðŸ”„ Testando UPDATE...');
       DTOFabricante fabricanteAtualizado = DTOFabricante(
         id: id,
         nome: 'Fabricante Web Atualizado',
-        descricao: 'Descrição atualizada web',
+        descricao: 'DescriÃ§Ã£o atualizada web',
         ativo: false,
       );
       await _daoFabricante.salvar(fabricanteAtualizado);
       
       DTOFabricante? fabricanteVerificado = await _daoFabricante.buscarPorId(id);
       if (fabricanteVerificado?.nome == 'Fabricante Web Atualizado') {
-        _adicionarLog('  ✅ UPDATE: Fabricante atualizado corretamente');
+        _adicionarLog('  âœ… UPDATE: Fabricante atualizado corretamente');
         _testesPassaram++;
       } else {
-        _adicionarLog('  ❌ UPDATE: Erro ao atualizar fabricante');
+        _adicionarLog('  âŒ UPDATE: Erro ao atualizar fabricante');
         _testesFalharam++;
       }
 
       // DELETE
-      _adicionarLog('  🗑️ Testando DELETE...');
+      _adicionarLog('  ðŸ—‘ï¸ Testando DELETE...');
       await _daoFabricante.excluir(id);
       DTOFabricante? fabricanteDeletado = await _daoFabricante.buscarPorId(id);
       if (fabricanteDeletado == null) {
-        _adicionarLog('  ✅ DELETE: Fabricante deletado corretamente');
+        _adicionarLog('  âœ… DELETE: Fabricante deletado corretamente');
         _testesPassaram++;
       } else {
-        _adicionarLog('  ❌ DELETE: Erro ao deletar fabricante');
+        _adicionarLog('  âŒ DELETE: Erro ao deletar fabricante');
         _testesFalharam++;
       }
 
     } catch (e) {
-      _adicionarLog('  ❌ ERRO no teste de Fabricante: $e');
+      _adicionarLog('  âŒ ERRO no teste de Fabricante: $e');
       _testesFalharam++;
     }
   }
 
   Future<void> _testarCategoriaMusica() async {
-    _adicionarLog('\n🎵 TESTANDO CATEGORIA MÚSICA...');
+    _adicionarLog('\nðŸŽµ TESTANDO CATEGORIA MÃšSICA...');
     
     try {
       // CREATE
-      _adicionarLog('  📝 Testando CREATE...');
+      _adicionarLog('  ðŸ“ Testando CREATE...');
       DTOCategoriaMusica categoria = DTOCategoriaMusica(
         nome: 'Teste Categoria Web',
+        descricao: 'Descricao teste web',
         ativa: true,
       );
       
       int id = await _daoCategoria.salvar(categoria);
-      _adicionarLog('  ✅ CREATE: Categoria criada com ID $id');
+      _adicionarLog('  âœ… CREATE: Categoria criada com ID $id');
       _testesPassaram++;
 
       // READ
-      _adicionarLog('  📖 Testando READ...');
+      _adicionarLog('  ðŸ“– Testando READ...');
       DTOCategoriaMusica? categoriaLida = await _daoCategoria.buscarPorId(id);
       if (categoriaLida != null && categoriaLida.nome == 'Teste Categoria Web') {
-        _adicionarLog('  ✅ READ: Categoria lida corretamente');
+        _adicionarLog('  âœ… READ: Categoria lida corretamente');
         _testesPassaram++;
       } else {
-        _adicionarLog('  ❌ READ: Erro ao ler categoria');
+        _adicionarLog('  âŒ READ: Erro ao ler categoria');
         _testesFalharam++;
       }
 
       // UPDATE
-      _adicionarLog('  🔄 Testando UPDATE...');
+      _adicionarLog('  ðŸ”„ Testando UPDATE...');
       DTOCategoriaMusica categoriaAtualizada = DTOCategoriaMusica(
         id: id,
         nome: 'Categoria Web Atualizada',
+        descricao: 'Descricao atualizada web',
         ativa: false,
       );
       await _daoCategoria.salvar(categoriaAtualizada);
       
       DTOCategoriaMusica? categoriaVerificada = await _daoCategoria.buscarPorId(id);
       if (categoriaVerificada?.nome == 'Categoria Web Atualizada') {
-        _adicionarLog('  ✅ UPDATE: Categoria atualizada corretamente');
+        _adicionarLog('  âœ… UPDATE: Categoria atualizada corretamente');
         _testesPassaram++;
       } else {
-        _adicionarLog('  ❌ UPDATE: Erro ao atualizar categoria');
+        _adicionarLog('  âŒ UPDATE: Erro ao atualizar categoria');
         _testesFalharam++;
       }
 
       // DELETE
-      _adicionarLog('  🗑️ Testando DELETE...');
+      _adicionarLog('  ðŸ—‘ï¸ Testando DELETE...');
       await _daoCategoria.excluir(id);
       DTOCategoriaMusica? categoriaDeletada = await _daoCategoria.buscarPorId(id);
       if (categoriaDeletada == null) {
-        _adicionarLog('  ✅ DELETE: Categoria deletada corretamente');
+        _adicionarLog('  âœ… DELETE: Categoria deletada corretamente');
         _testesPassaram++;
       } else {
-        _adicionarLog('  ❌ DELETE: Erro ao deletar categoria');
+        _adicionarLog('  âŒ DELETE: Erro ao deletar categoria');
         _testesFalharam++;
       }
 
     } catch (e) {
-      _adicionarLog('  ❌ ERRO no teste de CategoriaMusica: $e');
+      _adicionarLog('  âŒ ERRO no teste de CategoriaMusica: $e');
       _testesFalharam++;
     }
   }
 
   void _mostrarRelatorioFinal() {
-    _adicionarLog('\n📊 === RELATÓRIO FINAL ===');
-    _adicionarLog('✅ Testes que passaram: $_testesPassaram');
-    _adicionarLog('❌ Testes que falharam: $_testesFalharam');
+    _adicionarLog('\nðŸ“Š === RELATÃ“RIO FINAL ===');
+    _adicionarLog('âœ… Testes que passaram: $_testesPassaram');
+    _adicionarLog('âŒ Testes que falharam: $_testesFalharam');
     
     double taxaSucesso = _testesPassaram > 0 
         ? (_testesPassaram / (_testesPassaram + _testesFalharam)) * 100 
         : 0;
-    _adicionarLog('📈 Taxa de sucesso: ${taxaSucesso.toStringAsFixed(1)}%');
+    _adicionarLog('ðŸ“ˆ Taxa de sucesso: ${taxaSucesso.toStringAsFixed(1)}%');
     
     if (_testesFalharam == 0) {
-      _adicionarLog('\n🎉 PARABÉNS! TODOS OS TESTES PASSARAM!');
+      _adicionarLog('\nðŸŽ‰ PARABÃ‰NS! TODOS OS TESTES PASSARAM!');
     } else {
-      _adicionarLog('\n⚠️ ALGUNS TESTES FALHARAM. Verifique os logs acima.');
+      _adicionarLog('\nâš ï¸ ALGUNS TESTES FALHARAM. Verifique os logs acima.');
     }
     
     _adicionarLog('=== FIM DOS TESTES ===');
@@ -230,7 +232,7 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Botão de teste
+            // BotÃ£o de teste
             ElevatedButton(
               onPressed: _testando ? null : _executarTestes,
               style: ElevatedButton.styleFrom(
@@ -253,21 +255,21 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
                       Text('Executando testes...', style: TextStyle(color: Colors.white)),
                     ],
                   )
-                : Text('🚀 EXECUTAR TESTES CRUD', style: TextStyle(color: Colors.white, fontSize: 16)),
+                : Text('ðŸš€ EXECUTAR TESTES CRUD', style: TextStyle(color: Colors.white, fontSize: 16)),
             ),
             
             SizedBox(height: 20),
             
-            // Estatísticas
+            // EstatÃ­sticas
             Card(
               child: Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildStatCard('✅ Passaram', _testesPassaram.toString(), Colors.green),
-                    _buildStatCard('❌ Falharam', _testesFalharam.toString(), Colors.red),
-                    _buildStatCard('📊 Total', (_testesPassaram + _testesFalharam).toString(), Colors.blue),
+                    _buildStatCard('âœ… Passaram', _testesPassaram.toString(), Colors.green),
+                    _buildStatCard('âŒ Falharam', _testesFalharam.toString(), Colors.red),
+                    _buildStatCard('ðŸ“Š Total', (_testesPassaram + _testesFalharam).toString(), Colors.blue),
                   ],
                 ),
               ),
@@ -293,7 +295,7 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('📋 LOGS DOS TESTES', style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text('ðŸ“‹ LOGS DOS TESTES', style: TextStyle(fontWeight: FontWeight.bold)),
                           TextButton(
                             onPressed: () => setState(() => _logs.clear()),
                             child: Text('Limpar'),
@@ -342,7 +344,7 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
   }
 }
 
-// Função main para web
+// FunÃ§Ã£o main para web
 void main() {
   runApp(MaterialApp(
     title: 'Teste CRUD SQLite',
@@ -354,3 +356,4 @@ void main() {
     debugShowCheckedModeBanner: false,
   ));
 } 
+

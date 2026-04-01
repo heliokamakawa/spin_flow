@@ -4,73 +4,69 @@ import 'package:spin_flow/dto/dto_tipo_manutencao.dart';
 class DAOTipoManutencao {
   static const String _tabela = 'tipo_manutencao';
 
-  // Salvar (inserir ou atualizar)
   Future<int> salvar(DTOTipoManutencao tipo) async {
     final db = await ConexaoSQLite.database;
-    
+    final dados = {
+      'nome': tipo.nome,
+      'descricao': tipo.descricao,
+      'ativa': tipo.ativa ? 1 : 0,
+    };
+
     if (tipo.id != null) {
-      // Atualizar
-      return await db.update(
+      return db.update(
         _tabela,
-        {
-          'nome': tipo.nome,
-          'ativa': tipo.ativa ? 1 : 0,
-        },
+        dados,
         where: 'id = ?',
         whereArgs: [tipo.id],
       );
-    } else {
-      // Inserir
-      return await db.insert(
-        _tabela,
-        {
-          'nome': tipo.nome,
-          'ativa': tipo.ativa ? 1 : 0,
-        },
-      );
     }
+
+    return db.insert(_tabela, dados);
   }
 
-  // Buscar todos
   Future<List<DTOTipoManutencao>> buscarTodos() async {
     final db = await ConexaoSQLite.database;
-    final List<Map<String, dynamic>> maps = await db.query(_tabela);
-    
-    return List.generate(maps.length, (i) {
-      return DTOTipoManutencao(
-        id: maps[i]['id'],
-        nome: maps[i]['nome'],
-        ativa: maps[i]['ativa'] == 1,
-      );
-    });
+    final maps = await db.query(_tabela);
+    return maps.map(_mapParaDto).toList();
   }
 
-  // Buscar por ID
   Future<DTOTipoManutencao?> buscarPorId(int id) async {
     final db = await ConexaoSQLite.database;
-    final List<Map<String, dynamic>> maps = await db.query(
+    final maps = await db.query(
       _tabela,
       where: 'id = ?',
       whereArgs: [id],
+      limit: 1,
     );
-    
-    if (maps.isNotEmpty) {
-      return DTOTipoManutencao(
-        id: maps[0]['id'],
-        nome: maps[0]['nome'],
-        ativa: maps[0]['ativa'] == 1,
-      );
-    }
-    return null;
+
+    if (maps.isEmpty) return null;
+    return _mapParaDto(maps.first);
   }
 
-  // Excluir
   Future<int> excluir(int id) async {
     final db = await ConexaoSQLite.database;
-    return await db.delete(
+    return db.update(
       _tabela,
+      {'ativa': 0},
       where: 'id = ?',
       whereArgs: [id],
     );
   }
-} 
+
+  DTOTipoManutencao _mapParaDto(Map<String, dynamic> map) {
+    return DTOTipoManutencao(
+      id: _toInt(map['id']),
+      nome: (map['nome'] as String?) ?? '',
+      descricao: map['descricao'] as String?,
+      ativa: _toInt(map['ativa']) == 1,
+    );
+  }
+
+  int? _toInt(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    if (value is num) return value.toInt();
+    if (value is String) return int.tryParse(value);
+    return null;
+  }
+}

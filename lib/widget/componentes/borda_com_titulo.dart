@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 class BordaComTitulo extends StatelessWidget {
   final String titulo;
@@ -46,3 +46,4 @@ class BordaComTitulo extends StatelessWidget {
     );
   }
 }
+

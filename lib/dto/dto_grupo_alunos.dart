@@ -1,4 +1,4 @@
-import 'package:spin_flow/dto/dto.dart';
+﻿import 'package:spin_flow/dto/dto.dart';
 import 'package:spin_flow/dto/dto_aluno.dart';
 
 class DTOGrupoAlunos implements DTO {
@@ -18,3 +18,4 @@ class DTOGrupoAlunos implements DTO {
     this.ativo = true,
   });
 }
+

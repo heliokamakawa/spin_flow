@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:spin_flow/dto/dto.dart';
 
 class CampoOpcoes<T extends DTO> extends StatefulWidget {
@@ -38,6 +38,17 @@ class _CampoOpcoesState<T extends DTO> extends State<CampoOpcoes<T>> {
     super.initState();
     _opcoesCampo = List.from(widget.opcoes);
     _valorSelecionado = widget.valorSelecionado;
+  }
+
+  @override
+  void didUpdateWidget(covariant CampoOpcoes<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!identical(oldWidget.opcoes, widget.opcoes)) {
+      _opcoesCampo = List.from(widget.opcoes);
+    }
+    if (oldWidget.valorSelecionado != widget.valorSelecionado) {
+      _valorSelecionado = widget.valorSelecionado;
+    }
   }
 
   String? _validar(T? valor) {
@@ -99,3 +110,5 @@ class _CampoOpcoesState<T extends DTO> extends State<CampoOpcoes<T>> {
     );
   }
 }
+
+

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:spin_flow/banco/mock/mock_musicas.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:spin_flow/banco/sqlite/dao/dao_musica.dart';
 import 'package:spin_flow/dto/dto_musica.dart';
 import 'package:spin_flow/configuracoes/rotas.dart';
 import 'package:spin_flow/widget/componentes/lista_padrao.dart';
@@ -9,20 +9,22 @@ class ListaMusicas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dao = DAOMusica();
     return ListaPadrao<DTOMusica>(
-      titulo: 'Músicas',
+      titulo: 'Musicas',
       icone: Icons.music_note,
-      mensagemVazia: 'Nenhuma música cadastrada',
+      mensagemVazia: 'Nenhuma musica cadastrada',
       rotaCadastro: Rotas.cadastroMusica,
-      carregar: () async => mockMusicas,
-      excluir: (_) async {},
+      carregar: dao.buscarTodos,
+      excluir: dao.excluir,
       ativo: (m) => m.ativo,
       detalhes: (m) {
         final categorias = m.categorias.map((c) => c.nome).join(', ');
-        final descricao = m.descricao?.isNotEmpty == true ? 'Descrição: ${m.descricao}\n' : '';
-        final videos = m.linksVideoAula.isNotEmpty ? 'Vídeos: ${m.linksVideoAula.length}\n' : '';
+        final descricao = m.descricao.isNotEmpty ? 'Descricao: ${m.descricao}\n' : '';
+        final videos = m.linksVideoAula.isNotEmpty ? 'Videos: ${m.linksVideoAula.length}\n' : '';
         return 'Artista: ${m.artista.nome}\nCategorias: $categorias\n$descricao$videos${m.ativo ? 'Ativa' : 'Inativa'}';
       },
     );
   }
 }
+

@@ -1,4 +1,4 @@
-import 'package:spin_flow/dto/dto.dart';
+﻿import 'package:spin_flow/dto/dto.dart';
 import 'package:spin_flow/dto/dto_musica.dart';
 
 class DTOMix implements DTO {
@@ -22,3 +22,4 @@ class DTOMix implements DTO {
     this.ativo = true,
   });
 }
+

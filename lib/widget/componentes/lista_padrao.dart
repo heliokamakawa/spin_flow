@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:spin_flow/dto/dto.dart';
 
 class ListaPadrao<T extends DTO> extends StatefulWidget {
@@ -196,3 +196,4 @@ class _ListaPadraoState<T extends DTO> extends State<ListaPadrao<T>> {
     );
   }
 }
+

@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:spin_flow/banco/sqlite/dao/dao_sala.dart';
+import 'package:spin_flow/banco/sqlite/dao/dao_turma.dart';
 import 'package:spin_flow/dto/dto_turma.dart';
 import 'package:spin_flow/dto/dto_sala.dart';
 import 'package:spin_flow/configuracoes/rotas.dart';
@@ -6,7 +8,6 @@ import 'package:spin_flow/widget/componentes/campos/comum/campo_hora.dart';
 import 'package:spin_flow/widget/componentes/campos/comum/campo_numero.dart';
 import 'package:spin_flow/widget/componentes/campos/selecao_unica/campo_opcoes.dart';
 import 'package:spin_flow/widget/componentes/campos/comum/campo_texto.dart';
-import 'package:spin_flow/banco/mock/mock_salas.dart';
 
 import 'componentes/campos/selecao_multipla/campo_dias_semana.dart';
 
@@ -19,17 +20,21 @@ class FormTurma extends StatefulWidget {
 
 class _FormTurmaState extends State<FormTurma> {
   final _chaveFormulario = GlobalKey<FormState>();
+  final DAOTurma _daoTurma = DAOTurma();
+  final DAOSala _daoSala = DAOSala();
   int? _id;
   bool _dadosCarregados = false;
   bool _erroCarregamento = false;
 
   String? _nome;
-  String? _descricao;
-  String? _duracao;
+  String _descricao = '';
+  String _duracao = '';
   List<String> _diasSelecionados = [];
   String? _horarioInicio;
   DTOSala? _salaSelecionada;
   bool _ativo = true;
+
+  List<DTOSala> _salas = [];
 
   final TextEditingController _nomeControlador = TextEditingController();
   final TextEditingController _descricaoControlador = TextEditingController();
@@ -59,7 +64,7 @@ class _FormTurmaState extends State<FormTurma> {
     if (_erroCarregamento) {
       return Scaffold(
         appBar: AppBar(title: const Text('Erro ao carregar turma')),
-        body: const Center(child: Text('Não foi possível carregar os dados da turma.')),
+        body: const Center(child: Text('Nao foi possivel carregar os dados da turma.')),
       );
     }
     return Scaffold(
@@ -81,8 +86,8 @@ class _FormTurmaState extends State<FormTurma> {
               const SizedBox(height: 16),
               CampoTexto(
                 controle: _descricaoControlador,
-                rotulo: 'Descrição',
-                dica: 'Descrição da turma (opcional)',
+                rotulo: 'Descricao',
+                dica: 'Descricao da turma (opcional)',
                 eObrigatorio: false,
                 aoAlterar: (value) => _descricao = value,
               ),
@@ -110,7 +115,7 @@ class _FormTurmaState extends State<FormTurma> {
               ),
               const SizedBox(height: 16),
               CampoNumero(
-                rotulo: 'Duração da aula (minutos)',
+                rotulo: 'Duracao da aula (minutos)',
                 dica: 'Ex: 45',
                 eObrigatorio: true,
                 limiteMinimo: 1,
@@ -119,7 +124,7 @@ class _FormTurmaState extends State<FormTurma> {
               ),
               const SizedBox(height: 16),
               CampoOpcoes<DTOSala>(
-                opcoes: mockSalas,
+                opcoes: _salas,
                 valorSelecionado: _salaSelecionada,
                 rotulo: 'Sala / Local da aula',
                 rotaCadastro: Rotas.cadastroSala,
@@ -151,24 +156,23 @@ class _FormTurmaState extends State<FormTurma> {
     );
   }
 
-  void _carregarDadosEdicao() {
+  Future<void> _carregarDadosEdicao() async {
     final argumentos = ModalRoute.of(context)?.settings.arguments;
-    if (argumentos != null && argumentos is DTOTurma) {
-      try {
+    try {
+      final salas = await _daoSala.buscarTodos();
+      if (!mounted) return;
+      if (argumentos != null && argumentos is DTOTurma) {
         _preencherCampos(argumentos);
-        setState(() {
-          _dadosCarregados = true;
-          _erroCarregamento = false;
-        });
-      } catch (e) {
-        setState(() {
-          _erroCarregamento = true;
-        });
       }
-    } else {
       setState(() {
+        _salas = salas;
         _dadosCarregados = true;
         _erroCarregamento = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _erroCarregamento = true;
       });
     }
   }
@@ -177,9 +181,11 @@ class _FormTurmaState extends State<FormTurma> {
     _id = turma.id;
     _nome = turma.nome;
     _descricao = turma.descricao;
+    _nomeControlador.text = turma.nome;
+    _descricaoControlador.text = turma.descricao;
     _diasSelecionados = List<String>.from(turma.diasSemana);
     _horarioInicio = turma.horarioInicio;
-    _duracao = turma.duracaoMinutos > 0 ? turma.duracaoMinutos.toString() : null;
+    _duracao = turma.duracaoMinutos > 0 ? turma.duracaoMinutos.toString() : '';
     _salaSelecionada = turma.sala;
     _ativo = turma.ativo;
   }
@@ -187,12 +193,14 @@ class _FormTurmaState extends State<FormTurma> {
   void _limparCampos() {
     _id = null;
     _nome = null;
-    _descricao = null;
-    _duracao = null;
+    _descricao = '';
+    _duracao = '';
     _diasSelecionados = [];
     _horarioInicio = null;
     _salaSelecionada = null;
     _ativo = true;
+    _nomeControlador.clear();
+    _descricaoControlador.clear();
     setState(() {});
   }
 
@@ -203,7 +211,7 @@ class _FormTurmaState extends State<FormTurma> {
       descricao: _descricao,
       diasSemana: _diasSelecionados,
       horarioInicio: _horarioInicio ?? '',
-      duracaoMinutos: int.tryParse(_duracao ?? '0') ?? 0,
+      duracaoMinutos: int.tryParse(_duracao) ?? 0,
       sala: _salaSelecionada!,
       ativo: _ativo,
     );
@@ -229,13 +237,12 @@ class _FormTurmaState extends State<FormTurma> {
   Future<void> _salvar() async {
     if (_chaveFormulario.currentState!.validate() == false) return;
     if ((_nome ?? '').isEmpty || _diasSelecionados.isEmpty || (_horarioInicio == null || _horarioInicio!.isEmpty) || _salaSelecionada == null) {
-      _mostrarMensagem('Preencha todos os campos obrigatórios.', erro: true);
+      _mostrarMensagem('Preencha todos os campos obrigatorios.', erro: true);
       return;
     }
     try {
       final dto = _criarDTO();
-      debugPrint(dto.toString());
-      await Future.delayed(const Duration(milliseconds: 200));
+      await _daoTurma.salvar(dto);
       if (!mounted) return;
       _mostrarMensagem(_id != null ? 'Turma atualizada com sucesso!' : 'Turma criada com sucesso!');
       if (_id == null) {
@@ -248,3 +255,4 @@ class _FormTurmaState extends State<FormTurma> {
     }
   }
 }
+

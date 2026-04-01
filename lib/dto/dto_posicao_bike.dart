@@ -1,4 +1,4 @@
-import 'package:spin_flow/dto/dto_bike.dart';
+﻿import 'package:spin_flow/dto/dto_bike.dart';
 
 class DTOPosicaoBike {
   final int fila;
@@ -11,3 +11,4 @@ class DTOPosicaoBike {
     required this.bike,
   });
 }
+

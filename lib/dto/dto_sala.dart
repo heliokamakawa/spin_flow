@@ -1,4 +1,4 @@
-import 'package:spin_flow/dto/dto.dart';
+﻿import 'package:spin_flow/dto/dto.dart';
 
 class DTOSala implements DTO {
   @override
@@ -19,3 +19,4 @@ class DTOSala implements DTO {
     this.ativa = true,
   });
 }
+

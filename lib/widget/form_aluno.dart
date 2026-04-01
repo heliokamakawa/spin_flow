@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:spin_flow/dto/dto_aluno.dart';
 import 'package:spin_flow/banco/sqlite/dao/dao_aluno.dart';
 import 'package:spin_flow/widget/componentes/campos/comum/campo_data.dart';
@@ -230,11 +230,11 @@ class _FormAlunoState extends State<FormAluno> {
     _dataNascimento = aluno.dataNascimento;
     _genero = aluno.genero;
     _telefoneControlador.text = aluno.telefone;
-    _urlFotoControlador.text = aluno.urlFoto ?? '';
-    _instagramControlador.text = aluno.instagram ?? '';
-    _facebookControlador.text = aluno.facebook ?? '';
-    _tiktokControlador.text = aluno.tiktok ?? '';
-    _observacoesControlador.text = aluno.observacoes ?? '';
+    _urlFotoControlador.text = aluno.urlFoto;
+    _instagramControlador.text = aluno.instagram;
+    _facebookControlador.text = aluno.facebook;
+    _tiktokControlador.text = aluno.tiktok;
+    _observacoesControlador.text = aluno.observacoes;
     _ativo = aluno.ativo;
   }
 
@@ -262,11 +262,11 @@ class _FormAlunoState extends State<FormAluno> {
       dataNascimento: _dataNascimento ?? DateTime.now(),
       genero: _genero ?? '',
       telefone: _telefoneControlador.text,
-      urlFoto: _urlFotoControlador.text.isEmpty ? null : _urlFotoControlador.text,
-      instagram: _instagramControlador.text.isEmpty ? null : _instagramControlador.text,
-      facebook: _facebookControlador.text.isEmpty ? null : _facebookControlador.text,
-      tiktok: _tiktokControlador.text.isEmpty ? null : _tiktokControlador.text,
-      observacoes: _observacoesControlador.text.isEmpty ? null : _observacoesControlador.text,
+      urlFoto: _urlFotoControlador.text,
+      instagram: _instagramControlador.text,
+      facebook: _facebookControlador.text,
+      tiktok: _tiktokControlador.text,
+      observacoes: _observacoesControlador.text,
       ativo: _ativo,
     );
   }
@@ -312,3 +312,5 @@ class _FormAlunoState extends State<FormAluno> {
     }
   }
 }
+
+

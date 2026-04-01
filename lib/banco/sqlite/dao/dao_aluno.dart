@@ -1,112 +1,98 @@
-import 'package:spin_flow/banco/sqlite/conexao.dart';
+﻿import 'package:spin_flow/banco/sqlite/conexao.dart';
 import 'package:spin_flow/dto/dto_aluno.dart';
 
 class DAOAluno {
   static const String _tabela = 'aluno';
 
-  // Salvar (inserir ou atualizar)
   Future<int> salvar(DTOAluno aluno) async {
     final db = await ConexaoSQLite.database;
-    
+    final dados = {
+      'nome': aluno.nome,
+      'email': aluno.email,
+      'data_nascimento': aluno.dataNascimento.toIso8601String(),
+      'genero': aluno.genero,
+      'telefone': aluno.telefone,
+      'url_foto': aluno.urlFoto,
+      'instagram': aluno.instagram,
+      'facebook': aluno.facebook,
+      'tiktok': aluno.tiktok,
+      'observacoes': aluno.observacoes,
+      'ativo': aluno.ativo ? 1 : 0,
+    };
+
     if (aluno.id != null) {
-      // Atualizar
-      return await db.update(
+      return db.update(
         _tabela,
-        {
-          'nome': aluno.nome,
-          'email': aluno.email,
-          'data_nascimento': aluno.dataNascimento.toIso8601String(),
-          'genero': aluno.genero,
-          'telefone': aluno.telefone,
-          'url_foto': aluno.urlFoto,
-          'instagram': aluno.instagram,
-          'facebook': aluno.facebook,
-          'tiktok': aluno.tiktok,
-          'observacoes': aluno.observacoes,
-          'ativo': aluno.ativo ? 1 : 0,
-        },
+        dados,
         where: 'id = ?',
         whereArgs: [aluno.id],
       );
-    } else {
-      // Inserir
-      return await db.insert(
-        _tabela,
-        {
-          'nome': aluno.nome,
-          'email': aluno.email,
-          'data_nascimento': aluno.dataNascimento.toIso8601String(),
-          'genero': aluno.genero,
-          'telefone': aluno.telefone,
-          'url_foto': aluno.urlFoto,
-          'instagram': aluno.instagram,
-          'facebook': aluno.facebook,
-          'tiktok': aluno.tiktok,
-          'observacoes': aluno.observacoes,
-          'ativo': aluno.ativo ? 1 : 0,
-        },
-      );
     }
+
+    return db.insert(_tabela, dados);
   }
 
-  // Buscar todos
   Future<List<DTOAluno>> buscarTodos() async {
     final db = await ConexaoSQLite.database;
-    final List<Map<String, dynamic>> maps = await db.query(_tabela);
-    
-    return List.generate(maps.length, (i) {
-      return DTOAluno(
-        id: maps[i]['id'],
-        nome: maps[i]['nome'],
-        email: maps[i]['email'],
-        dataNascimento: DateTime.parse(maps[i]['data_nascimento']),
-        genero: maps[i]['genero'],
-        telefone: maps[i]['telefone'],
-        urlFoto: maps[i]['url_foto'],
-        instagram: maps[i]['instagram'],
-        facebook: maps[i]['facebook'],
-        tiktok: maps[i]['tiktok'],
-        observacoes: maps[i]['observacoes'],
-        ativo: maps[i]['ativo'] == 1,
-      );
-    });
+    final maps = await db.query(_tabela);
+    return maps.map(_mapParaDto).toList();
   }
 
-  // Buscar por ID
+  Future<List<DTOAluno>> buscarAtivos() async {
+    final db = await ConexaoSQLite.database;
+    final maps = await db.query(_tabela, where: 'ativo = 1');
+    return maps.map(_mapParaDto).toList();
+  }
+
   Future<DTOAluno?> buscarPorId(int id) async {
     final db = await ConexaoSQLite.database;
-    final List<Map<String, dynamic>> maps = await db.query(
+    final maps = await db.query(
       _tabela,
       where: 'id = ?',
       whereArgs: [id],
+      limit: 1,
     );
-    
-    if (maps.isNotEmpty) {
-      return DTOAluno(
-        id: maps[0]['id'],
-        nome: maps[0]['nome'],
-        email: maps[0]['email'],
-        dataNascimento: DateTime.parse(maps[0]['data_nascimento']),
-        genero: maps[0]['genero'],
-        telefone: maps[0]['telefone'],
-        urlFoto: maps[0]['url_foto'],
-        instagram: maps[0]['instagram'],
-        facebook: maps[0]['facebook'],
-        tiktok: maps[0]['tiktok'],
-        observacoes: maps[0]['observacoes'],
-        ativo: maps[0]['ativo'] == 1,
-      );
-    }
-    return null;
+    if (maps.isEmpty) return null;
+    return _mapParaDto(maps.first);
   }
 
-  // Excluir
+  Future<DTOAluno?> buscarPorEmailAtivo(String email) async {
+    final db = await ConexaoSQLite.database;
+    final maps = await db.query(
+      _tabela,
+      where: 'LOWER(email) = ? AND ativo = 1',
+      whereArgs: [email.toLowerCase().trim()],
+      limit: 1,
+    );
+    if (maps.isEmpty) return null;
+    return _mapParaDto(maps.first);
+  }
+
   Future<int> excluir(int id) async {
     final db = await ConexaoSQLite.database;
-    return await db.delete(
+    return db.update(
       _tabela,
+      {'ativo': 0},
       where: 'id = ?',
       whereArgs: [id],
     );
   }
-} 
+
+  DTOAluno _mapParaDto(Map<String, dynamic> map) {
+    return DTOAluno(
+      id: map['id'] as int?,
+      nome: (map['nome'] as String?) ?? '',
+      email: (map['email'] as String?) ?? '',
+      dataNascimento: DateTime.tryParse((map['data_nascimento'] as String?) ?? '') ?? DateTime.now(),
+      genero: (map['genero'] as String?) ?? '',
+      telefone: (map['telefone'] as String?) ?? '',
+      urlFoto: (map['url_foto'] as String?) ?? '',
+      instagram: (map['instagram'] as String?) ?? '',
+      facebook: (map['facebook'] as String?) ?? '',
+      tiktok: (map['tiktok'] as String?) ?? '',
+      observacoes: (map['observacoes'] as String?) ?? '',
+      ativo: ((map['ativo'] as int?) ?? 1) == 1,
+    );
+  }
+}
+

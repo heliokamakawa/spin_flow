@@ -4,89 +4,75 @@ import 'package:spin_flow/dto/dto_fabricante.dart';
 class DAOFabricante {
   static const String _tabela = 'fabricante';
 
-  // Salvar (inserir ou atualizar)
   Future<int> salvar(DTOFabricante fabricante) async {
     final db = await ConexaoSQLite.database;
-    
+    final dados = {
+      'nome': fabricante.nome,
+      'descricao': fabricante.descricao,
+      'nome_contato_principal': fabricante.nomeContatoPrincipal,
+      'email_contato': fabricante.emailContato,
+      'telefone_contato': fabricante.telefoneContato,
+      'ativo': fabricante.ativo ? 1 : 0,
+    };
+
     if (fabricante.id != null) {
-      // Atualizar
-      return await db.update(
+      return db.update(
         _tabela,
-        {
-          'nome': fabricante.nome,
-          'descricao': fabricante.descricao,
-          'nome_contato_principal': fabricante.nomeContatoPrincipal,
-          'email_contato': fabricante.emailContato,
-          'telefone_contato': fabricante.telefoneContato,
-          'ativo': fabricante.ativo ? 1 : 0,
-        },
+        dados,
         where: 'id = ?',
         whereArgs: [fabricante.id],
       );
-    } else {
-      // Inserir
-      return await db.insert(
-        _tabela,
-        {
-          'nome': fabricante.nome,
-          'descricao': fabricante.descricao,
-          'nome_contato_principal': fabricante.nomeContatoPrincipal,
-          'email_contato': fabricante.emailContato,
-          'telefone_contato': fabricante.telefoneContato,
-          'ativo': fabricante.ativo ? 1 : 0,
-        },
-      );
     }
+
+    return db.insert(_tabela, dados);
   }
 
-  // Buscar todos
   Future<List<DTOFabricante>> buscarTodos() async {
     final db = await ConexaoSQLite.database;
-    final List<Map<String, dynamic>> maps = await db.query(_tabela);
-    
-    return List.generate(maps.length, (i) {
-      return DTOFabricante(
-        id: maps[i]['id'],
-        nome: maps[i]['nome'],
-        descricao: maps[i]['descricao'],
-        nomeContatoPrincipal: maps[i]['nome_contato_principal'],
-        emailContato: maps[i]['email_contato'],
-        telefoneContato: maps[i]['telefone_contato'],
-        ativo: maps[i]['ativo'] == 1,
-      );
-    });
+    final maps = await db.query(_tabela);
+    return maps.map(_mapParaDto).toList();
   }
 
-  // Buscar por ID
   Future<DTOFabricante?> buscarPorId(int id) async {
     final db = await ConexaoSQLite.database;
-    final List<Map<String, dynamic>> maps = await db.query(
+    final maps = await db.query(
       _tabela,
       where: 'id = ?',
       whereArgs: [id],
+      limit: 1,
     );
-    
-    if (maps.isNotEmpty) {
-      return DTOFabricante(
-        id: maps[0]['id'],
-        nome: maps[0]['nome'],
-        descricao: maps[0]['descricao'],
-        nomeContatoPrincipal: maps[0]['nome_contato_principal'],
-        emailContato: maps[0]['email_contato'],
-        telefoneContato: maps[0]['telefone_contato'],
-        ativo: maps[0]['ativo'] == 1,
-      );
-    }
-    return null;
+
+    if (maps.isEmpty) return null;
+    return _mapParaDto(maps.first);
   }
 
-  // Excluir
   Future<int> excluir(int id) async {
     final db = await ConexaoSQLite.database;
-    return await db.delete(
+    return db.update(
       _tabela,
+      {'ativo': 0},
       where: 'id = ?',
       whereArgs: [id],
     );
   }
-} 
+
+  DTOFabricante _mapParaDto(Map<String, dynamic> map) {
+    return DTOFabricante(
+      id: _toInt(map['id']),
+      nome: (map['nome'] as String?) ?? '',
+      descricao: map['descricao'] as String?,
+      nomeContatoPrincipal: map['nome_contato_principal'] as String?,
+      emailContato: map['email_contato'] as String?,
+      telefoneContato: map['telefone_contato'] as String?,
+      ativo: _toInt(map['ativo']) == 1,
+    );
+  }
+
+  int? _toInt(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    if (value is num) return value.toInt();
+    if (value is String) return int.tryParse(value);
+    return null;
+  }
+}

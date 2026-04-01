@@ -1,4 +1,4 @@
-import 'package:spin_flow/dto/dto_aluno.dart';
+﻿import 'package:spin_flow/dto/dto_aluno.dart';
 import 'package:spin_flow/dto/dto_turma.dart';
 
 class DTOCheckin {
@@ -20,3 +20,4 @@ class DTOCheckin {
     this.ativo = true,
   });
 }
+

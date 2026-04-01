@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:spin_flow/dto/dto_sala.dart';
+import 'package:spin_flow/banco/sqlite/dao/dao_posicao_bike.dart';
 import 'package:spin_flow/banco/sqlite/dao/dao_sala.dart';
+import 'package:spin_flow/dto/dto_sala.dart';
 import 'package:spin_flow/widget/componentes/campos/comum/campo_texto.dart';
 
 class FormSala extends StatefulWidget {
@@ -14,17 +15,16 @@ class FormSala extends StatefulWidget {
 class _FormSalaState extends State<FormSala> {
   final _chaveFormulario = GlobalKey<FormState>();
   final DAOSala _daoSala = DAOSala();
+  final DAOPosicaoBike _daoPosicaoBike = DAOPosicaoBike();
   int? _id;
   bool _dadosCarregados = false;
   bool _erroCarregamento = false;
-  
-  // Controllers para os campos
+
   final TextEditingController _nomeControlador = TextEditingController();
-  final TextEditingController _numBikesControlador = TextEditingController();
   final TextEditingController _numFilasControlador = TextEditingController();
-  final TextEditingController _limiteBikesControlador = TextEditingController();
-  
-  // Campos do formulário
+  final TextEditingController _numColunasControlador = TextEditingController();
+  final TextEditingController _posicaoProfessoraControlador = TextEditingController();
+
   bool _ativa = true;
 
   @override
@@ -38,9 +38,9 @@ class _FormSalaState extends State<FormSala> {
   @override
   void dispose() {
     _nomeControlador.dispose();
-    _numBikesControlador.dispose();
     _numFilasControlador.dispose();
-    _limiteBikesControlador.dispose();
+    _numColunasControlador.dispose();
+    _posicaoProfessoraControlador.dispose();
     super.dispose();
   }
 
@@ -54,9 +54,10 @@ class _FormSalaState extends State<FormSala> {
     if (_erroCarregamento) {
       return Scaffold(
         appBar: AppBar(title: const Text('Erro ao carregar sala')),
-        body: const Center(child: Text('Não foi possível carregar os dados da sala.')),
+        body: const Center(child: Text('Nao foi possivel carregar os dados da sala.')),
       );
     }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(_id != null ? 'Editar Sala' : 'Nova Sala'),
@@ -81,49 +82,41 @@ class _FormSalaState extends State<FormSala> {
                 eObrigatorio: true,
               ),
               const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: _numBikesControlador,
-                      decoration: const InputDecoration(labelText: 'Nº Bikes'),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      validator: (value) {
-                        if (value == null || value.isEmpty) return 'Informe Nº de Bikes';
-                        final n = int.tryParse(value);
-                        if (n == null || n < 1) return 'Número positivo obrigatório';
-                        return null;
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: TextFormField(
-                      controller: _numFilasControlador,
-                      decoration: const InputDecoration(labelText: 'Nº Filas'),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      validator: (value) {
-                        if (value == null || value.isEmpty) return 'Informe Nº de Filas';
-                        final n = int.tryParse(value);
-                        if (n == null || n < 1) return 'Número positivo obrigatório';
-                        return null;
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
               TextFormField(
-                controller: _limiteBikesControlador,
-                decoration: const InputDecoration(labelText: 'Limite Bikes por Fila'),
+                controller: _numFilasControlador,
+                decoration: const InputDecoration(labelText: 'Numero de filas'),
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 validator: (value) {
-                  if (value == null || value.isEmpty) return 'Informe o limite';
+                  if (value == null || value.isEmpty) return 'Informe o numero de filas';
                   final n = int.tryParse(value);
-                  if (n == null || n < 1) return 'Número positivo obrigatório';
+                  if (n == null || n < 1) return 'Numero positivo obrigatorio';
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _numColunasControlador,
+                decoration: const InputDecoration(labelText: 'Numero de colunas'),
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                validator: (value) {
+                  if (value == null || value.isEmpty) return 'Informe o numero de colunas';
+                  final n = int.tryParse(value);
+                  if (n == null || n < 1) return 'Numero positivo obrigatorio';
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _posicaoProfessoraControlador,
+                decoration: const InputDecoration(labelText: 'Posicao da professora (1..colunas)'),
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                validator: (value) {
+                  if (value == null || value.isEmpty) return 'Informe a posicao da professora';
+                  final n = int.tryParse(value);
+                  if (n == null || n < 1) return 'Numero positivo obrigatorio';
                   return null;
                 },
               ),
@@ -156,7 +149,7 @@ class _FormSalaState extends State<FormSala> {
           _dadosCarregados = true;
           _erroCarregamento = false;
         });
-      } catch (e) {
+      } catch (_) {
         setState(() {
           _erroCarregamento = true;
         });
@@ -172,57 +165,29 @@ class _FormSalaState extends State<FormSala> {
   void _preencherCampos(DTOSala sala) {
     _id = sala.id;
     _nomeControlador.text = sala.nome;
-    _numBikesControlador.text = sala.numeroBikes.toString();
     _numFilasControlador.text = sala.numeroFilas.toString();
-    _limiteBikesControlador.text = sala.limiteBikesPorFila.toString();
+    _numColunasControlador.text = sala.numeroColunas.toString();
+    _posicaoProfessoraControlador.text = (sala.posicaoProfessora + 1).toString();
     _ativa = sala.ativa;
   }
 
   void _limparCampos() {
     _id = null;
     _nomeControlador.clear();
-    _numBikesControlador.clear();
     _numFilasControlador.clear();
-    _limiteBikesControlador.clear();
+    _numColunasControlador.clear();
+    _posicaoProfessoraControlador.clear();
     _ativa = true;
     setState(() {});
   }
 
   DTOSala _criarDTO() {
-    final numBikes = int.parse(_numBikesControlador.text);
-    final numFilas = int.parse(_numFilasControlador.text);
-    final limiteBikes = int.parse(_limiteBikesControlador.text);
-
-    // Criar grade básica
-    List<List<bool>> gradeBikes = List.generate(
-      numFilas + 1, // +1 fila da professora
-      (_) => List.generate(limiteBikes, (_) => false),
-    );
-
-    // Preencher a bike da professora na fila 0 meio da fila
-    if (limiteBikes > 0) {
-      int bikeProf = limiteBikes ~/ 2;
-      gradeBikes[0][bikeProf] = true;
-    }
-
-    // Distribuir bikes restantes
-    int bikesRestantes = numBikes - 1;
-    if (bikesRestantes < 0) bikesRestantes = 0;
-
-    for (int fila = 1; fila <= numFilas && bikesRestantes > 0; fila++) {
-      for (int bike = 0; bike < limiteBikes && bikesRestantes > 0; bike++) {
-        gradeBikes[fila][bike] = true;
-        bikesRestantes--;
-      }
-    }
-
     return DTOSala(
       id: _id,
       nome: _nomeControlador.text,
-      numeroBikes: numBikes,
-      numeroFilas: numFilas,
-      limiteBikesPorFila: limiteBikes,
-      gradeBikes: gradeBikes,
+      numeroFilas: int.parse(_numFilasControlador.text),
+      numeroColunas: int.parse(_numColunasControlador.text),
+      posicaoProfessora: int.parse(_posicaoProfessoraControlador.text) - 1,
       ativa: _ativa,
     );
   }
@@ -236,28 +201,39 @@ class _FormSalaState extends State<FormSala> {
     );
   }
 
-  void _redirecionarAposSalvar() {
-    // TODO: Implementar lógica de redirecionamento
-    // Se for edição (_id != null): voltar para tela anterior
-    // Se for novo item (_id == null): ir para lista de salas
-  }
-
   Future<void> _salvar() async {
-    if (_chaveFormulario.currentState!.validate()) {
-      try {
-        final dto = _criarDTO();
-        debugPrint(dto.toString());
-        await _daoSala.salvar(dto);
-        if (!mounted) return;
-        _mostrarMensagem(_id != null ? 'Sala atualizada com sucesso!' : 'Sala criada com sucesso!');
-        if (_id == null) {
-          _limparCampos();
-        }
-        _redirecionarAposSalvar();
-      } catch (e) {
-        if (!mounted) return;
-        _mostrarMensagem('Erro ao salvar sala: $e', erro: true);
+    if (!_chaveFormulario.currentState!.validate()) return;
+
+    final numFilas = int.tryParse(_numFilasControlador.text) ?? 0;
+    final numColunas = int.tryParse(_numColunasControlador.text) ?? 0;
+    final posicaoInformada = int.tryParse(_posicaoProfessoraControlador.text) ?? 0;
+    if (posicaoInformada < 1 || posicaoInformada > numColunas) {
+      _mostrarMensagem('A posicao da professora deve estar entre 1 e $numColunas.', erro: true);
+      return;
+    }
+
+    if (_id != null) {
+      final posicoes = await _daoPosicaoBike.buscarTodos();
+      final extrapola = posicoes.any((p) => p.fila >= numFilas || p.coluna >= numColunas);
+      if (extrapola) {
+        _mostrarMensagem('Nao e permitido reduzir a grade com posicoes de bike fora do novo limite.', erro: true);
+        return;
       }
+    }
+
+    try {
+      final dto = _criarDTO();
+      await _daoSala.salvar(dto);
+      if (!mounted) return;
+      _mostrarMensagem(_id != null ? 'Sala atualizada com sucesso!' : 'Sala criada com sucesso!');
+      if (_id == null) {
+        _limparCampos();
+      } else {
+        Navigator.of(context).pop();
+      }
+    } catch (e) {
+      if (!mounted) return;
+      _mostrarMensagem('Erro ao salvar sala: $e', erro: true);
     }
   }
 }

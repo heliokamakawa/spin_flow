@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:spin_flow/configuracoes/erro.dart';
 import 'package:spin_flow/validacoes/validador_url.dart';
 
@@ -59,3 +59,4 @@ class CampoUrl extends StatelessWidget {
     return null;
   }
 }
+

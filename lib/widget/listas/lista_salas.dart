@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:spin_flow/banco/sqlite/dao/dao_sala.dart';
 import 'package:spin_flow/dto/dto_sala.dart';
 import 'package:spin_flow/configuracoes/rotas.dart';
@@ -19,7 +19,9 @@ class ListaSalas extends StatelessWidget {
       excluir: dao.excluir,
       ativo: (s) => s.ativa,
       detalhes: (s) =>
-          'Bikes: ${s.numeroBikes}\nFilas: ${s.numeroFilas}\nLimite por fila: ${s.limiteBikesPorFila}\n${s.ativa ? 'Ativa' : 'Inativa'}',
+          'Filas: ${s.numeroFilas}\nColunas: ${s.numeroColunas}\nPosição da professora: ${s.posicaoProfessora + 1}\n${s.ativa ? 'Ativa' : 'Inativa'}',
     );
   }
 }
+
+

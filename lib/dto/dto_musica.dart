@@ -1,4 +1,4 @@
-import 'package:spin_flow/dto/dto.dart';
+﻿import 'package:spin_flow/dto/dto.dart';
 import 'package:spin_flow/dto/dto_artista_banda.dart';
 import 'package:spin_flow/dto/dto_categoria_musica.dart';
 import 'package:spin_flow/dto/dto_video_aula.dart';
@@ -24,3 +24,4 @@ class DTOMusica implements DTO {
     this.ativo = true,
   });
 }
+

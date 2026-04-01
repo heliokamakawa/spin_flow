@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:spin_flow/banco/sqlite/dao/dao_aluno.dart';
 import 'package:spin_flow/dto/dto_aluno.dart';
 import 'package:spin_flow/configuracoes/rotas.dart';
@@ -23,3 +23,4 @@ class ListaAlunos extends StatelessWidget {
     );
   }
 }
+

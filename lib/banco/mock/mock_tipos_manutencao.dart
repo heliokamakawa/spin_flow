@@ -1,52 +1,52 @@
-import 'package:spin_flow/dto/dto_tipo_manutencao.dart';
+﻿import 'package:spin_flow/dto/dto_tipo_manutencao.dart';
 
 List<DTOTipoManutencao> mockTiposManutencao = [
   DTOTipoManutencao(
     id: 1,
     nome: 'Pedal Esquerdo',
-    descricao: 'Manutenção ou substituição do pedal esquerdo da bike',
+    descricao: 'ManutenÃ§Ã£o ou substituiÃ§Ã£o do pedal esquerdo da bike',
     ativa: true,
   ),
   DTOTipoManutencao(
     id: 2,
     nome: 'Pedal Direito',
-    descricao: 'Manutenção ou substituição do pedal direito da bike',
+    descricao: 'ManutenÃ§Ã£o ou substituiÃ§Ã£o do pedal direito da bike',
     ativa: true,
   ),
   DTOTipoManutencao(
     id: 3,
     nome: 'Regulagem Quebrada',
-    descricao: 'Reparo da regulagem de resistência da bike',
+    descricao: 'Reparo da regulagem de resistÃªncia da bike',
     ativa: true,
   ),
   DTOTipoManutencao(
     id: 4,
-    nome: 'Pé-de-Vela',
-    descricao: 'Substituição ou reparo do pé-de-vela',
+    nome: 'PÃ©-de-Vela',
+    descricao: 'SubstituiÃ§Ã£o ou reparo do pÃ©-de-vela',
     ativa: true,
   ),
   DTOTipoManutencao(
     id: 5,
     nome: 'Correia',
-    descricao: 'Substituição da correia de transmissão',
+    descricao: 'SubstituiÃ§Ã£o da correia de transmissÃ£o',
     ativa: true,
   ),
   DTOTipoManutencao(
     id: 6,
     nome: 'Volante',
-    descricao: 'Manutenção ou substituição do volante',
+    descricao: 'ManutenÃ§Ã£o ou substituiÃ§Ã£o do volante',
     ativa: true,
   ),
   DTOTipoManutencao(
     id: 7,
     nome: 'Selim',
-    descricao: 'Substituição ou ajuste do selim',
+    descricao: 'SubstituiÃ§Ã£o ou ajuste do selim',
     ativa: true,
   ),
   DTOTipoManutencao(
     id: 8,
-    nome: 'Guidão',
-    descricao: 'Ajuste ou substituição do guidão',
+    nome: 'GuidÃ£o',
+    descricao: 'Ajuste ou substituiÃ§Ã£o do guidÃ£o',
     ativa: true,
   ),
   DTOTipoManutencao(
@@ -58,55 +58,55 @@ List<DTOTipoManutencao> mockTiposManutencao = [
   DTOTipoManutencao(
     id: 10,
     nome: 'Rolamento',
-    descricao: 'Substituição de rolamentos desgastados',
+    descricao: 'SubstituiÃ§Ã£o de rolamentos desgastados',
     ativa: true,
   ),
   DTOTipoManutencao(
     id: 11,
     nome: 'Cabo de Freio',
-    descricao: 'Substituição do cabo de freio',
+    descricao: 'SubstituiÃ§Ã£o do cabo de freio',
     ativa: true,
   ),
   DTOTipoManutencao(
     id: 12,
     nome: 'Display',
-    descricao: 'Reparo ou substituição do display eletrônico',
+    descricao: 'Reparo ou substituiÃ§Ã£o do display eletrÃ´nico',
     ativa: true,
   ),
   DTOTipoManutencao(
     id: 13,
     nome: 'Sensor',
-    descricao: 'Substituição de sensores de velocidade ou cadência',
+    descricao: 'SubstituiÃ§Ã£o de sensores de velocidade ou cadÃªncia',
     ativa: true,
   ),
   DTOTipoManutencao(
     id: 14,
-    nome: 'Fiação Elétrica',
-    descricao: 'Reparo da fiação elétrica da bike',
+    nome: 'FiaÃ§Ã£o ElÃ©trica',
+    descricao: 'Reparo da fiaÃ§Ã£o elÃ©trica da bike',
     ativa: true,
   ),
   DTOTipoManutencao(
     id: 15,
     nome: 'Base da Bike',
-    descricao: 'Ajuste ou reparo da base de sustentação',
+    descricao: 'Ajuste ou reparo da base de sustentaÃ§Ã£o',
     ativa: true,
   ),
   DTOTipoManutencao(
     id: 16,
-    nome: 'Nível',
-    descricao: 'Ajuste do nível da bike para estabilidade',
+    nome: 'NÃ­vel',
+    descricao: 'Ajuste do nÃ­vel da bike para estabilidade',
     ativa: true,
   ),
   DTOTipoManutencao(
     id: 17,
     nome: 'Parafusos',
-    descricao: 'Substituição de parafusos soltos ou danificados',
+    descricao: 'SubstituiÃ§Ã£o de parafusos soltos ou danificados',
     ativa: true,
   ),
   DTOTipoManutencao(
     id: 18,
-    nome: 'Lubrificação',
-    descricao: 'Lubrificação geral dos componentes móveis',
+    nome: 'LubrificaÃ§Ã£o',
+    descricao: 'LubrificaÃ§Ã£o geral dos componentes mÃ³veis',
     ativa: true,
   ),
   DTOTipoManutencao(
@@ -117,8 +117,8 @@ List<DTOTipoManutencao> mockTiposManutencao = [
   ),
   DTOTipoManutencao(
     id: 20,
-    nome: 'Calibração',
-    descricao: 'Calibração dos sensores e displays',
+    nome: 'CalibraÃ§Ã£o',
+    descricao: 'CalibraÃ§Ã£o dos sensores e displays',
     ativa: true,
   ),
 ]; 
