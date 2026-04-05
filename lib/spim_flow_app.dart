@@ -17,6 +17,7 @@ import 'package:spin_flow/widget/form_turma_mix.dart';
 import 'package:spin_flow/widget/tela_dashboard_aluno.dart';
 import 'package:spin_flow/widget/tela_dashboard_professora.dart';
 import 'package:spin_flow/widget/tela_login.dart';
+import 'package:spin_flow/widget/tela_splash.dart';
 import 'package:spin_flow/widget/listas/lista_fabricantes.dart';
 import 'package:spin_flow/widget/listas/lista_categorias_musica.dart';
 import 'package:spin_flow/widget/listas/lista_tipos_manutencao.dart';
@@ -47,8 +48,9 @@ class SpinFlowApp extends StatelessWidget {
       title: 'pinFlow',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.purple),
-      initialRoute: Rotas.login,
+      initialRoute: Rotas.splash,
       routes: {
+        Rotas.splash: (context) => const TelaSplash(),
         Rotas.login: (context) => const TelaLogin(),
         Rotas.dashboardAluno: (context) => const TelaDashboardAluno(),
         Rotas.dashboardProfessora: (context) => const TelaDashboardProfessora(),

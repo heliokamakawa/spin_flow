@@ -1,4 +1,5 @@
 ﻿class Rotas {
+  static const String splash = '/';
   static const String login = '/login';
   static const String dashboardAluno = '/dashboard-aluno';
   static const String dashboardProfessora = '/dashboard-professora';
