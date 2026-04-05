@@ -2,7 +2,7 @@
 import 'package:spin_flow/dto/dto.dart';
 import 'package:spin_flow/widget/componentes/campos/selecao_unica/campo_busca_opcoes.dart';
 
-/// Widget reutilizÃ¡vel para seleção múltipla com busca.
+/// Widget reutilizável para seleção múltipla com busca.
 /// T recebe um tipo que herda de DTO e sobrescreve toString() ou implementa nome.
 class CampoBuscaMultipla<T extends DTO> extends StatelessWidget {
   final List<T> opcoes;

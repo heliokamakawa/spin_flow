@@ -20,7 +20,7 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
   int _testesPassaram = 0;
   int _testesFalharam = 0;
   
-  // InstÃ¢ncias dos DAOs
+  // Instâncias dos DAOs
   final DAOFabricante _daoFabricante = DAOFabricante();
   final DAOCategoriaMusica _daoCategoria = DAOCategoriaMusica();
 
@@ -45,10 +45,10 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
       _adicionarLog('ðŸŒ Configurando SQLite para web...');
       databaseFactory = databaseFactoryFfiWeb;
       
-      // Inicializar conexÃ£o
-      _adicionarLog('ðŸ”Œ Inicializando conexÃ£o SQLite...');
+      // Inicializar conexão
+      _adicionarLog('ðŸ”Œ Inicializando conexão SQLite...');
       await ConexaoSQLite.database;
-      _adicionarLog('âœ… ConexÃ£o SQLite inicializada');
+      _adicionarLog('âœ… Conexão SQLite inicializada');
 
       // Testar Fabricante
       await _testarFabricante();
@@ -56,12 +56,12 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
       // Testar CategoriaMusica
       await _testarCategoriaMusica();
       
-      // RelatÃ³rio final
+      // Relatório final
       _mostrarRelatorioFinal();
       
-      // Fechar conexÃ£o
+      // Fechar conexão
       await ConexaoSQLite.fecharConexao();
-      _adicionarLog('âœ… ConexÃ£o SQLite fechada');
+      _adicionarLog('âœ… Conexão SQLite fechada');
       
     } catch (e) {
       _adicionarLog('ðŸ’¥ ERRO FATAL: $e');
@@ -81,7 +81,7 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
       _adicionarLog('  ðŸ“ Testando CREATE...');
       DTOFabricante fabricante = DTOFabricante(
         nome: 'Teste Fabricante Web',
-        descricao: 'DescriÃ§Ã£o teste web',
+        descricao: 'Descrição teste web',
         ativo: true,
       );
       
@@ -105,7 +105,7 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
       DTOFabricante fabricanteAtualizado = DTOFabricante(
         id: id,
         nome: 'Fabricante Web Atualizado',
-        descricao: 'DescriÃ§Ã£o atualizada web',
+        descricao: 'Descrição atualizada web',
         ativo: false,
       );
       await _daoFabricante.salvar(fabricanteAtualizado);
@@ -138,7 +138,7 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
   }
 
   Future<void> _testarCategoriaMusica() async {
-    _adicionarLog('\nðŸŽµ TESTANDO CATEGORIA MÃšSICA...');
+    _adicionarLog('\nðŸŽµ TESTANDO CATEGORIA MÀšSICA...');
     
     try {
       // CREATE
@@ -202,7 +202,7 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
   }
 
   void _mostrarRelatorioFinal() {
-    _adicionarLog('\nðŸ“Š === RELATÃ“RIO FINAL ===');
+    _adicionarLog('\nðŸ“Š === RELATÀ“RIO FINAL ===');
     _adicionarLog('âœ… Testes que passaram: $_testesPassaram');
     _adicionarLog('âŒ Testes que falharam: $_testesFalharam');
     
@@ -212,7 +212,7 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
     _adicionarLog('ðŸ“ˆ Taxa de sucesso: ${taxaSucesso.toStringAsFixed(1)}%');
     
     if (_testesFalharam == 0) {
-      _adicionarLog('\nðŸŽ‰ PARABÃ‰NS! TODOS OS TESTES PASSARAM!');
+      _adicionarLog('\nðŸŽ‰ PARABÀ‰NS! TODOS OS TESTES PASSARAM!');
     } else {
       _adicionarLog('\nâš ï¸ ALGUNS TESTES FALHARAM. Verifique os logs acima.');
     }
@@ -232,7 +232,7 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // BotÃ£o de teste
+            // Botão de teste
             ElevatedButton(
               onPressed: _testando ? null : _executarTestes,
               style: ElevatedButton.styleFrom(
@@ -260,7 +260,7 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
             
             SizedBox(height: 20),
             
-            // EstatÃ­sticas
+            // Estatísticas
             Card(
               child: Padding(
                 padding: EdgeInsets.all(16.0),
@@ -344,7 +344,7 @@ class _TesteCRUDWebState extends State<TesteCRUDWeb> {
   }
 }
 
-// FunÃ§Ã£o main para web
+// Função main para web
 void main() {
   runApp(MaterialApp(
     title: 'Teste CRUD SQLite',

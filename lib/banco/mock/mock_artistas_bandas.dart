@@ -4,7 +4,7 @@ List<DTOArtistaBanda> mockArtistasBandas = [
   DTOArtistaBanda(
     id: 1,
     nome: 'Survivor',
-    descricao: 'Banda de rock americana conhecida por mÃºsicas motivacionais e de superaÃ§Ã£o',
+    descricao: 'Banda de rock americana conhecida por músicas motivacionais e de superação',
     link: 'https://survivorband.com',
     foto: 'https://example.com/survivor.jpg',
     ativo: true,
@@ -12,7 +12,7 @@ List<DTOArtistaBanda> mockArtistasBandas = [
   DTOArtistaBanda(
     id: 2,
     nome: 'Queen',
-    descricao: 'LendÃ¡ria banda britÃ¢nica com mÃºsicas Ã©picas e energÃ©ticas',
+    descricao: 'Lendária banda britânica com músicas épicas e energéticas',
     link: 'https://queenonline.com',
     foto: 'https://example.com/queen.jpg',
     ativo: true,
@@ -36,7 +36,7 @@ List<DTOArtistaBanda> mockArtistasBandas = [
   DTOArtistaBanda(
     id: 5,
     nome: 'Imagine Dragons',
-    descricao: 'Banda de rock alternativo com mÃºsicas energÃ©ticas e inspiradoras',
+    descricao: 'Banda de rock alternativo com músicas energéticas e inspiradoras',
     link: 'https://imaginedragonsmusic.com',
     foto: 'https://example.com/imaginedragons.jpg',
     ativo: true,
@@ -44,7 +44,7 @@ List<DTOArtistaBanda> mockArtistasBandas = [
   DTOArtistaBanda(
     id: 6,
     nome: 'Kanye West',
-    descricao: 'Artista de hip-hop com produÃ§Ãµes inovadoras e letras motivacionais',
+    descricao: 'Artista de hip-hop com produçÀµes inovadoras e letras motivacionais',
     link: 'https://kanyewest.com',
     foto: 'https://example.com/kanye.jpg',
     ativo: true,
@@ -52,7 +52,7 @@ List<DTOArtistaBanda> mockArtistasBandas = [
   DTOArtistaBanda(
     id: 7,
     nome: 'Fall Out Boy',
-    descricao: 'Banda de rock alternativo com mÃºsicas cativantes e energÃ©ticas',
+    descricao: 'Banda de rock alternativo com músicas cativantes e energéticas',
     link: 'https://falloutboy.com',
     foto: 'https://example.com/falloutboy.jpg',
     ativo: true,
@@ -60,7 +60,7 @@ List<DTOArtistaBanda> mockArtistasBandas = [
   DTOArtistaBanda(
     id: 8,
     nome: 'The Script',
-    descricao: 'Banda irlandesa com mÃºsicas emocionais e motivacionais',
+    descricao: 'Banda irlandesa com músicas emocionais e motivacionais',
     link: 'https://thescriptmusic.com',
     foto: 'https://example.com/thescript.jpg',
     ativo: true,
@@ -68,7 +68,7 @@ List<DTOArtistaBanda> mockArtistasBandas = [
   DTOArtistaBanda(
     id: 9,
     nome: 'Macklemore',
-    descricao: 'Rapper americano com mÃºsicas inspiradoras e positivas',
+    descricao: 'Rapper americano com músicas inspiradoras e positivas',
     link: 'https://macklemore.com',
     foto: 'https://example.com/macklemore.jpg',
     ativo: true,
@@ -76,7 +76,7 @@ List<DTOArtistaBanda> mockArtistasBandas = [
   DTOArtistaBanda(
     id: 10,
     nome: 'Sia',
-    descricao: 'Cantora australiana com vocais poderosos e mÃºsicas emocionais',
+    descricao: 'Cantora australiana com vocais poderosos e músicas emocionais',
     link: 'https://siamusic.net',
     foto: 'https://example.com/sia.jpg',
     ativo: true,
@@ -84,7 +84,7 @@ List<DTOArtistaBanda> mockArtistasBandas = [
   DTOArtistaBanda(
     id: 11,
     nome: 'Calvin Harris',
-    descricao: 'DJ e produtor escocÃªs com mÃºsicas eletrÃ´nicas energÃ©ticas',
+    descricao: 'DJ e produtor escocês com músicas eletrônicas energéticas',
     link: 'https://calvinharris.com',
     foto: 'https://example.com/calvinharris.jpg',
     ativo: true,
@@ -92,7 +92,7 @@ List<DTOArtistaBanda> mockArtistasBandas = [
   DTOArtistaBanda(
     id: 12,
     nome: 'David Guetta',
-    descricao: 'DJ francÃªs com produÃ§Ãµes eletrÃ´nicas e colaboraÃ§Ãµes internacionais',
+    descricao: 'DJ francês com produçÀµes eletrônicas e colaboraçÀµes internacionais',
     link: 'https://davidguetta.com',
     foto: 'https://example.com/davidguetta.jpg',
     ativo: true,
@@ -108,7 +108,7 @@ List<DTOArtistaBanda> mockArtistasBandas = [
   DTOArtistaBanda(
     id: 14,
     nome: 'Red Hot Chili Peppers',
-    descricao: 'Banda de funk rock com mÃºsicas energÃ©ticas e contagiantes',
+    descricao: 'Banda de funk rock com músicas energéticas e contagiantes',
     link: 'https://redhotchilipeppers.com',
     foto: 'https://example.com/rhcp.jpg',
     ativo: true,
@@ -116,7 +116,7 @@ List<DTOArtistaBanda> mockArtistasBandas = [
   DTOArtistaBanda(
     id: 15,
     nome: 'Lady Gaga',
-    descricao: 'Cantora americana com mÃºsicas pop energÃ©ticas e empoderadas',
+    descricao: 'Cantora americana com músicas pop energéticas e empoderadas',
     link: 'https://ladygaga.com',
     foto: 'https://example.com/ladygaga.jpg',
     ativo: true,
@@ -124,7 +124,7 @@ List<DTOArtistaBanda> mockArtistasBandas = [
   DTOArtistaBanda(
     id: 16,
     nome: 'Bruno Mars',
-    descricao: 'Cantor americano com mÃºsicas funk e pop contagiantes',
+    descricao: 'Cantor americano com músicas funk e pop contagiantes',
     link: 'https://brunomars.com',
     foto: 'https://example.com/brunomars.jpg',
     ativo: true,
@@ -148,7 +148,7 @@ List<DTOArtistaBanda> mockArtistasBandas = [
   DTOArtistaBanda(
     id: 19,
     nome: 'Panic! At The Disco',
-    descricao: 'Banda de rock alternativo com mÃºsicas cativantes e energÃ©ticas',
+    descricao: 'Banda de rock alternativo com músicas cativantes e energéticas',
     link: 'https://panicatthedisco.com',
     foto: 'https://example.com/panic.jpg',
     ativo: true,
@@ -156,7 +156,7 @@ List<DTOArtistaBanda> mockArtistasBandas = [
   DTOArtistaBanda(
     id: 20,
     nome: 'Two Steps From Hell',
-    descricao: 'Compositores de mÃºsica Ã©pica e cinematogrÃ¡fica para treinos intensos',
+    descricao: 'Compositores de música épica e cinematográfica para treinos intensos',
     link: 'https://twostepsfromhell.com',
     foto: 'https://example.com/tsfh.jpg',
     ativo: true,

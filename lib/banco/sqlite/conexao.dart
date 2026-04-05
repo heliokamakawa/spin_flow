@@ -8,7 +8,7 @@ import 'script.dart';
 class ConexaoSQLite {
   static Database? _database;
   
-  // MÃ©todo singleton para obter a instÃ¢ncia do banco
+  // Método singleton para obter a instância do banco
   static Future<Database> get database async {
     if (_database != null) return _database!;
     
@@ -26,7 +26,7 @@ class ConexaoSQLite {
       sqfliteFfiInit();
       databaseFactory = databaseFactoryFfi;
     }
-    // Mobile usa o sqflite padrÃ£o
+    // Mobile usa o sqflite padrão
 
     // Caminho do banco
     String path;
@@ -69,10 +69,10 @@ class ConexaoSQLite {
   }
 
   static Future<void> _atualizarBanco(Database db, int oldVersion, int newVersion) async {
-    // LÃ³gica para atualizaÃ§Ãµes futuras
+    // Lógica para atualizaçÀµes futuras
   }
 
-  // MÃ©todo para fechar conexÃ£o
+  // Método para fechar conexão
   static Future<void> fecharConexao() async {
     if (_database != null) {
       await _database!.close();

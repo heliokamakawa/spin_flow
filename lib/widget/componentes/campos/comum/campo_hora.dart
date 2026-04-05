@@ -2,7 +2,7 @@
 import 'package:spin_flow/configuracoes/erro.dart';
 
 class CampoHora extends StatefulWidget {
-  // 1. Atributos pÃºblicos
+  // 1. Atributos públicos
   final dynamic valor;
   final String rotulo;
   final String mensagemErro;
@@ -23,7 +23,7 @@ class CampoHora extends StatefulWidget {
     this.aoAlterarString,
   });
 
-  // 3. MÃ©todos override
+  // 3. Métodos override
   @override
   State<CampoHora> createState() => _CampoHoraState();
 }

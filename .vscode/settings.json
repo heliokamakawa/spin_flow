@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "C:/Users/Helio/Desktop/spin_flow/linux"
+  "cmake.sourceDirectory": "C:/Users/Helio/Desktop/spin_flow/linux",
+  "dart.flutterSdkPath": ".fvm/versions/stable"
 }

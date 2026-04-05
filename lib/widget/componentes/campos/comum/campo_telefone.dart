@@ -3,7 +3,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:spin_flow/configuracoes/erro.dart';
 
 class CampoTelefone extends StatelessWidget {
-  // 1. Atributos pÃºblicos
+  // 1. Atributos públicos
   final TextEditingController? controle;
   final String? valorInicial;
   final String rotulo;
@@ -26,7 +26,7 @@ class CampoTelefone extends StatelessWidget {
     this.aoAlterar,
   });
 
-  // 3. MÃ©todos override
+  // 3. Métodos override
   @override
   Widget build(BuildContext context) {
     final mascara = MaskTextInputFormatter(
@@ -50,7 +50,7 @@ class CampoTelefone extends StatelessWidget {
     );
   }
 
-  // 5. MÃ©todos privados importantes
+  // 5. Métodos privados importantes
   TextEditingController? _definirController() {
     // Se valorInicial for fornecido, não usar controller para evitar conflito
     return valorInicial != null ? null : controle;
@@ -64,7 +64,7 @@ class CampoTelefone extends StatelessWidget {
       return mensagemErro;
     }
     if (valor != null && valor.isNotEmpty) {
-      // Remove caracteres não numÃ©ricos para validaÃ§Ã£o
+      // Remove caracteres não numéricos para validação
       final numeros = valor.replaceAll(RegExp(r'[^\d]'), '');
       if (numeros.length < 10 || numeros.length > 11) return Erro.telefoneInvalido;
     }

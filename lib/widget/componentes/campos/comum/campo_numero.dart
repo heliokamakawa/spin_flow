@@ -2,7 +2,7 @@
 import 'package:spin_flow/configuracoes/erro.dart';
 
 class CampoNumero extends StatelessWidget {
-  // 1. Atributos pÃºblicos
+  // 1. Atributos públicos
   final TextEditingController? controle;
   final String? valorInicial;
   final String rotulo;
@@ -31,7 +31,7 @@ class CampoNumero extends StatelessWidget {
     this.aoAlterar,
   });
 
-  // 3. MÃ©todos override
+  // 3. Métodos override
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -48,7 +48,7 @@ class CampoNumero extends StatelessWidget {
     );
   }
 
-  // 5. MÃ©todos privados importantes
+  // 5. Métodos privados importantes
   TextEditingController? _definirController() {
     // Se valorInicial for fornecido, não usar controller para evitar conflito
     return valorInicial != null ? null : controle;
