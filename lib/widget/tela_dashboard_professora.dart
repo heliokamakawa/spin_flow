@@ -1,4 +1,10 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:spin_flow/banco/sqlite/dao/dao_aluno.dart';
+import 'package:spin_flow/banco/sqlite/dao/dao_bike.dart';
+import 'package:spin_flow/banco/sqlite/dao/dao_checkin.dart';
+import 'package:spin_flow/banco/sqlite/dao/dao_manutencao.dart';
+import 'package:spin_flow/banco/sqlite/dao/dao_mix.dart';
+import 'package:spin_flow/banco/sqlite/dao/dao_turma.dart';
 
 import '../configuracoes/rotas.dart';
 import '../configuracoes/sessao_usuario.dart';
@@ -21,10 +27,52 @@ class _TelaDashboardProfessoraState extends State<TelaDashboardProfessora> with 
     Tab(icon: Icon(Icons.build), text: 'Manutenção'),
   ];
 
+  // Métricas carregadas do banco
+  int _alunosAtivos = 0;
+  int _turmasAtivas = 0;
+  int _mixesAtivos = 0;
+  int _bikesAtivas = 0;
+  int _bikesManutencao = 0;
+  int _checkinsHoje = 0;
+  bool _carregandoMetricas = true;
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: _abas.length, vsync: this);
+    _carregarMetricas();
+  }
+
+  Future<void> _carregarMetricas() async {
+    setState(() => _carregandoMetricas = true);
+    try {
+      final alunos = await DAOAluno().buscarTodos();
+      final turmas = await DAOTurma().buscarTodos();
+      final mixes = await DAOMix().buscarTodos();
+      final bikes = await DAOBike().buscarTodos();
+      final bikesManut = await DAOManutencao().buscarBikeIdsEmManutencaoAtiva();
+      final checkins = await DAOCheckin().buscarTodos();
+
+      final agora = DateTime.now();
+      final hojeSemHora = DateTime(agora.year, agora.month, agora.day);
+      final checkinsHoje = checkins.where((c) {
+        final d = DateTime(c.data.year, c.data.month, c.data.day);
+        return c.ativo && d.isAtSameMomentAs(hojeSemHora);
+      }).length;
+
+      if (!mounted) return;
+      setState(() {
+        _alunosAtivos = alunos.where((a) => a.ativo).length;
+        _turmasAtivas = turmas.where((t) => t.ativo).length;
+        _mixesAtivos = mixes.where((m) => m.ativo).length;
+        _bikesAtivas = bikes.where((b) => b.ativa).length;
+        _bikesManutencao = bikesManut.length;
+        _checkinsHoje = checkinsHoje;
+        _carregandoMetricas = false;
+      });
+    } catch (_) {
+      if (mounted) setState(() => _carregandoMetricas = false);
+    }
   }
 
   @override
@@ -67,37 +115,68 @@ class _TelaDashboardProfessoraState extends State<TelaDashboardProfessora> with 
   }
 
   Widget _visaoGeral() {
-    return GridView.count(
-      padding: const EdgeInsets.all(16),
-      crossAxisCount: 2,
-      crossAxisSpacing: 16,
-      mainAxisSpacing: 16,
-      children: [
-        _InfoCard(
-          titulo: 'Cadastros',
-          valor: 'Operacional',
-          icone: Icons.folder_copy,
-          onTap: () => _tabController.animateTo(1),
-        ),
-        _InfoCard(
-          titulo: 'Listas',
-          valor: 'Consulta',
-          icone: Icons.list,
-          onTap: () => _tabController.animateTo(2),
-        ),
-        _InfoCard(
-          titulo: 'Aulas',
-          valor: 'Check-in',
-          icone: Icons.event,
-          onTap: () => _tabController.animateTo(3),
-        ),
-        _InfoCard(
-          titulo: 'Manutenção',
-          valor: 'Bikes',
-          icone: Icons.build,
-          onTap: () => _tabController.animateTo(4),
-        ),
-      ],
+    if (_carregandoMetricas) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    return RefreshIndicator(
+      onRefresh: _carregarMetricas,
+      child: GridView.count(
+        padding: const EdgeInsets.all(16),
+        crossAxisCount: 2,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+        children: [
+          _InfoCard(
+            titulo: 'Alunos Ativos',
+            valor: '$_alunosAtivos',
+            icone: Icons.person,
+            cor: Colors.blue,
+            onTap: () => Navigator.pushNamed(context, Rotas.listaAlunos),
+          ),
+          _InfoCard(
+            titulo: 'Turmas Ativas',
+            valor: '$_turmasAtivas',
+            icone: Icons.event,
+            cor: Colors.purple,
+            onTap: () => Navigator.pushNamed(context, Rotas.listaTurmas),
+          ),
+          _InfoCard(
+            titulo: 'Mixes Ativos',
+            valor: '$_mixesAtivos',
+            icone: Icons.queue_music,
+            cor: Colors.teal,
+            onTap: () => Navigator.pushNamed(context, Rotas.listaMixes),
+          ),
+          _InfoCard(
+            titulo: 'Bikes OK',
+            valor: '$_bikesAtivas',
+            icone: Icons.directions_bike,
+            cor: Colors.green,
+            onTap: () => Navigator.pushNamed(context, Rotas.listaBikes),
+          ),
+          _InfoCard(
+            titulo: 'Em Manutenção',
+            valor: '$_bikesManutencao',
+            icone: Icons.build,
+            cor: Colors.orange,
+            onTap: () => Navigator.pushNamed(context, Rotas.listaManutencoes),
+          ),
+          _InfoCard(
+            titulo: 'Check-ins Hoje',
+            valor: '$_checkinsHoje',
+            icone: Icons.pin_drop,
+            cor: Colors.deepPurple,
+            onTap: () => Navigator.pushNamed(context, Rotas.listaCheckins),
+          ),
+          _InfoCard(
+            titulo: 'Relatórios',
+            valor: 'Gerenciais',
+            icone: Icons.bar_chart,
+            cor: Colors.indigo,
+            onTap: () => Navigator.pushNamed(context, Rotas.relatoriosProfessora),
+          ),
+        ],
+      ),
     );
   }
 
@@ -135,6 +214,10 @@ class _TelaDashboardProfessoraState extends State<TelaDashboardProfessora> with 
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 8),
+          child: Text('Listas Simples', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        ),
         _CadastroTile('Fabricantes', Icons.factory, () => Navigator.pushNamed(context, Rotas.listaFabricantes)),
         _CadastroTile('Categorias de Musica', Icons.category, () => Navigator.pushNamed(context, Rotas.listaCategoriasMusica)),
         _CadastroTile('Tipos de Manutenção', Icons.build, () => Navigator.pushNamed(context, Rotas.listaTiposManutencao)),
@@ -142,11 +225,18 @@ class _TelaDashboardProfessoraState extends State<TelaDashboardProfessora> with 
         _CadastroTile('Alunos', Icons.person, () => Navigator.pushNamed(context, Rotas.listaAlunos)),
         _CadastroTile('Salas', Icons.room, () => Navigator.pushNamed(context, Rotas.listaSalas)),
         _CadastroTile('Video-aula', Icons.ondemand_video, () => Navigator.pushNamed(context, Rotas.listaVideoAula)),
+        const Divider(),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 8),
+          child: Text('Listas com Associações', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        ),
         _CadastroTile('Bikes', Icons.directions_bike, () => Navigator.pushNamed(context, Rotas.listaBikes)),
         _CadastroTile('Musicas', Icons.library_music, () => Navigator.pushNamed(context, Rotas.listaMusicas)),
         _CadastroTile('Mixes', Icons.queue_music, () => Navigator.pushNamed(context, Rotas.listaMixes)),
         _CadastroTile('Turmas', Icons.group, () => Navigator.pushNamed(context, Rotas.listaTurmas)),
         _CadastroTile('Grupos de Alunos', Icons.groups, () => Navigator.pushNamed(context, Rotas.listaGruposAlunos)),
+        _CadastroTile('Manutenções', Icons.build_circle, () => Navigator.pushNamed(context, Rotas.listaManutencoes)),
+        _CadastroTile('Check-ins', Icons.event_available, () => Navigator.pushNamed(context, Rotas.listaCheckins)),
       ],
     );
   }
@@ -164,6 +254,8 @@ class _TelaDashboardProfessoraState extends State<TelaDashboardProfessora> with 
           Icons.grid_view,
           () => Navigator.pushNamed(context, Rotas.mapaOperacionalProfessora),
         ),
+        _CadastroTile('Consultar Check-ins', Icons.event_available, () => Navigator.pushNamed(context, Rotas.listaCheckins)),
+        _CadastroTile('Relatórios Gerenciais', Icons.bar_chart, () => Navigator.pushNamed(context, Rotas.relatoriosProfessora)),
       ],
     );
   }
@@ -174,7 +266,8 @@ class _TelaDashboardProfessoraState extends State<TelaDashboardProfessora> with 
       children: [
         _CadastroTile('Bikes', Icons.directions_bike, () => Navigator.pushNamed(context, Rotas.listaBikes)),
         _CadastroTile('Tipos de Manutenção', Icons.handyman, () => Navigator.pushNamed(context, Rotas.listaTiposManutencao)),
-        _CadastroTile('Manutenção de Bikes', Icons.build, () => Navigator.pushNamed(context, Rotas.cadastroManutencao)),
+        _CadastroTile('Registrar Manutenção', Icons.build, () => Navigator.pushNamed(context, Rotas.cadastroManutencao)),
+        _CadastroTile('Consultar Manutenções', Icons.build_circle, () => Navigator.pushNamed(context, Rotas.listaManutencoes)),
       ],
     );
   }
@@ -184,9 +277,10 @@ class _InfoCard extends StatelessWidget {
   final String titulo;
   final String valor;
   final IconData icone;
+  final Color cor;
   final VoidCallback? onTap;
 
-  const _InfoCard({required this.titulo, required this.valor, required this.icone, this.onTap});
+  const _InfoCard({required this.titulo, required this.valor, required this.icone, this.cor = Colors.blue, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -201,9 +295,9 @@ class _InfoCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icone, size: 40, color: Colors.blue),
+              Icon(icone, size: 40, color: cor),
               const SizedBox(height: 16),
-              Text(valor, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              Text(valor, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: cor)),
               const SizedBox(height: 8),
               Text(titulo, textAlign: TextAlign.center, style: const TextStyle(fontSize: 14)),
             ],
@@ -231,4 +325,3 @@ class _CadastroTile extends StatelessWidget {
     );
   }
 }
-

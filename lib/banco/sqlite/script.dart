@@ -254,6 +254,13 @@
     "INSERT INTO aluno (nome, email, data_nascimento, genero, telefone, url_foto, instagram, facebook, tiktok, observacoes, ativo) VALUES ('Ana Ribeiro', 'aluno@gmail.com', '1990-05-15', 'feminino', '(11) 99999-1111', 'https://example.com/aluno.jpg', 'https://instagram.com/ana.ribeiro', 'https://facebook.com/ana.ribeiro', 'https://tiktok.com/@ana.ribeiro', 'Aluna ativa para simulacao de uso real', 1)",
     "INSERT INTO aluno (nome, email, data_nascimento, genero, telefone, url_foto, instagram, facebook, tiktok, observacoes, ativo) VALUES ('Joao Santos', 'joao.santos@email.com', '1985-08-22', 'masculino', '(11) 99999-2222', 'https://example.com/joao.jpg', 'https://instagram.com/joao.santos', 'https://facebook.com/joao.santos', 'https://tiktok.com/@joao.santos', 'Aluno iniciante', 1)",
     "INSERT INTO aluno (nome, email, data_nascimento, genero, telefone, url_foto, instagram, facebook, tiktok, observacoes, ativo) VALUES ('Maria Costa', 'maria.costa@email.com', '1992-12-10', 'feminino', '(11) 99999-3333', 'https://example.com/maria.jpg', 'https://instagram.com/maria.costa', 'https://facebook.com/maria.costa', 'https://tiktok.com/@maria.costa', 'Aluna avancada', 1)",
+    "INSERT INTO aluno (nome, email, data_nascimento, genero, telefone, url_foto, instagram, facebook, tiktok, observacoes, ativo) VALUES ('Carlos Pereira', 'carlos.pereira@email.com', '1988-03-20', 'masculino', '(11) 99999-4444', '', '', '', '', 'Aluno intermediario', 1)",
+    "INSERT INTO aluno (nome, email, data_nascimento, genero, telefone, url_foto, instagram, facebook, tiktok, observacoes, ativo) VALUES ('Fernanda Lima', 'fernanda.lima@email.com', '1995-07-08', 'feminino', '(11) 99999-5555', '', '', '', '', 'Alta frequencia', 1)",
+    "INSERT INTO aluno (nome, email, data_nascimento, genero, telefone, url_foto, instagram, facebook, tiktok, observacoes, ativo) VALUES ('Lucas Oliveira', 'lucas.oliveira@email.com', '1993-11-30', 'masculino', '(11) 99999-6666', '', '', '', '', 'Preferencia turma manha', 1)",
+    "INSERT INTO aluno (nome, email, data_nascimento, genero, telefone, url_foto, instagram, facebook, tiktok, observacoes, ativo) VALUES ('Patricia Souza', 'patricia.souza@email.com', '1987-01-25', 'feminino', '(11) 99999-7777', '', '', '', '', 'Aluna desde 2024', 1)",
+    "INSERT INTO aluno (nome, email, data_nascimento, genero, telefone, url_foto, instagram, facebook, tiktok, observacoes, ativo) VALUES ('Roberto Gomes', 'roberto.gomes@email.com', '1991-09-14', 'masculino', '(11) 99999-8888', '', '', '', '', 'Treina 3x por semana', 1)",
+    "INSERT INTO aluno (nome, email, data_nascimento, genero, telefone, url_foto, instagram, facebook, tiktok, observacoes, ativo) VALUES ('Juliana Martins', 'juliana.martins@email.com', '1994-06-03', 'feminino', '(11) 99999-9999', '', '', '', '', 'Aluna nova', 1)",
+    "INSERT INTO aluno (nome, email, data_nascimento, genero, telefone, url_foto, instagram, facebook, tiktok, observacoes, ativo) VALUES ('Bruno Almeida', 'bruno.almeida@email.com', '1989-04-18', 'masculino', '(11) 98888-1111', '', '', '', '', 'Aluno inativo de exemplo', 0)",
   ];
 
   static const List<String> _insercoesUsuario = [
@@ -324,11 +331,47 @@
 
   static const List<String> _insercoesManutencao = [
     "INSERT INTO manutencao (bike_id, tipo_manutencao_id, data_solicitacao, data_realizacao, descricao, ativo) VALUES (3, 1, '2026-03-25T08:00:00', '2026-04-05T08:00:00', 'Pedal com folga', 1)",
+    "INSERT INTO manutencao (bike_id, tipo_manutencao_id, data_solicitacao, data_realizacao, descricao, ativo) VALUES (7, 2, '2026-03-28T09:00:00', '2026-03-30T14:00:00', 'Altura do banco desregulada', 0)",
+    "INSERT INTO manutencao (bike_id, tipo_manutencao_id, data_solicitacao, data_realizacao, descricao, ativo) VALUES (5, 3, '2026-04-01T10:00:00', '2026-04-01T10:00:00', 'Banco com rachadura, necessita troca', 1)",
+    "INSERT INTO manutencao (bike_id, tipo_manutencao_id, data_solicitacao, data_realizacao, descricao, ativo) VALUES (9, 1, '2026-04-03T07:30:00', '2026-04-03T07:30:00', 'Pedal esquerdo travando', 1)",
   ];
 
   static const List<String> _insercoesCheckin = [
+    // Check-ins historicos (concluidos - datas passadas)
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (1, 1, '2026-03-03T07:00:00', 1, 1, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (1, 1, '2026-03-05T07:00:00', 1, 1, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (1, 1, '2026-03-10T07:00:00', 1, 1, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (1, 2, '2026-03-11T18:30:00', 0, 0, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (1, 1, '2026-03-17T07:00:00', 1, 1, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (1, 1, '2026-03-24T07:00:00', 1, 1, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (1, 1, '2026-03-31T07:00:00', 1, 1, 1)",
     "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (1, 1, '2026-04-01T07:00:00', 1, 1, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (2, 1, '2026-03-03T07:00:00', 1, 3, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (2, 1, '2026-03-10T07:00:00', 1, 3, 1)",
     "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (2, 1, '2026-04-01T07:00:00', 1, 3, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (3, 2, '2026-03-04T18:30:00', 0, 1, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (3, 2, '2026-03-11T18:30:00', 0, 1, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (4, 1, '2026-03-05T07:00:00', 0, 0, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (4, 1, '2026-03-10T07:00:00', 0, 0, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (4, 2, '2026-03-11T18:30:00', 0, 3, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (5, 1, '2026-03-03T07:00:00', 0, 1, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (5, 1, '2026-03-05T07:00:00', 0, 1, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (5, 1, '2026-03-10T07:00:00', 0, 1, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (5, 1, '2026-03-17T07:00:00', 0, 1, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (5, 2, '2026-03-18T18:30:00', 0, 0, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (6, 1, '2026-03-05T07:00:00', 0, 3, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (6, 1, '2026-03-17T07:00:00', 0, 3, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (7, 2, '2026-03-04T18:30:00', 0, 0, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (7, 2, '2026-03-18T18:30:00', 0, 1, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (8, 1, '2026-03-10T07:00:00', 0, 4, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (8, 1, '2026-03-24T07:00:00', 0, 4, 1)",
+    // Check-in cancelado (historico preservado)
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (1, 2, '2026-03-18T18:30:00', 0, 0, 0)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (3, 1, '2026-03-17T07:00:00', 1, 4, 0)",
+    // Check-in futuro (agendado)
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (1, 1, '2026-04-14T07:00:00', 1, 1, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (5, 1, '2026-04-14T07:00:00', 0, 1, 1)",
+    "INSERT INTO checkin (aluno_id, turma_id, data, fila, coluna, ativo) VALUES (2, 2, '2026-04-15T18:30:00', 0, 1, 1)",
   ];
 
   static const List<String> _insercoesFilaEspera = [

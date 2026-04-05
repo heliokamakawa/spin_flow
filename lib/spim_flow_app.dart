@@ -38,6 +38,9 @@ import 'package:spin_flow/widget/aluno/tela_mix_turma_aluno.dart';
 import 'package:spin_flow/widget/aluno/tela_mapa_checkin.dart';
 import 'package:spin_flow/widget/professora/tela_mapa_operacional_professora.dart';
 import 'package:spin_flow/widget/professora/tela_posicionamento_bikes.dart';
+import 'package:spin_flow/widget/professora/tela_relatorios_professora.dart';
+import 'package:spin_flow/widget/listas/lista_manutencoes.dart';
+import 'package:spin_flow/widget/listas/lista_checkins.dart';
 
 class SpinFlowApp extends StatelessWidget {
   const SpinFlowApp({super.key});
@@ -100,6 +103,9 @@ class SpinFlowApp extends StatelessWidget {
         Rotas.listaGruposAlunos: (context) => const ListaGruposAlunos(),
         Rotas.listaSalas: (context) => const ListaSalas(),
         Rotas.listaVideoAula: (context) => const ListaVideoAula(),
+        Rotas.listaManutencoes: (context) => const ListaManutencoes(),
+        Rotas.listaCheckins: (context) => const ListaCheckins(),
+        Rotas.relatoriosProfessora: (context) => const TelaRelatoriosProfessora(),
       },
     );
   }

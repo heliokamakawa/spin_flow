@@ -49,5 +49,10 @@
   static const String listaGruposAlunos = '/lista-grupos-alunos';
   static const String listaSalas = '/lista-salas';
   static const String listaVideoAula = '/lista-video-aula';
+  static const String listaManutencoes = '/lista-manutencoes';
+  static const String listaCheckins = '/lista-checkins';
+
+  // Relatórios
+  static const String relatoriosProfessora = '/relatorios-professora';
 }
 
