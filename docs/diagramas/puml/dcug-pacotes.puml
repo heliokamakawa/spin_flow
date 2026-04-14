@@ -1,0 +1,100 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+
+actor "Aluno" as Aluno
+actor "Professora" as Professora
+
+
+
+package "SpinFlow" {
+    package "Acesso" {
+        usecase UC01 as "Autenticar no Sistema"
+        note right of (UC01)
+            Pré-condição para execução
+            de todos os casos de uso
+        end note
+    }
+    package "Consultas" {
+        usecase UC02 as "Consultar Agenda Semanal"
+        usecase UC03 as "Consultar Mix Musical"
+        usecase UC04 as "Consultar Histórico de Presença"
+        usecase UC05 as "Visualizar Dashboard"
+    }
+
+    package "Check-in" {
+        usecase UC06 as "Realizar Check-in"
+        usecase UC07 as "Cancelar Check-in"
+        usecase UC08 as "Verificar Disponibilidade da Bike"
+        usecase UC09 as "Visualizar Mapa da Sala"
+    }
+    
+    package "Gestão Operacional" {
+        usecase UC10 as "Gerenciar Alunos"
+        usecase UC11 as "Gerenciar Grupos de Alunos"
+        usecase UC12 as "Gerenciar Bikes"
+        usecase UC13 as "Gerenciar Fabricantes"
+        usecase UC14 as "Gerenciar Manutenções"
+        usecase UC15 as "Cancelar Manutenção"
+        usecase UC16 as "Gerenciar Mix"
+        usecase UC17 as "Gerenciar Salas"
+        usecase UC18 as "Gerenciar Turmas"
+        usecase UC19 as "Verificar Disponibilidade de Horário"
+        usecase UC20 as "Associar Mix à Turma"        
+        usecase UC21 as "Gerenciar Música"
+    }
+}
+
+
+
+' Associações específicas
+Professora --|> Aluno
+
+Aluno --> "Acesso"
+Aluno --> "Consultas"
+Aluno --> "Check-in"
+
+' Aluno --> UC01
+' Aluno -> UC02
+' Aluno -> UC03
+' Aluno -> UC04
+' Aluno -> UC05
+' Aluno -> UC06
+' Aluno -> UC07
+' Aluno -> UC08
+
+Professora --> "Gestão Operacional"
+
+' Professora -> UC10
+' Professora -> UC11
+' Professora -> UC12
+' Professora -> UC13
+' Professora -> UC14
+' Professora -> UC15
+' Professora -> UC16
+' Professora -> UC17
+' Professora -> UC18
+' Professora -> UC19
+' Professora -> UC20
+
+
+
+' Includes
+UC06 -.> UC08 : <<include>>
+UC06 -.> UC09 : <<include>>
+UC18 -.> UC19 : <<include>>
+
+' Extends
+UC07 -.> UC06 : <<extends>>
+UC11 -.> UC10 : <<extends>>
+UC13 -.> UC12 : <<extends>>
+UC15 -.> UC14 : <<extends>>
+UC18 -.> UC17 : <<extends>>
+UC20 -.> UC18 : <<extends>>
+UC21 -.> UC16 : <<extends>>
+
+
+
+
+@enduml
