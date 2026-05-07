@@ -6,7 +6,7 @@ import 'package:spin_flow/spim_flow_app.dart';
 /// Teste de integração — Fluxo da Professora
 /// Faz login como professora e navega por todas as telas do sistema.
 ///
-/// Comando: flutter test integration_test/test_fluxo_professora.dart -d chrome
+/// Comando: flutter test integration_test/test_fluxo_professora.dart -d <DEVICE_ID>
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
