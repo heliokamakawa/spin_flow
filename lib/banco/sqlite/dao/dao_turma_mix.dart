@@ -1,6 +1,4 @@
 ﻿import 'package:spin_flow/banco/sqlite/conexao.dart';
-import 'package:spin_flow/dto/dto_mix.dart';
-import 'package:spin_flow/dto/dto_turma.dart';
 import 'package:spin_flow/dto/dto_turma_mix.dart';
 
 import 'dao_mix.dart';

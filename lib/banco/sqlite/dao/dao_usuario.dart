@@ -19,6 +19,28 @@ class DAOUsuario {
     return resultado.first;
   }
 
+  Future<Map<String, dynamic>?> buscarPorEmailAtivo(String email) async {
+    final db = await ConexaoSQLite.database;
+    final resultado = await db.query(
+      _tabela,
+      where: 'LOWER(email) = ? AND ativo = 1',
+      whereArgs: [email.toLowerCase().trim()],
+      limit: 1,
+    );
+    if (resultado.isEmpty) return null;
+    return resultado.first;
+  }
+
+  Future<int> atualizarSenha(int id, String novaSenha) async {
+    final db = await ConexaoSQLite.database;
+    return db.update(
+      _tabela,
+      {'senha': novaSenha},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   Future<Map<String, dynamic>?> buscarPrimeiraProfessoraAtiva() async {
     final db = await ConexaoSQLite.database;
     final resultado = await db.query(

@@ -12,17 +12,28 @@ class TelaHistoricoAluno extends StatefulWidget {
   State<TelaHistoricoAluno> createState() => _TelaHistoricoAlunoState();
 }
 
-class _TelaHistoricoAlunoState extends State<TelaHistoricoAluno> {
+class _TelaHistoricoAlunoState extends State<TelaHistoricoAluno> with SingleTickerProviderStateMixin {
   final DAOAluno _daoAluno = DAOAluno();
   final DAOCheckin _daoCheckin = DAOCheckin();
 
+  late TabController _tabController;
   bool _carregando = true;
   DTOAluno? _aluno;
   List<DTOCheckin> _checkins = [];
 
   @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(() {
+      if (!_tabController.indexIsChanging) setState(() {});
+    });
     _carregar();
   }
 
@@ -44,6 +55,59 @@ class _TelaHistoricoAlunoState extends State<TelaHistoricoAluno> {
     final email = SessaoUsuario.email;
     if (email == null || email.isEmpty) return null;
     return _daoAluno.buscarPorEmailAtivo(email);
+  }
+
+  List<DTOCheckin> _checkinsFiltrados() {
+    final agora = DateTime.now();
+    switch (_tabController.index) {
+      case 1: // Este mês
+        return _checkins.where((c) => c.data.year == agora.year && c.data.month == agora.month).toList();
+      case 2: // Últimos 3 meses
+        final limite = DateTime(agora.year, agora.month - 3, agora.day);
+        return _checkins.where((c) => c.data.isAfter(limite)).toList();
+      default: // Todas
+        return _checkins;
+    }
+  }
+
+  String _statusCheckin(DTOCheckin c) {
+    final hoje = DateTime.now();
+    final dataCheckin = DateTime(c.data.year, c.data.month, c.data.day);
+    if (!c.ativo) return 'Falta';
+    if (dataCheckin.isBefore(DateTime(hoje.year, hoje.month, hoje.day))) return 'Presente';
+    return 'Agendado';
+  }
+
+  Color _corStatus(String status) {
+    switch (status) {
+      case 'Presente':
+        return Colors.green;
+      case 'Falta':
+        return Colors.red;
+      default:
+        return Colors.blue;
+    }
+  }
+
+  IconData _iconeStatus(String status) {
+    switch (status) {
+      case 'Presente':
+        return Icons.check_circle;
+      case 'Falta':
+        return Icons.cancel;
+      default:
+        return Icons.schedule;
+    }
+  }
+
+  void _abrirDetalheAula(DTOCheckin c) {
+    final status = _statusCheckin(c);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => _TelaDetalheAula(checkin: c, status: status),
+      ),
+    );
   }
 
   @override
@@ -84,10 +148,20 @@ class _TelaHistoricoAlunoState extends State<TelaHistoricoAluno> {
         ? null
         : (recorrenciaPosicaoPorTurma.entries.toList()..sort((a, b) => b.value.compareTo(a.value))).first;
 
+    final filtrados = _checkinsFiltrados();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Meu Historico'),
         actions: [IconButton(onPressed: _carregar, icon: const Icon(Icons.refresh))],
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: const [
+            Tab(text: 'Todas'),
+            Tab(text: 'Este mes'),
+            Tab(text: 'Ultimos 3 meses'),
+          ],
+        ),
       ),
       body: _aluno == null
           ? const Center(child: Text('Aluno autenticado nao encontrado.'))
@@ -136,20 +210,45 @@ class _TelaHistoricoAlunoState extends State<TelaHistoricoAluno> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                const Text('Check-ins', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text('Check-ins (${filtrados.length})', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 8),
-                if (_checkins.isEmpty)
+                if (filtrados.isEmpty)
                   const Card(child: Padding(padding: EdgeInsets.all(12), child: Text('Nenhum check-in encontrado.'))),
-                ..._checkins.map(
-                  (c) => Card(
-                    child: ListTile(
-                      leading: Icon(c.ativo ? Icons.check_circle : Icons.cancel, color: c.ativo ? Colors.green : Colors.red),
-                      title: Text('${c.turma.nome} - ${c.data.toString().split(' ')[0]}'),
-                      subtitle: Text('Posicao: fila ${c.fila + 1}, coluna ${c.coluna + 1}'),
-                      trailing: Text(c.ativo ? 'Ativo' : 'Cancelado'),
+                ...filtrados.map((c) {
+                  final status = _statusCheckin(c);
+                  final cor = _corStatus(status);
+                  final dataStr = '${c.data.day.toString().padLeft(2, '0')}/${c.data.month.toString().padLeft(2, '0')}/${c.data.year}';
+                  return Card(
+                    child: InkWell(
+                      onTap: () => _abrirDetalheAula(c),
+                      borderRadius: BorderRadius.circular(12),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                        child: Row(
+                          children: [
+                            Icon(_iconeStatus(status), color: cor, size: 28),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(c.turma.nome, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                                  const SizedBox(height: 2),
+                                  Text('$dataStr - ${c.turma.horarioInicio}', style: TextStyle(fontSize: 13, color: Colors.grey.shade600)),
+                                  Text(c.turma.sala.nome, style: TextStyle(fontSize: 13, color: Colors.grey.shade600)),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Text(status, style: TextStyle(color: cor, fontWeight: FontWeight.bold, fontSize: 13)),
+                            const SizedBox(width: 4),
+                            Icon(Icons.chevron_right, color: Colors.grey.shade400),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                }),
               ],
             ),
     );
@@ -172,6 +271,106 @@ class _TelaHistoricoAlunoState extends State<TelaHistoricoAluno> {
       default:
         return 'Dom';
     }
+  }
+}
+
+class _TelaDetalheAula extends StatelessWidget {
+  final DTOCheckin checkin;
+  final String status;
+
+  const _TelaDetalheAula({required this.checkin, required this.status});
+
+  @override
+  Widget build(BuildContext context) {
+    final c = checkin;
+    Color corStatus;
+    switch (status) {
+      case 'Presente':
+        corStatus = Colors.green;
+        break;
+      case 'Falta':
+        corStatus = Colors.red;
+        break;
+      default:
+        corStatus = Colors.blue;
+    }
+
+    final diaSemana = _nomeDiaSemana(c.data);
+    final dataFormatada = '${c.data.day.toString().padLeft(2, '0')}/${c.data.month.toString().padLeft(2, '0')}/${c.data.year} ($diaSemana)';
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Detalhe da Aula')),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(c.turma.nome, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 4),
+                  Text(c.turma.sala.nome, style: TextStyle(fontSize: 14, color: Colors.grey.shade600)),
+                  const Divider(height: 24),
+                  _linhaDetalheComIcone(Icons.calendar_today, 'Data', dataFormatada),
+                  _linhaDetalheComIcone(Icons.access_time, 'Horario', c.turma.horarioInicio),
+                  _linhaDetalheComIcone(Icons.timer, 'Duracao', '${c.turma.duracaoMinutos} min'),
+                  _linhaDetalheComIcone(Icons.pedal_bike, 'Bike', 'F${c.fila + 1} C${c.coluna + 1}'),
+                  const SizedBox(height: 12),
+                  _linhaDetalheComIcone(
+                    Icons.check_circle_outline,
+                    'Status',
+                    status,
+                    valorCor: corStatus,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(Icons.arrow_back),
+              label: const Text('Voltar para historico'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _nomeDiaSemana(DateTime data) {
+    switch (data.weekday) {
+      case DateTime.monday: return 'Segunda';
+      case DateTime.tuesday: return 'Terca';
+      case DateTime.wednesday: return 'Quarta';
+      case DateTime.thursday: return 'Quinta';
+      case DateTime.friday: return 'Sexta';
+      case DateTime.saturday: return 'Sabado';
+      default: return 'Domingo';
+    }
+  }
+
+  Widget _linhaDetalheComIcone(IconData icone, String label, String valor, {Color? valorCor}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        children: [
+          Icon(icone, size: 20, color: Colors.grey.shade500),
+          const SizedBox(width: 10),
+          SizedBox(width: 80, child: Text(label, style: TextStyle(fontSize: 13, color: Colors.grey.shade600))),
+          Expanded(
+            child: Text(
+              valor,
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: valorCor),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

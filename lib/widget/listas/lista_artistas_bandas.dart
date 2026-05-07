@@ -19,8 +19,8 @@ class ListaArtistasBandas extends StatelessWidget {
       excluir: dao.excluir,
       ativo: (a) => a.ativo,
       detalhes: (a) {
-        final descricao = a.descricao?.isNotEmpty == true ? '${a.descricao}\n' : '';
-        final link = a.link?.isNotEmpty == true ? 'Link: ${a.link}\n' : '';
+        final descricao = a.descricao.isNotEmpty == true ? '${a.descricao}\n' : '';
+        final link = a.link.isNotEmpty == true ? 'Link: ${a.link}\n' : '';
         return '$descricao$link${a.ativo ? 'Ativo' : 'Inativo'}';
       },
     );

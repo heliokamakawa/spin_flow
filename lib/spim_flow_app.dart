@@ -17,6 +17,7 @@ import 'package:spin_flow/widget/form_turma_mix.dart';
 import 'package:spin_flow/widget/tela_dashboard_aluno.dart';
 import 'package:spin_flow/widget/tela_dashboard_professora.dart';
 import 'package:spin_flow/widget/tela_login.dart';
+import 'package:spin_flow/widget/tela_splash.dart';
 import 'package:spin_flow/widget/listas/lista_fabricantes.dart';
 import 'package:spin_flow/widget/listas/lista_categorias_musica.dart';
 import 'package:spin_flow/widget/listas/lista_tipos_manutencao.dart';
@@ -37,6 +38,13 @@ import 'package:spin_flow/widget/aluno/tela_mix_turma_aluno.dart';
 import 'package:spin_flow/widget/aluno/tela_mapa_checkin.dart';
 import 'package:spin_flow/widget/professora/tela_mapa_operacional_professora.dart';
 import 'package:spin_flow/widget/professora/tela_posicionamento_bikes.dart';
+import 'package:spin_flow/widget/professora/tela_relatorios_professora.dart';
+import 'package:spin_flow/widget/listas/lista_manutencoes.dart';
+import 'package:spin_flow/widget/listas/lista_checkins.dart';
+import 'package:spin_flow/widget/aluno/tela_indicadores_detalhados_aluno.dart';
+import 'package:spin_flow/widget/tela_recuperar_senha.dart';
+import 'package:spin_flow/widget/tela_sessao_expirada.dart';
+import 'package:spin_flow/configuracoes/sessao_usuario.dart';
 
 class SpinFlowApp extends StatelessWidget {
   const SpinFlowApp({super.key});
@@ -47,8 +55,10 @@ class SpinFlowApp extends StatelessWidget {
       title: 'pinFlow',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.purple),
-      initialRoute: Rotas.login,
+      initialRoute: Rotas.splash,
+      navigatorObservers: [_SessaoObserver()],
       routes: {
+        Rotas.splash: (context) => const TelaSplash(),
         Rotas.login: (context) => const TelaLogin(),
         Rotas.dashboardAluno: (context) => const TelaDashboardAluno(),
         Rotas.dashboardProfessora: (context) => const TelaDashboardProfessora(),
@@ -98,8 +108,51 @@ class SpinFlowApp extends StatelessWidget {
         Rotas.listaGruposAlunos: (context) => const ListaGruposAlunos(),
         Rotas.listaSalas: (context) => const ListaSalas(),
         Rotas.listaVideoAula: (context) => const ListaVideoAula(),
+        Rotas.listaManutencoes: (context) => const ListaManutencoes(),
+        Rotas.listaCheckins: (context) => const ListaCheckins(),
+        Rotas.relatoriosProfessora: (context) => const TelaRelatoriosProfessora(),
+        Rotas.indicadoresDetalhadosAluno: (context) => const TelaIndicadoresDetalhadosAluno(),
+        Rotas.recuperarSenha: (context) => const TelaRecuperarSenha(),
+        Rotas.sessaoExpirada: (context) => const TelaSessaoExpirada(),
       },
     );
   }
 }
 
+/// Observer que verifica a expiração da sessão em cada navegação.
+/// Rotas públicas (login, splash, recuperar senha, sessão expirada) são ignoradas.
+class _SessaoObserver extends NavigatorObserver {
+  static const _rotasPublicas = {
+    Rotas.login,
+    Rotas.splash,
+    Rotas.recuperarSenha,
+    Rotas.sessaoExpirada,
+  };
+
+  @override
+  void didPush(Route route, Route? previousRoute) {
+    _verificar(route);
+  }
+
+  @override
+  void didReplace({Route? newRoute, Route? oldRoute}) {
+    if (newRoute != null) _verificar(newRoute);
+  }
+
+  void _verificar(Route route) {
+    final nome = route.settings.name;
+    if (nome != null && _rotasPublicas.contains(nome)) return;
+
+    if (SessaoUsuario.ativa && SessaoUsuario.expirada) {
+      // Agenda o redirect para depois do frame atual
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final nav = navigator;
+        if (nav == null) return;
+        SessaoUsuario.encerrar();
+        nav.pushNamedAndRemoveUntil(Rotas.sessaoExpirada, (r) => false);
+      });
+    } else {
+      SessaoUsuario.registrarAtividade();
+    }
+  }
+}

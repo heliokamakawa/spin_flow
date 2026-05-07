@@ -1,9 +1,12 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:spin_flow/banco/sqlite/dao/dao_aluno.dart';
 import 'package:spin_flow/banco/sqlite/dao/dao_checkin.dart';
+import 'package:spin_flow/banco/sqlite/dao/dao_fila_espera_checkin.dart';
 import 'package:spin_flow/banco/sqlite/dao/dao_manutencao.dart';
 import 'package:spin_flow/banco/sqlite/dao/dao_posicao_bike.dart';
 import 'package:spin_flow/banco/sqlite/dao/dao_turma.dart';
 import 'package:spin_flow/dto/dto_checkin.dart';
+import 'package:spin_flow/dto/dto_fila_espera_checkin.dart';
 import 'package:spin_flow/dto/dto_posicao_bike.dart';
 import 'package:spin_flow/dto/dto_turma.dart';
 
@@ -19,6 +22,8 @@ class _TelaMapaOperacionalProfessoraState extends State<TelaMapaOperacionalProfe
   final DAOCheckin _daoCheckin = DAOCheckin();
   final DAOManutencao _daoManutencao = DAOManutencao();
   final DAOPosicaoBike _daoPosicaoBike = DAOPosicaoBike();
+  final DAOFilaEsperaCheckin _daoFila = DAOFilaEsperaCheckin();
+  final DAOAluno _daoAluno = DAOAluno();
 
   List<DTOTurma> _turmas = [];
   DTOTurma? _turmaSelecionada;
@@ -26,6 +31,7 @@ class _TelaMapaOperacionalProfessoraState extends State<TelaMapaOperacionalProfe
   bool _carregando = true;
   List<DTOCheckin> _checkins = [];
   List<DTOPosicaoBike> _bloqueadas = [];
+  List<_FilaEsperaItem> _filaEspera = [];
 
   @override
   void initState() {
@@ -47,12 +53,29 @@ class _TelaMapaOperacionalProfessoraState extends State<TelaMapaOperacionalProfe
     final bikesBloqueadas = await _daoManutencao.buscarBikeIdsEmManutencaoAtiva();
     final posicoesBloqueadas = await _daoPosicaoBike.buscarPorBikeIds(bikesBloqueadas);
 
+    List<_FilaEsperaItem> fila = [];
+    if (turma != null) {
+      final filaDTO = await _daoFila.buscarAtivosPorTurmaData(
+        turmaId: turma.id ?? 0,
+        data: _data,
+      );
+      for (int i = 0; i < filaDTO.length; i++) {
+        final aluno = await _daoAluno.buscarPorId(filaDTO[i].alunoId);
+        fila.add(_FilaEsperaItem(
+          dto: filaDTO[i],
+          nomeAluno: aluno?.nome ?? 'Aluno #${filaDTO[i].alunoId}',
+          posicao: i + 1,
+        ));
+      }
+    }
+
     if (!mounted) return;
     setState(() {
       _turmas = turmas;
       _turmaSelecionada = turma;
       _checkins = checkins;
       _bloqueadas = posicoesBloqueadas;
+      _filaEspera = fila;
       _carregando = false;
     });
   }
@@ -66,6 +89,62 @@ class _TelaMapaOperacionalProfessoraState extends State<TelaMapaOperacionalProfe
     );
     if (data == null) return;
     setState(() => _data = data);
+    await _carregar();
+  }
+
+  Widget _secaoFilaEspera() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: Colors.amber.shade50,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.amber.shade300),
+      ),
+      child: ExpansionTile(
+        leading: Icon(Icons.people_outline, color: Colors.amber.shade800),
+        title: Text(
+          'Fila de Espera (${_filaEspera.length})',
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.amber.shade900),
+        ),
+        initiallyExpanded: true,
+        children: _filaEspera.map((item) {
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundColor: Colors.amber.shade200,
+              child: Text('${item.posicao}', style: const TextStyle(fontWeight: FontWeight.bold)),
+            ),
+            title: Text(item.nomeAluno),
+            subtitle: Text('Entrou: ${item.dto.criadoEm.hour.toString().padLeft(2, '0')}:${item.dto.criadoEm.minute.toString().padLeft(2, '0')}'),
+            trailing: IconButton(
+              icon: const Icon(Icons.remove_circle_outline, color: Colors.red),
+              tooltip: 'Remover da fila',
+              onPressed: () => _removerDaFila(item),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Future<void> _removerDaFila(_FilaEsperaItem item) async {
+    if (item.dto.id == null) return;
+    final confirma = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Remover da fila'),
+        content: Text('Remover ${item.nomeAluno} da fila de espera?'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Nao')),
+          TextButton(onPressed: () => Navigator.pop(context, true), child: const Text('Sim')),
+        ],
+      ),
+    );
+    if (confirma != true) return;
+    await _daoFila.sairDaFila(item.dto.id!);
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('${item.nomeAluno} removido(a) da fila.')),
+    );
     await _carregar();
   }
 
@@ -146,6 +225,7 @@ class _TelaMapaOperacionalProfessoraState extends State<TelaMapaOperacionalProfe
               ],
             ),
           ),
+          if (_filaEspera.isNotEmpty) _secaoFilaEspera(),
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(12),
@@ -210,3 +290,14 @@ class _TelaMapaOperacionalProfessoraState extends State<TelaMapaOperacionalProfe
   }
 }
 
+class _FilaEsperaItem {
+  final DTOFilaEsperaCheckin dto;
+  final String nomeAluno;
+  final int posicao;
+
+  _FilaEsperaItem({
+    required this.dto,
+    required this.nomeAluno,
+    required this.posicao,
+  });
+}

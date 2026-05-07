@@ -3,19 +3,19 @@
 final List<DTOVideoAula> mockVideoAulas = [
   DTOVideoAula(
     id: 1,
-    nome: 'Aula de IntroduÃ§Ã£o ao Spinning',
+    nome: 'Aula de Introdução ao Spinning',
     linkVideo: 'https://youtu.be/intro-spinning',
     ativo: true,
   ),
   DTOVideoAula(
     id: 2,
-    nome: 'Aula AvanÃ§ada de ResistÃªncia',
+    nome: 'Aula Avançada de Resistência',
     linkVideo: 'https://youtu.be/avancada-resistencia',
     ativo: true,
   ),
   DTOVideoAula(
     id: 3,
-    nome: 'Aula de RecuperaÃ§Ã£o',
+    nome: 'Aula de Recuperação',
     linkVideo: 'https://youtu.be/recuperacao',
     ativo: false,
   ),

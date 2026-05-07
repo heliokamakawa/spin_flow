@@ -1,4 +1,5 @@
 ﻿class Rotas {
+  static const String splash = '/';
   static const String login = '/login';
   static const String dashboardAluno = '/dashboard-aluno';
   static const String dashboardProfessora = '/dashboard-professora';
@@ -48,5 +49,19 @@
   static const String listaGruposAlunos = '/lista-grupos-alunos';
   static const String listaSalas = '/lista-salas';
   static const String listaVideoAula = '/lista-video-aula';
+  static const String listaManutencoes = '/lista-manutencoes';
+  static const String listaCheckins = '/lista-checkins';
+
+  // Painel aluno
+  static const String indicadoresDetalhadosAluno = '/indicadores-detalhados-aluno';
+
+  // Recuperação de senha
+  static const String recuperarSenha = '/recuperar-senha';
+
+  // Sessão expirada
+  static const String sessaoExpirada = '/sessao-expirada';
+
+  // Relatórios
+  static const String relatoriosProfessora = '/relatorios-professora';
 }
 

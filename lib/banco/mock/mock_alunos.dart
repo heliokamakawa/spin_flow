@@ -12,12 +12,12 @@ List<DTOAluno> mockAlunos = [
     instagram: 'https://instagram.com/maria_oliveira',
     facebook: 'https://facebook.com/maria.oliveira',
     tiktok: 'https://tiktok.com/@maria_spin',
-    observacoes: 'Aluna dedicada, frequenta aulas hÃ¡ 2 anos',
+    observacoes: 'Aluna dedicada, frequenta aulas há 2 anos',
     ativo: true,
   ),
   DTOAluno(
     id: 2,
-    nome: 'JoÃ£o Carlos Silva',
+    nome: 'João Carlos Silva',
     email: 'joao.silva@email.com',
     dataNascimento: DateTime(1985, 8, 22),
     genero: 'masculino',
@@ -54,7 +54,7 @@ List<DTOAluno> mockAlunos = [
     instagram: 'https://instagram.com/pedro_spin',
     facebook: 'https://facebook.com/pedro.henrique',
     tiktok: '',
-    observacoes: 'Aluno avanÃ§ado, participa de competiÃ§Ãµes',
+    observacoes: 'Aluno avançado, participa de competiçÀµes',
     ativo: true,
   ),
   DTOAluno(
@@ -82,7 +82,7 @@ List<DTOAluno> mockAlunos = [
     instagram: 'https://instagram.com/carlos_spin',
     facebook: 'https://facebook.com/carlos.eduardo',
     tiktok: '',
-    observacoes: 'Recuperando de lesÃ£o no joelho',
+    observacoes: 'Recuperando de lesão no joelho',
     ativo: true,
   ),
   DTOAluno(
@@ -96,7 +96,7 @@ List<DTOAluno> mockAlunos = [
     instagram: 'https://instagram.com/fernanda_spin',
     facebook: '',
     tiktok: 'https://tiktok.com/@fernanda_fit',
-    observacoes: 'Professora de yoga, busca equilÃ­brio',
+    observacoes: 'Professora de yoga, busca equilíbrio',
     ativo: true,
   ),
   DTOAluno(
@@ -152,7 +152,7 @@ List<DTOAluno> mockAlunos = [
     instagram: 'https://instagram.com/bruna_spin',
     facebook: '',
     tiktok: 'https://tiktok.com/@bruna_fit',
-    observacoes: 'Fisioterapeuta, foca em prevenÃ§Ã£o',
+    observacoes: 'Fisioterapeuta, foca em prevenção',
     ativo: true,
   ),
   DTOAluno(
@@ -166,7 +166,7 @@ List<DTOAluno> mockAlunos = [
     instagram: 'https://instagram.com/rafael_spin',
     facebook: 'https://facebook.com/rafael.monteiro',
     tiktok: '',
-    observacoes: 'Advogado, busca equilÃ­brio trabalho/vida',
+    observacoes: 'Advogado, busca equilíbrio trabalho/vida',
     ativo: true,
   ),
   DTOAluno(
@@ -180,12 +180,12 @@ List<DTOAluno> mockAlunos = [
     instagram: 'https://instagram.com/camila_spin',
     facebook: 'https://facebook.com/camila.teixeira',
     tiktok: 'https://tiktok.com/@camila_fit',
-    observacoes: 'Influenciadora fitness, compartilha experiÃªncias',
+    observacoes: 'Influenciadora fitness, compartilha experiências',
     ativo: true,
   ),
   DTOAluno(
     id: 14,
-    nome: 'AndrÃ© Barbosa',
+    nome: 'André Barbosa',
     email: 'andre.barbosa@email.com',
     dataNascimento: DateTime(1984, 5, 17),
     genero: 'masculino',
@@ -194,7 +194,7 @@ List<DTOAluno> mockAlunos = [
     instagram: 'https://instagram.com/andre_spin',
     facebook: 'https://facebook.com/andre.barbosa',
     tiktok: '',
-    observacoes: 'MÃ©dico cardiologista, recomenda spinning',
+    observacoes: 'Médico cardiologista, recomenda spinning',
     ativo: true,
   ),
   DTOAluno(
@@ -213,7 +213,7 @@ List<DTOAluno> mockAlunos = [
   ),
   DTOAluno(
     id: 16,
-    nome: 'VinÃ­cius Carvalho',
+    nome: 'Vinícius Carvalho',
     email: 'vinicius.carvalho@email.com',
     dataNascimento: DateTime(1988, 3, 11),
     genero: 'masculino',
@@ -222,7 +222,7 @@ List<DTOAluno> mockAlunos = [
     instagram: 'https://instagram.com/vinicius_spin',
     facebook: 'https://facebook.com/vinicius.carvalho',
     tiktok: '',
-    observacoes: 'Engenheiro, busca desafios fÃ­sicos',
+    observacoes: 'Engenheiro, busca desafios físicos',
     ativo: true,
   ),
   DTOAluno(
@@ -236,7 +236,7 @@ List<DTOAluno> mockAlunos = [
     instagram: 'https://instagram.com/sabrina_spin',
     facebook: 'https://facebook.com/sabrina.duarte',
     tiktok: 'https://tiktok.com/@sabrina_fit',
-    observacoes: 'PsicÃ³loga, usa spinning como terapia',
+    observacoes: 'Psicóloga, usa spinning como terapia',
     ativo: true,
   ),
   DTOAluno(
@@ -250,7 +250,7 @@ List<DTOAluno> mockAlunos = [
     instagram: 'https://instagram.com/gustavo_spin',
     facebook: 'https://facebook.com/gustavo.nogueira',
     tiktok: '',
-    observacoes: 'Professor de educaÃ§Ã£o fÃ­sica',
+    observacoes: 'Professor de educação física',
     ativo: true,
   ),
   DTOAluno(
@@ -264,7 +264,7 @@ List<DTOAluno> mockAlunos = [
     instagram: 'https://instagram.com/elaine_spin',
     facebook: '',
     tiktok: 'https://tiktok.com/@elaine_fit',
-    observacoes: 'Dentista, busca aliviar tensÃ£o',
+    observacoes: 'Dentista, busca aliviar tensão',
     ativo: true,
   ),
   DTOAluno(
@@ -278,7 +278,7 @@ List<DTOAluno> mockAlunos = [
     instagram: 'https://instagram.com/igor_spin',
     facebook: 'https://facebook.com/igor.pacheco',
     tiktok: '',
-    observacoes: 'Programador, busca equilÃ­brio mental',
+    observacoes: 'Programador, busca equilíbrio mental',
     ativo: true,
   ),
 ]; 
