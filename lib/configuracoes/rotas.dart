@@ -52,6 +52,15 @@
   static const String listaManutencoes = '/lista-manutencoes';
   static const String listaCheckins = '/lista-checkins';
 
+  // Painel aluno
+  static const String indicadoresDetalhadosAluno = '/indicadores-detalhados-aluno';
+
+  // Recuperação de senha
+  static const String recuperarSenha = '/recuperar-senha';
+
+  // Sessão expirada
+  static const String sessaoExpirada = '/sessao-expirada';
+
   // Relatórios
   static const String relatoriosProfessora = '/relatorios-professora';
 }

@@ -171,7 +171,14 @@ class _TelaLoginState extends State<TelaLogin> {
                                 dica: 'Informe a senha',
                                 mensagemErro: Erro.obrigatorio,
                               ),
-                              const SizedBox(height: 28),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: TextButton(
+                                  onPressed: () => Navigator.pushNamed(context, Rotas.recuperarSenha),
+                                  child: const Text('Esqueceu a senha?'),
+                                ),
+                              ),
+                              const SizedBox(height: 12),
                               SizedBox(
                                 height: 48,
                                 child: ElevatedButton(
@@ -205,6 +212,15 @@ class _TelaLoginState extends State<TelaLogin> {
                             ],
                           ),
                         ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Nao tem uma conta? Fale com o administrador.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.black.withValues(alpha: 0.5),
                       ),
                     ),
                   ],
