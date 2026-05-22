@@ -1,5 +1,18 @@
 # Padrões de Código
 
+## Arquitetura em camadas
+
+O projeto segue uma arquitetura em camadas (estilo MVC). Ver detalhes em
+`04_arquitetura.md`.
+
+- `lib/visao/`: telas, formulários, listas e componentes.
+- `lib/controle/`: um controlador por feature/tela, estendendo `ControladorBase`.
+- `lib/modelo/`: `dto/` (entidades) e `dao/` (acesso a dados).
+- `lib/core/`: infraestrutura comum (base, banco, mock, configurações, validações).
+
+Regra: a visão nunca acessa um DAO diretamente; todo acesso a dados passa por
+um controlador.
+
 ## Estrutura de classes Flutter
 
 Ordem recomendada no `State`:
@@ -21,6 +34,8 @@ Padrão mínimo por formulário:
 - `_salvar`
 
 Boas práticas:
+- acessar dados por um controlador (`Controlador<Feature>`), nunca por DAO direto
+- liberar o controlador no `dispose`
 - usar `mounted` após async
 - validar campos obrigatórios no `Form` e no fluxo de salvar
 - manter navegação consistente (`pop` em edição, lista em criação)
@@ -28,6 +43,7 @@ Boas práticas:
 ## Listas
 
 Padrão mínimo:
+- carregamento async via controlador (`controlador.listar`)
 - carregamento async com estado de loading
 - estado vazio com CTA
 - confirmar exclusão antes da ação
@@ -44,4 +60,4 @@ Padrão mínimo:
 
 - português para nomes de métodos de negócio/UI
 - código autoexplicativo (comentários apenas quando necessário)
-- manter padrão existente do projeto (sem criar arquitetura paralela)
+- seguir a arquitetura em camadas visão/controle/modelo/core (ver `04_arquitetura.md`)

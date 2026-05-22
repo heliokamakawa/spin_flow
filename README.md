@@ -73,9 +73,34 @@ test_driver/
   integration_test.dart        # Driver para flutter drive (web)
 ```
 
+## Arquitetura
+
+O projeto segue uma arquitetura em camadas (estilo MVC), com uma camada `core`
+de infraestrutura compartilhada:
+
+```
+visao  ->  controle  ->  modelo (dto + dao)
+                \              /
+                   core (base + infraestrutura)
+```
+
+- **visao** (`lib/visao/`): camada de apresentacao - telas, formularios, listas
+  e componentes reutilizaveis. Nao acessa DAO diretamente: toda operacao de
+  dados passa por um controlador.
+- **controle** (`lib/controle/`): controladores, um por feature/tela. Cada
+  controlador estende `ControladorBase` (um `ChangeNotifier`) e faz a mediacao
+  entre a visao e o modelo.
+- **modelo** (`lib/modelo/`): `dto/` (entidades) e `dao/` (acesso a dados SQLite).
+- **core** (`lib/core/`): infraestrutura comum usada por controle e modelo -
+  `base/` (classe base de controlador), `banco/` (conexao e scripts SQLite),
+  `mock/`, `configuracoes/` (rotas, sessao, mensagens de erro) e `validacoes/`.
+
+Regra de dependencia: a visao depende do controle; o controle depende do modelo;
+controle e modelo apoiam-se no core. Nenhuma view importa um DAO diretamente.
+
 ## Tecnologias
 
 - Flutter 3.38+
 - Dart 3.10+
 - SQLite (sqflite + sqflite_common_ffi_web)
-- Arquitetura: DAO + DTO + Widgets
+- Arquitetura em camadas: visao + controle + modelo + core (estilo MVC)

@@ -10,6 +10,7 @@ Este diretório concentra documentação técnica do projeto.
   - `01_regras_negocio.md`: regras funcionais e validações do domínio
   - `02_padroes_codigo.md`: padrões de formulários/listas/componentes e organização de código
   - `03_cadastros_e_entidades.md`: visão objetiva de entidades, cadastros e dependências
+  - `04_arquitetura.md`: arquitetura em camadas (visão/controle/modelo/core)
 - `03_execucao/`
   - `01_log_execucao.md`: histórico técnico do que foi feito e pendências
 - `99_prompts/`
